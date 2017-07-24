@@ -5,9 +5,7 @@ import Search from './components/Search';
 import Listing from './components/Listing';
 import { Router, hashHistory, Route, IndexRoute } from 'react-router';
 import dotenv from 'dotenv';
-dotenv.config({
-  silent:true
-});
+dotenv.config({ silent:true });
 
 ReactDOM.render(
   <Router history= { hashHistory }>

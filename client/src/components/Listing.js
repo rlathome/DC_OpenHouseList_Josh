@@ -7,6 +7,7 @@ import currency from 'currency-formatter';
 import jquery from 'jquery';
 const google = window.google;
 let apiKey = (process.env.REACT_APP_STATUS == 'production') ? "http://localhost:8080" : "https://git.heroku.com/calm-forest-74045.git";
+console.log('listingjs env: ',process.env.REACT_APP_STATUS);
 
 class Listing extends Component{
   constructor(props){
@@ -16,7 +17,8 @@ class Listing extends Component{
       showing:'',
       thumb_photos:[],
       big_photos:[],
-      showing_index:0
+      showing_index:0,
+      showing_modal:false
     }
   }
   componentWillMount(){
@@ -157,6 +159,13 @@ class Listing extends Component{
   navigateBack(){
     this.props.goBack();
   }
+  showing_modal(){
+    console.log('showing');
+    this.setState({showing_modal:true})
+  }
+  showing_modal_off(){
+    this.setState({showing_modal:false})
+  }
   render(){
     let showing=this.state.showing;
     let listing=this.state.listing;
@@ -175,10 +184,20 @@ class Listing extends Component{
       backgroundSize:'cover',
       overlap:'hidden'
     }
-
     showing = (
       <div style={style} className="photo-container"></div>
     )
+    //FULLSCREEN IMAGES
+    let showing_modal = (this.state.showing_modal) ? (
+      <div className="showing-modal">
+          <div className="sm_opacity"></div>
+          <div onClick={this.goLeft.bind(this)} className="arrow arrow-left fa fa-arrow-left"></div>
+          <div onClick={this.goRight.bind(this)} className="arrow arrow-right fa fa-arrow-right"></div>
+          <img className="showing-modal-image image-responsive" src={big_photos[showing_index]} alt="listing photo"/>
+          <i className="glyphicon glyphicon-resize-small" onClick={this.showing_modal_off.bind(this)}></i>
+      </div>
+    ) : '';
+
     let comments = (listing) ? listing.open_house_events[0].open_house_comments : '';
     let listing_bedrooms = (listing) ? listing.num_bedrooms : '';
     //LISTING SPECS:
@@ -223,8 +242,9 @@ class Listing extends Component{
       <div>MLS #:&nbsp;{(listing) ? listing.mls_number : ''}</div>
     ) : '';
     let parking = (listing) ? (<div>Parking spaces:&nbsp;{(listing) ? listing.parking_spaces || listing.garage_spaces : ''}</div>) : '';
-    return(
+    return (
       <div className="wrapper listing-page">
+        {showing_modal}
         <div className="listing-header row">
           <div className="listing-address">
             { st_address }
@@ -239,14 +259,17 @@ class Listing extends Component{
         </div>
         <div className="listing-section">
           <div className="row">
-            <div className="listing-column col-sm-6">
+            <div className="listing-column col-md-8 col-lg-6">
               <div className="photos-map-column">
                 <div className="listing-photos">
                   <div className="photo-viewer">
+                    <div className="full-screen-icon hidden-xs">
+                      <i onClick={this.showing_modal.bind(this)} className="glyphicon glyphicon-fullscreen"></i>
+                    </div>
                     {/* <img src={this.state.showing} alt="listing photo" /> */}
                     {showing}
-                    <div onClick={this.goLeft.bind(this)}className="arrow arrow-left fa fa-arrow-left"></div>
-                    <div onClick={this.goRight.bind(this)}className="arrow arrow-right fa fa-arrow-right"></div>
+                    <div onClick={this.goLeft.bind(this)} className="arrow arrow-left fa fa-arrow-left"></div>
+                    <div onClick={this.goRight.bind(this)} className="arrow arrow-right fa fa-arrow-right"></div>
                   </div>
                   <div className="scroller">
                     <div className="photo-carousel">
@@ -264,9 +287,9 @@ class Listing extends Component{
                 <div className="listing-map">{map}</div>
               </div>
             </div>
-            <div className="listing-column2 col-sm-6">
+            <div className="listing-column2 col-md-4 col-lg-6">
               <div className="specs-form-column">
-                <div className="listing-specs">
+                <div className="listing-specs clearfix">
 
 
                   <div className="specs-2">
@@ -282,8 +305,8 @@ class Listing extends Component{
                     <div className="specs-text">{parking}</div>
                   </div>
                 </div>
-                <div className="listing-form-column">
-                  <div className="listing-form">
+                <div className="listing-form-column row">
+                  <div className="listing-form col-lg-8">
                     <div className="listing-form-header">
                       Ask a Question
                       <div className="listing-form-header-quote">"We'll respond quickly!"</div>
@@ -302,14 +325,20 @@ class Listing extends Component{
                       <input type="submit" value="Submit"/>
                     </form>
                   </div>
-                  <div className="listing-agent-photo">
-                    <img src={require('../images/Justin_Levitch.jpg')} className="image-responsive" alt="Agent Image" />
-                    <h3>Justin Levitch</h3>
-                    <div>Real Estate Professional</div>
-                    <div>4600 North Park Avenue, Suite 100</div>
-                    <div>Chevy Chase, MD 20815</div>
-                    <div>Phone: 301-652-0643</div>
-                    <div>Email: <a href="info@rlahre.com" alt='email'>info@rlahre.com</a></div>
+                  <div className="listing-agent-photo col-lg-4">
+                    <div className="row listing-agent-column">
+                      <div className="agent-photo-holder col-lg-12 col-md-6 col-sm-6 pull-right">
+                        <img src={require('../images/Justin_Levitch.jpg')} className="image-responsive" alt="Agent Image" />
+                      </div>
+                      <div className="col-lg-12 col-md-6 col-sm-6">
+                        <h3>Justin Levitch</h3>
+                        <div>Real Estate Professional</div>
+                        <div>4600 North Park Avenue, Suite 100</div>
+                        <div>Chevy Chase, MD 20815</div>
+                        <div>Phone: 301-652-0643</div>
+                        <div>Email: <a href="info@rlahre.com" alt='email'>info@rlahre.com</a></div>
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>

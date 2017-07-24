@@ -6,7 +6,7 @@ import currency from 'currency-formatter';
 import moment from 'moment';
 // import _ from "lodash";
 import ReactMap from './ReactMap';
-let apiKey = (process.env.REACT_APP_STATUS == 'production') ? "http://localhost:8080" : "https://git.heroku.com/calm-forest-74045.git";
+let apiKey = (process.env.REACT_APP_STATUS == 'development') ? "http://localhost:8080" : "https://git.heroku.com/calm-forest-74045.git";
 
 
 class Results extends Component{
@@ -20,7 +20,7 @@ class Results extends Component{
       selected:'SORT BY TIME',
       popup:false,
       sorting_spec:'time',
-      sort_order:'',
+      sort_order:'ascending',
       markers: ''
     }
   }
@@ -48,15 +48,15 @@ class Results extends Component{
       }).catch((err)=>{
         console.log('error -',err);
       });
-}else{
-  console.log('setting previous markers');
-  this.setState({
-    results:this.props.raw_stored_results,
-    markers:stored_results,
-    display:'list'
-  });
-  setTimeout(()=>{jquery('.list-view').addClass('list-btn-pressed');},50);
-}
+    }else{
+      console.log('setting previous markers');
+      this.setState({
+        results:this.props.raw_stored_results,
+        markers:stored_results,
+        display:'map'
+      });
+      setTimeout(()=>{jquery('.list-view').addClass('list-btn-pressed');},50);
+    }
 }
   componentDidUpdate(){
     if(this.state.display === 'map'){
@@ -68,6 +68,9 @@ class Results extends Component{
   }
   arrowToggle(e){
     this.pressed_toggle(e);
+    setTimeout(()=>{
+      this.props.goHome();
+    },500);
   }
   removeClass(){
     // jquery('.btn-3d').removeClass('btn-pressed');
@@ -257,14 +260,16 @@ class Results extends Component{
       this.orderByPrice();
     }
   }
-  orderByPrice(){
+  sortByPrice(){
     let $item = jquery('#down');
     $item.removeClass('down-btn-pressed');
-    jquery('.map-view').removeClass('map-btn-pressed');
     this.setState({
       dropdown: false,
       sorting_spec:'price'
     });
+    this.orderByPrice();
+  }
+  orderByPrice(){
     let listings = this.state.markers;
     listings.sort((a,b)=>{
       return a.list_price - b.list_price
@@ -273,49 +278,80 @@ class Results extends Component{
       console.log(val.list_price);
     });
     console.log('price results: ',listings);
-    if(this.state.sort_order=="ascending"){
-      listings.reverse();
-    }
+    // if(this.state.sort_order=="ascending"){
+    //   listings.reverse();
+    // }
     this.setState({
-      markers:listings
+      markers:listings,
+      sort_order:'descending'
     });
   }
-  sortAsc(e){
-    if(this.state.display==='list'){
-      if(this.state.sort_order==='descending' || this.state.sort_order==''){
-        this.setState({
-          sort_order:'ascending'
-        });
-        if(this.state.sorting_spec === 'time'){
-          this.sortTime();
-        }
-        if(this.state.sorting_spec === 'price'){
-          this.orderByPrice();
-        }
-      }
-    }
+  orderByPriceDesc(){
+    let listings = this.state.markers;
+    listings.sort((a,b)=>{
+      return a.list_price - b.list_price
+    })
+    listings.forEach((val)=>{
+      console.log(val.list_price);
+    });
+    console.log('price results: ',listings);
+      listings.reverse();
+    this.setState({
+      markers:listings,
+      sort_order:'ascending'
+    });
   }
-  sortDesc(e){
-    if(this.state.display==='list'){
-      if(this.state.sort_order==='ascending' || this.state.sort_order==''){
-        this.setState({
-          sort_order:'descending'
-        });
-        if(this.state.sorting_spec === 'time'){
-          this.sortTime();
-        }
-        if(this.state.sorting_spec === 'price'){
-          this.orderByPrice();
-        }
-      }
+  sortAsc(){
+    console.log('asc');
+    if(this.state.sorting_spec === 'time' && this.state.sort_order==='descending'){
+      // this.sortTime();
+      let markers=this.state.markers.reverse();
+      this.setState({
+        markers,
+        sort_order:'ascending'
+      })
+    }else if(this.state.sorting_spec === 'price' && this.state.sort_order==='descending'){
+      // this.sortTime();
+      // let markers=this.state.markers;
+      // this.setState({
+      //   markers
+      // })
+      this.orderByPriceDesc();
     }
+
+    // if(this.state.sort_order !=='ascending'){
+    //     this.setState({
+    //       sort_order:'ascending'
+    //     });
+    //   }
   }
+  sortDesc(){
+    console.log('desc');
+    if(this.state.sorting_spec === 'time' && this.state.sort_order==='ascending'){
+      this.sortTime();
+      // let markers=this.state.markers.reverse();
+      this.setState({
+        sort_order:'descending'
+      })
+    }else if(this.state.sorting_spec === 'price' && this.state.sort_order==='ascending'){
+      // this.sortTime();
+      // let markers=this.state.markers;
+      // this.setState({
+      //   sort_order'ascending'
+      // })
+      this.orderByPrice();
+    }
+
+  }
+
+  // let ascending_arrow = (this.state.sort_order ==='descending') ? ( <i onClick={this.sortAsc.bind(this)} className="glyphicon glyphicon-triangle-top"></i> ) : '';
+  // let descending_arrow = (this.state.sort_order ==='ascending') ? ( <i onClick={this.sortDesc.bind(this)} className="glyphicon glyphicon-triangle-bottom"></i> ) : '';
+
   updateResults(results){
     this.setState({
       markers:results
     });
   }
-
   render(){
     let results = this.state.markers;
     let selected = this.state.selected;
@@ -343,7 +379,7 @@ class Results extends Component{
       dow = (date) ? days[dow] : '';
       dow = (date) ? dow.toLowerCase() : '';
 
-      //FILTER NEIGHBORHOOD:
+      //FILTER BY MLS SUBDIVISION:
 
       // if(params.neighborhood && params.neighborhood !=='Full DC Area'){
       //   console.log('filtering by day and neighborhood :',params.day,' vs ',dow,', ','and ',params.neighborhood,' vs ',listing.subdivision);
@@ -380,8 +416,8 @@ class Results extends Component{
       return(
         <div id={listing.id} onClick={this.viewTabListing.bind(this)} className="results-item row">
           <div id={listing.id} style={style} className="results-div col-xs-4 results-item-pic">
-            <div id='pause' className="results-item-selector">
-            </div>
+            {/* <div id='pause' className="results-item-selector">
+            </div> */}
             {/* <img src="./images/download-2.jpg" alt="listing image" /> */}
           </div>
           <div id={listing.id} className="results-div col-xs-4 results-item-info">
@@ -421,7 +457,7 @@ class Results extends Component{
     console.log('the results in results render: ',results);
     switch(this.state.display){
       case 'list':
-      display=(results.length) ? results : (<div className="no-results-msg">We're sorry - your search for {this.props.params.neighborhood} listings on {this.props.params.day} didn't return any results - try entering another price.</div>);
+      display=(results.length) ? results : (<div className="no-results-msg">We're sorry - your search for {this.props.params.neighborhood} listings on {this.props.params.day} didn't return any results.</div>);
       break;
       case 'map':
       display=map;
@@ -437,6 +473,10 @@ class Results extends Component{
       onMouseEnter:this.highlight.bind(this),
       onMouseLeave:this.highlight_off.bind(this)
     }
+
+    let ascending_arrow = (this.state.sort_order ==='descending') ? ( <i onClick={this.sortAsc.bind(this)} className="glyphicon ascending_arrow glyphicon-triangle-bottom"></i> ) : '';
+    let descending_arrow = (this.state.sort_order ==='ascending') ? ( <i onClick={this.sortDesc.bind(this)} className="glyphicon descending_arrow glyphicon-triangle-top"></i> ) : '';
+
     let dropdown = (this.state.dropdown) ? (
       <div>
         <div className="sort-dropdown-list">
@@ -448,9 +488,10 @@ class Results extends Component{
           <div id='time' {...drop} onClick={this.sortTime.bind(this)} className="sort-values subdivision">
             SORT BY TIME
           </div>
-          <div id='price' {...drop} onClick={this.orderByPrice.bind(this)}  className="sort-values subdivision">
+          <div id='price' {...drop} onClick={this.sortByPrice.bind(this)}  className="sort-values subdivision">
             SORT BY PRICE
           </div>
+          {/* PRICE SORTING OPTIONS */}
           {/* <div className="sort-subvalues">
             <div onClick={this.sortPrice.bind(this)} className="subdivision" id='3' {...drop}>- $0-$500,000</div>
             <div onClick={this.sortPrice.bind(this)} className="subdivision" id='4' {...drop}>- $500,000-$1,000,000</div>
@@ -463,15 +504,15 @@ class Results extends Component{
     let spec = this.state.sorting_spec.toUpperCase();
     let updownfilter = (this.state.display == 'list') ? (
       <div className="up-down-filter">
-        <i onClick={this.sortAsc.bind(this)} className="glyphicon glyphicon-triangle-top"></i>
-        <i onClick={this.sortDesc.bind(this)} className="glyphicon glyphicon-triangle-bottom"></i>
+        { ascending_arrow }
+        { descending_arrow }
       </div>
   ) : ( <div className="up-down-placeholder"></div> );
     return(
       <div>
         <div className="results-search-options">
 
-          <a onClick={this.arrowToggle.bind(this)} className="btn-3d results-option select-all btn-3d-blue-results" href="#"><div>SELECT ALL</div></a>
+          <a onClick={this.arrowToggle.bind(this)} className="btn-3d results-option select-all btn-3d-blue-results" href="#"><div>NEW SEARCH</div></a>
           <a onClick={this.listToggle.bind(this)} className="btn-3d results-option list-view  btn-3d-blue-results" href="#"><div>LIST VIEW</div></a>
           <a onClick={this.mapBtnToggle.bind(this)} className="btn-3d results-option map-view btn-3d-blue-results" href="#"><div>MAP VIEW</div></a>
           <a className="btn-3d results-option sort-by  btn-3d-blue-results" href="#">

@@ -34,6 +34,11 @@ class Search extends Component{
       $item.addClass('btn-pressed');
     }
   }
+  goHome(){
+    this.setState({
+      step:''
+    });
+  }
   saturday(e){
     e.preventDefault();
     setTimeout(()=>{
@@ -93,6 +98,7 @@ class Search extends Component{
     window.scrollTo(0,0);
   }
   goBack(place){
+    console.log('going back');
     let last_place = this.state.last_place;
     this.setState({
       step:last_place
@@ -126,7 +132,7 @@ class Search extends Component{
       options = (<Neighborhood selectNeighborhood={this.selectNeighborhood.bind(this)} arrowToggle={this.arrowToggle.bind(this)}/>);
       break;
       case 'results':
-      options = (<Results storeResults={this.storeResults.bind(this)} raw_stored_results={this.state.raw_stored_results} stored_results={this.state.stored_results} viewListing={this.viewListing.bind(this)} params={params}/>);
+      options = (<Results storeResults={this.storeResults.bind(this)} goHome={this.goHome.bind(this)} raw_stored_results={this.state.raw_stored_results} stored_results={this.state.stored_results} viewListing={this.viewListing.bind(this)} params={params}/>);
       break;
       case 'listing':
       options = (<Listing goBack={this.goBack.bind(this)} listing={selected_listing}/>);

@@ -3,7 +3,8 @@ import currency from 'currency-formatter';
 import moment from 'moment';
 import jquery from 'jquery';
 import newN from './Neighborhoods';
-import GoogleMap from "react-google-map"
+import GoogleMap from "react-google-map";
+import  MarkerClusterer  from "react-google-maps/lib/addons/MarkerClusterer";
 import GoogleMapLoader from "react-google-maps-loader"
 // let markers = this.props.markers;
 const google = window.google;
@@ -30,8 +31,9 @@ class FullMap extends Component{
     let neighb = this.props.neighborhood;
     console.log('neigh: ',neighb);
     console.log('West End: ',Neighborhoods[neighb]);
+    console.log('r_map markers: ',this.props.markers);
     let neighborhood_polygon = (Neighborhoods[neighb] && neighb !== 'FullDCArea') ? Neighborhoods[neighb] : 'none';
-    let map_center = (Neighborhoods[neighb] && neighb !=='FullDCAarea') ? (Neighborhoods[neighb][0]) : {lat:0,lng:0};
+    let map_center = (Neighborhoods[neighb] && neighb !=='FullDCAarea') ? Neighborhoods[neighb][0] : Neighborhoods['dupontcircle'][0];
     console.log('map center: ',Neighborhoods[neighb]);
     console.log('neighborhood params: ',this.props.neighborhood);
     return(
@@ -56,8 +58,9 @@ class FullMap extends Component{
               title:"Hello World!"
             });
             let viewListing = this.props.viewListing;
-
+            console.log('map markers: ',this.props.markers);
             //FILTER BY NEIGHBORHOOD:
+            if(neighb !=='FullDCArea'){
               var neighborhoodPolygon = new google.maps.Polygon({
                 paths: neighborhood_polygon,
                 strokeColor: '#FF0000',
@@ -67,12 +70,34 @@ class FullMap extends Component{
                 fillOpacity: 0.35
               });
               neighborhoodPolygon.setMap(map);
+            }
 
+            //MARKER CLUSTERING
+
+            //       let map_markers = this.props.markers.map((val)=>{
+            //         return new google.maps.Marker({
+            //           title:val.street_name,
+            //           position: {
+            //             lat: parseFloat(val.latitude),
+            //             lng: parseFloat(val.longitude),
+            //           }
+            //         });
+            //       // map_markers.push(map_marker);
+            //     });
+            // // let map_markers=[];
+            // var markerCluster = new MarkerClusterer(map, map_markers,
+            // {imagePath: 'https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/m'});
+            // console.log('clusterer: ',markerCluster);
+
+            // markerCluster.setMap(map);
+            // <MarkerClusterer averageCenter enableRetinaIcons={true} gridSize={30} zoomOnClick={false} onClick={(cluster)=> this.props.onClusterClicked(cluster)}></MarkerClusterer>
 
             var bounds = new google.maps.LatLngBounds();
             let num_markers = 0;
             let filtered_results = [];
+            // if(this.props.markers) return;
             this.props.markers.forEach((val)=>{
+              console.log('this marker is: ',val);
               let price = currency.format(val.list_price,{ code: 'USD', decimalDigits: 0 });
               price = price.slice(0,price.length-3);
               //get day of the week:
@@ -95,7 +120,7 @@ class FullMap extends Component{
                 }
               );
 
-
+              let map_markers = [];
               marker.setAnimation(googleMaps.Animation.DROP);
               let position = new google.maps.LatLng(lat,lng);
               // console.log('gmap position: ',position);
@@ -106,6 +131,7 @@ class FullMap extends Component{
                 bounds.extend(boundary);
                 filtered_results.push(val);
                 num_markers++;
+                map_markers.push(marker);
               }else if(google.maps.geometry.poly.containsLocation(position, neighborhoodPolygon)){
                 //place marker
                 console.log('plotting marker!');
@@ -114,6 +140,7 @@ class FullMap extends Component{
                 bounds.extend(boundary);
                 filtered_results.push(val);
                 num_markers++;
+                map_markers.push(marker);
               }else{
                 //ignore marker
                 console.log('not plotting marker');
@@ -129,6 +156,9 @@ class FullMap extends Component{
                 // bounds.extend(boundary);
                 // num_markers++;
               }
+              var markerCluster = new MarkerClusterer(map, map_markers,
+              {imagePath: '../utils/m'});
+              console.log('clusterer: ',markerCluster);
             //CREATE PROPERTY INFOWINDOW
             // let mls = val.mls_number.toString();
             // console.log('listing id: ',val.id);

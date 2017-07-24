@@ -3,6 +3,8 @@ import jquery from 'jquery';
 import axios from 'axios';
 import currency from 'currency-formatter';
 import moment from 'moment';
+let app_status = process.env.REACT_APP_STATUS;
+console.log('listingjs env: ',app_status);
 let apiKey = (process.env.REACT_APP_STATUS === 'development') ? "http://localhost:8080" : "https://git.heroku.com/calm-forest-74045.git";
 
 class Featured extends Component{
