@@ -5,7 +5,7 @@ import currency from 'currency-formatter';
 import moment from 'moment';
 let app_status = process.env.REACT_APP_STATUS;
 console.log('listingjs env: ',app_status);
-let apiKey = (process.env.REACT_APP_STATUS === 'development') ? "http://localhost:8080" : "https://git.heroku.com/calm-forest-74045.git";
+let apiKey = (process.env.REACT_APP_STATUS === 'development') ? "http://localhost:8080" : "http://dcopenhouselist.com";
 
 class Featured extends Component{
   constructor(props){

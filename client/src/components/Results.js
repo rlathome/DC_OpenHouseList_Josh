@@ -6,7 +6,7 @@ import currency from 'currency-formatter';
 import moment from 'moment';
 // import _ from "lodash";
 import ReactMap from './ReactMap';
-let apiKey = (process.env.REACT_APP_STATUS == 'development') ? "http://localhost:8080" : "https://git.heroku.com/calm-forest-74045.git";
+let apiKey = (process.env.REACT_APP_STATUS == 'development') ? "http://localhost:8080" : "http://dcopenhouselist.com";
 
 
 class Results extends Component{
@@ -21,7 +21,8 @@ class Results extends Component{
       popup:false,
       sorting_spec:'time',
       sort_order:'ascending',
-      markers: ''
+      markers: '',
+      cache:[]
     }
   }
   componentWillMount(){
@@ -43,6 +44,7 @@ class Results extends Component{
         this.setState({
           results,
           markers,
+          cache:markers,
           display:'map'
         });
       }).catch((err)=>{
@@ -53,6 +55,7 @@ class Results extends Component{
       this.setState({
         results:this.props.raw_stored_results,
         markers:stored_results,
+        cache:stored_results,
         display:'map'
       });
       setTimeout(()=>{jquery('.list-view').addClass('list-btn-pressed');},50);
