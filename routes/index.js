@@ -3,7 +3,7 @@ var router = express.Router();
 var request = require('request');
 var https = require('https');
 let apiKey=process.env.DISPLET_API_KEY;
-let domain = (process.env.NODE_ENV==='development') ? 'http://localhost:8080' : 'http://dcopenhouselist.com';
+let domain = (process.env.NODE_ENV==='development') ? 'http://localhost:3000' : 'http://dcopenhouselist.com';
 // let params = 'latitude,longitude,image_urls,street_name,subdivision,street_number,square_feet,mls_number,list_price,open_house_events,address,full_baths,num_bedrooms,half_baths';
 
 let params='';
