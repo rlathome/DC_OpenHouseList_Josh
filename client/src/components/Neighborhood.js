@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import axios from 'axios'
-let apiKey = (process.env.REACT_APP_STATUS == 'production') ? "http://localhost:8080" : "http://dcopenhouselist.com";
+let apiKey = (process.env.REACT_APP_STATUS == 'development') ? "http://localhost:8080" : "http://dcopenhouselist.com";
 
 class Neighborhood extends Component{
   constructor(props){

@@ -6,7 +6,7 @@ import GoogleMapLoader from "react-google-maps-loader";
 import currency from 'currency-formatter';
 import jquery from 'jquery';
 const google = window.google;
-let apiKey = (process.env.REACT_APP_STATUS == 'production') ? "http://localhost:8080" : "http://dcopenhouselist.com";
+let apiKey = (process.env.REACT_APP_STATUS == 'development') ? "http://localhost:8080" : "http://dcopenhouselist.com";
 console.log('listingjs env: ',process.env.REACT_APP_STATUS);
 
 class Listing extends Component{
