@@ -241,7 +241,7 @@ class Listing extends Component{
     let mls = (listing) ? (
       <div>MLS #:&nbsp;{(listing) ? listing.mls_number : ''}</div>
     ) : '';
-    let parking = (listing) ? (<div>Parking spaces:&nbsp;{(listing) ? listing.parking_spaces || listing.garage_spaces : ''}</div>) : '';
+    let parking = (listing) ? (<div>Parking spaces-&nbsp;{(listing) ? listing.parking_spaces || listing.garage_spaces : ''}</div>) : '';
     return (
       <div className="wrapper listing-page">
         {showing_modal}
