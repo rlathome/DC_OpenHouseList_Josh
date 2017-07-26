@@ -2,8 +2,19 @@ var express = require('express');
 var router = express.Router();
 var request = require('request');
 var https = require('https');
-let apiKey=process.env.DISPLET_API_KEY;
-let domain = (process.env.NODE_ENV==='development') ? 'http://localhost:3000' : 'http://vast-shore-14133.herokuapp.com';
+
+
+
+
+// let domain = (process.env.NODE_ENV==='development') ? 'http://localhost:3000' : 'http://vast-shore-14133.herokuapp.com';
+// let domain = 'http://localhost:3000';
+
+// let apiKey=process.env.DISPLET_API_KEY;
+let apiKey = '82b44a7662b0abb55eebf365a61c50399b512935';
+let domain = 'http://vast-shore-14133.herokuapp.com';
+
+
+
 let stage = process.env.NODE_ENV;
 console.log('app in stage: ',stage);
 console.log('domain: ',domain);

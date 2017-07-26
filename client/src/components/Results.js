@@ -6,7 +6,9 @@ import currency from 'currency-formatter';
 import moment from 'moment';
 // import _ from "lodash";
 import ReactMap from './ReactMap';
-let apiKey = (process.env.REACT_APP_STATUS == 'development') ? "http://localhost:8080" : "http://vast-shore-14133.herokuapp.com";
+// let apiKey = (process.env.REACT_APP_STATUS == 'development') ? "http://localhost:8080" : "http://vast-shore-14133.herokuapp.com";
+
+let apiKey="http://vast-shore-14133.herokuapp.com";
 
 
 class Results extends Component{
