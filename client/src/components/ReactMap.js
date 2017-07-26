@@ -169,7 +169,7 @@ class FullMap extends Component{
                 '>'+
                 '<div class="listing-popup-opacity"></div>'+
                 '<div class="listing-popup-text">'+
-                 val.street_number + ' ' + val.street_name + ' ('+dowUC+')<br/>'+
+                 val.street_number + ' ' + val.street_name + ' ' + val.street_post_dir + ' ('+dowUC+')<br/>'+
                  price +' <br/>'+
                 '</div>'+
               '</div>'

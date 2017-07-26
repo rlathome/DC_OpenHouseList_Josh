@@ -45,7 +45,7 @@ class Featured extends Component{
                 <div id={listing.id} className="listing-info-opacity">
                 </div>
                 <div id={listing.id} className="listing-info">
-                  {listing.street_number} {listing.street_name}<br/>
+                  {listing.street_number} {listing.street_name} {listing.street_post_dir}<br/>
                   {price} - {new_date}
                 </div>
               </div>

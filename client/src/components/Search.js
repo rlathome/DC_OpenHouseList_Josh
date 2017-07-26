@@ -115,6 +115,11 @@ class Search extends Component{
       raw_stored_results:raw_results
     });
   }
+  skipAhead(){
+    this.setState({
+      step:'neighborhoods'
+    });
+  }
   render(){
     let btn_style = 'day-btn btn-3d btn-3d-blue';
     let options;
@@ -126,7 +131,7 @@ class Search extends Component{
     let selected_listing = this.state.selected_listing;
     switch(this.state.step){
       case '':
-      options = (<Days saturday={this.saturday.bind(this)} sunday={this.sunday.bind(this)} pressed_toggle={this.pressed_toggle.bind(this)} />);
+      options = (<Days skipAhead={this.skipAhead.bind(this)} saturday={this.saturday.bind(this)} sunday={this.sunday.bind(this)} pressed_toggle={this.pressed_toggle.bind(this)} />);
       break;
       case 'neighborhoods':
       options = (<Neighborhood selectNeighborhood={this.selectNeighborhood.bind(this)} arrowToggle={this.arrowToggle.bind(this)}/>);
@@ -138,10 +143,12 @@ class Search extends Component{
       options = (<Listing goBack={this.goBack.bind(this)} listing={selected_listing}/>);
       break;
     }
+    let neighborhood = this.state.neighborhood.toUpperCase();
+    let day = this.state.day.toUpperCase();
     return(
       <div>
 
-          <Header reload={this.reload.bind(this)}/>
+          <Header day={day} neighborhood={neighborhood} reload={this.reload.bind(this)}/>
           <div className="wrapper">
 
             {/* <Map /> */}

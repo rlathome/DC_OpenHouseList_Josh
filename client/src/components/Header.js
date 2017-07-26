@@ -11,6 +11,8 @@ class Header extends Component{
     this.props.reload();
   }
   render(){
+    let day = (this.props.day) ? (<li>{this.props.day}</li>) : '';
+    let neighborhood = (this.props.neighborhood) ? (<li>{this.props.neighborhood}</li>) : '';
     return(
       <header>
         <div className="grey-bar">
@@ -27,6 +29,8 @@ class Header extends Component{
           <div className="collapse navbar-collapse">
             <ul className="nav navbar-nav navbar-right">
               <li onClick={this.reload.bind(this)}><i className="glyphicon glyphicon-play"></i><a href="/index.html">HOME</a></li>
+              { day }
+              { neighborhood }
               {/* <li id="saturday" onClick={this.pickDay.bind(this)}><i className="glyphicon glyphicon-play"></i>SATURDAY</li>
               <li id="sunday" onClick={this.pickDay.bind(this)}><i className="glyphicon glyphicon-play"></i>SUNDAY</li> */}
             </ul>

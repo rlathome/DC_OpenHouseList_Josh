@@ -160,7 +160,6 @@ footer .logo-contain {
 
 .wrapper {
   margin: 0px 25px;
-  max-width: 100%;
   text-align: center;
   font-family: "Futura",Helvetica,sans-serif;
 }
@@ -238,6 +237,10 @@ footer .logo-contain {
     z-index: 10 !important;
     background-color: inherit;
   }
+}
+
+.skip-ahead {
+  cursor: pointer;
 }
 
 .glyphicon-play {

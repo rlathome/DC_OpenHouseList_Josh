@@ -9,6 +9,10 @@ class Days extends Component{
     e.preventDefault();
     this.props.sunday(e);
   }
+  skipAhead(e){
+    e.preventDefault();
+    this.props.skipAhead();
+  }
   render(){
     let btn_style = 'day-btn btn-3d btn-3d-blue';
     return(
@@ -40,6 +44,7 @@ class Days extends Component{
               </div>
             </span>
           </div>
+          <div className="skip-ahead" onClick={this.skipAhead.bind(this)}>Click here to search by neighborhood</div>
         </div>
       );
     }

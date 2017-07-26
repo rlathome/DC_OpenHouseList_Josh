@@ -368,7 +368,7 @@ class Results extends Component{
     console.log('params: ',params);
     let stored_results = this.props.stored_results;
     let i = (stored_results) ? true: false;
-    // console.log('app has stored results: ',i, ', ',stored_results, ', and raw results: ',this.state.results);
+    console.log('app has stored results: ',i, ', ',stored_results, ', and raw results: ',this.state.results);
     results = (results) ? results.map((listing)=>{
       // console.log('listing in render: ',listing);
       let price = currency.format(listing.list_price,{ code: 'USD', decimalDigits: 0 });
@@ -425,7 +425,7 @@ class Results extends Component{
           </div>
           <div id={listing.id} className="results-div col-xs-4 results-item-info">
             <div id={listing.id}>
-              { listing.street_number } { listing.street_name } ({dowUC})<br/>
+              { listing.street_number } { listing.street_name } { listing.street_post_dir } ({dowUC})<br/>
               { price } <br/>
             </div>
           </div>

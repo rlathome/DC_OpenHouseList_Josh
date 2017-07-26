@@ -6,6 +6,7 @@ let apiKey=process.env.DISPLET_API_KEY;
 let domain = (process.env.NODE_ENV==='development') ? 'http://localhost:3000' : 'http://vast-shore-14133.herokuapp.com';
 let stage = process.env.NODE_ENV;
 console.log('app in stage: ',stage);
+console.log('domain: ',domain);
 // let params = 'latitude,longitude,image_urls,street_name,subdivision,street_number,square_feet,mls_number,list_price,open_house_events,address,full_baths,num_bedrooms,half_baths';
 
 let params='';
@@ -37,7 +38,7 @@ router.get('/featured',function(req,res,next){
 router.get('/open_houses',function(req,res,next){
   console.log('api key: ',apiKey);
   // let params='';
-  let url = "https://api.displet.com/residentials/search?authentication_token="+apiKey+"&;return_fields="+params+"&min_bedrooms=2&min_bathrooms=1&min_list_price=350&open_house=y&open_house_within=7&limit=2000";
+  let url = "https://api.displet.com/residentials/search?authentication_token="+apiKey+"&;return_fields="+params+"&min_bedrooms=2&min_bathrooms=1&min_list_price=350&open_house=y&open_house_within=7&state=DC&limit=2000";
 
   let options = {
     url:url,

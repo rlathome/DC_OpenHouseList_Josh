@@ -143,6 +143,10 @@ class Listing extends Component{
       console.log('bot');
       return;
     }
+    if(first==='' || last==='' || email==='' || phone===''){
+      alert('All form fields are required.');
+      return; 
+    }
     let data = {
       first,
       last,
