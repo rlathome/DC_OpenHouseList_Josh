@@ -175,18 +175,70 @@ class Search extends Component{
       options = (<Listing goBack={this.goBack.bind(this)} listing={selected_listing}/>);
       break;
     }
-    let neighborhood = this.state.neighborhood.toUpperCase();
+    let neighborhood = this.state.neighborhood;
     let day = this.state.day.toUpperCase();
+
+    let subd = '';
+
+    switch(neighborhood){
+      case 'FullDCArea':
+      subd='Full DC Area';
+      break;
+      case 'adamsmorgan':
+      subd='Adams Morgan';
+      break;
+      case 'anacostia':
+      subd='Anacostia';
+      break;
+      case 'brookland':
+      subd='Brookland';
+      break;
+      case 'capitolhill':
+      subd='Capitol Hill';
+      break;
+      case 'columbiaheights':
+      subd='Columbia Heights';
+      break;
+      case 'deanwood':
+      subd='Deanwood';
+      break;
+      case 'dupontcircle':
+      subd='duPont Circle';
+      break;
+      case 'eckington':
+      subd='Eckington';
+      break;
+      case 'friendshipheights':
+      subd='Friendship Heights';
+      break;
+      case 'georgetown':
+      subd='Georgetown';
+      break;
+      case 'logancircle':
+      subd='Logan Circle';
+      break;
+      case 'petworth':
+      subd='Petworth';
+      break;
+      case 'southwestwaterfront':
+      subd='Southwest Waterfront';
+      break;
+      case 'westend':
+      subd='Westend';
+      break;
+      default:
+      subd=''
+    }
+    subd = subd.toUpperCase();
     return(
       <div>
-
-          <Header day={day} neighborhood={neighborhood} reload={this.reload.bind(this)}/>
+          <Header day={day} neighborhood={subd} reload={this.reload.bind(this)}/>
           <div className="wrapper">
 
             {/* <Map /> */}
               { options }
               {/* <Days saturday={this.saturday.bind(this)} sunday={this.sunday.bind(this)} pressed_toggle={this.pressed_toggle.bind(this)} /> */}
-            <Featured last_place={this.props.last_place} day={this.state.day} neighborhood={this.state.neighborhood} setLastPlace={this.setLastPlace.bind(this)} viewListing={this.viewListing.bind(this)}/>
+            <Featured last_place={this.props.last_place} day={this.state.day} neighborhood={subd} setLastPlace={this.setLastPlace.bind(this)} viewListing={this.viewListing.bind(this)}/>
           </div>
       </div>
     );

@@ -510,8 +510,59 @@ class Results extends Component{
       <ReactMap display={true} viewListing={this.viewListing.bind(this)} updateResults={this.updateResults.bind(this)} neighborhood={this.props.params.neighborhood} markers={markers}/>
       // <Map markers={this.state.markers} />
     );
+    let subd = '';
 
-    let spinner = (<div className="no-results-msg">Searching for {this.props.params.neighborhood} listings on {this.props.params.day}. Thanks for your patience.<br/><img className="spinner" src={require("../images/loadcontent.gif")} alt="please wait"/></div>);
+    switch(this.props.params.neighborhood){
+      case 'FullDCArea':
+      subd='Full DC Area';
+      break;
+      case 'adamsmorgan':
+      subd='Adams Morgan';
+      break;
+      case 'anacostia':
+      subd='Anacostia';
+      break;
+      case 'brookland':
+      subd='Brookland';
+      break;
+      case 'capitolhill':
+      subd='Capitol Hill';
+      break;
+      case 'columbiaheights':
+      subd='Columbia Heights';
+      break;
+      case 'deanwood':
+      subd='Deanwood';
+      break;
+      case 'dupontcircle':
+      subd='duPont Circle';
+      break;
+      case 'eckington':
+      subd='Eckington';
+      break;
+      case 'friendshipheights':
+      subd='Friendship Heights';
+      break;
+      case 'georgetown':
+      subd='Georgetown';
+      break;
+      case 'logancircle':
+      subd='Logan Circle';
+      break;
+      case 'petworth':
+      subd='Petworth';
+      break;
+      case 'southwestwaterfront':
+      subd='Southwest Waterfront';
+      break;
+      case 'westend':
+      subd='Westend';
+      break;
+      default:
+      subd=''
+    }
+
+    let spinner = (<div className="no-results-msg">Searching for {subd} listings on {this.props.params.day}. Thanks for your patience.<br/><img className="spinner" src={require("../images/loadcontent.gif")} alt="please wait"/></div>);
     results = (results) ? results.filter((val)=>{
       if(val){
         return val;
@@ -549,19 +600,19 @@ class Results extends Component{
         </div>
         <div className="sort-text">
           <div id='time_dsc' {...drop} onClick={this.sortTimeDesc.bind(this)} className="sort-values subdivision">
-            SORT BY TIME (low to high)
+            Sort By Time (low to high)
           </div>
           <div id='time_asc' {...drop} onClick={this.sortTimeAsc.bind(this)} className="sort-values subdivision">
-            SORT BY TIME (high to low)
+            Sort By Time (high to low)
           </div>
           <div id='price_ase' {...drop} onClick={this.sortByPrice.bind(this)}  className="sort-values subdivision">
-            SORT BY PRICE (low to high)
+            Sort By Price (low to high)
           </div>
           <div id='price_dsc' {...drop} onClick={this.sortByPriceDesc.bind(this)}  className="sort-values subdivision">
-            SORT BY PRICE (high to low)
+            Sort By Price (high to low)
           </div>
           <div id='price' {...drop} onClick={this.sortByNewest.bind(this)}  className="sort-values subdivision">
-            NEWEST
+            Newest
           </div>
           {/* PRICE SORTING OPTIONS */}
           {/* <div className="sort-subvalues">

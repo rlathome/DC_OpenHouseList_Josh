@@ -502,7 +502,6 @@ footer .logo-contain {
 .btn-3d {
   font-family: 'apercu-regular', sans-serif;
   text-decoration: none;
-  text-transform: uppercase;
   position: relative;
   display: inline-block;
   cursor: pointer;
@@ -528,7 +527,6 @@ footer .logo-contain {
   height: 40vh;
   font-size: 1em;
   line-height: 1em;
-  text-transform: lowercase !important;
   color: #fff;
   position: absolute;
   width: 99%;
@@ -575,7 +573,6 @@ footer .logo-contain {
   height: 30vh;
   font-size: 1em;
   line-height: 1em;
-  text-transform: lowercase !important;
   color: #fff;
   padding-bottom: 5px;
   position: absolute;
@@ -798,6 +795,10 @@ footer .logo-contain {
 
 .day-text * {
   margin-bottom: 5px;
+}
+
+.day-text-1, .day-text-2, .neigh-selected {
+  text-transform: uppercase;
 }
 
 .day-text-1 {
