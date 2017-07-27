@@ -36,11 +36,12 @@ class FullMap extends Component{
     let map_center = (Neighborhoods[neighb] && neighb !=='FullDCAarea') ? Neighborhoods[neighb][0] : Neighborhoods['dupontcircle'][0];
     console.log('map center: ',Neighborhoods[neighb]);
     console.log('neighborhood params: ',this.props.neighborhood);
+    let showing = (this.props.display) ? '' : 'hidden';
     return(
       // GoogleMap component has a 100% height style.
       // You have to set the DOM parent height.
       // So you can perfectly handle responsive with differents heights.
-      <div style={style}>
+      <div className={showing} style={style}>
         <GoogleMap
           googleMaps={this.props.googleMaps}
 
@@ -58,6 +59,7 @@ class FullMap extends Component{
               title:"Hello World!"
             });
             let viewListing = this.props.viewListing;
+
             console.log('map markers: ',this.props.markers);
             //FILTER BY NEIGHBORHOOD:
             if(neighb !=='FullDCArea'){
@@ -162,7 +164,8 @@ class FullMap extends Component{
             //CREATE PROPERTY INFOWINDOW
             // let mls = val.mls_number.toString();
             // console.log('listing id: ',val.id);
-            let mls = val.id.toString();
+            // let mls = val.id.toString();
+            let mls = val.id;
             var contentString = (
               '<div id='+mls+' class="listing-popup" style='+
                 'backgroundImage:url('+val.image_urls.all_thumb[1]+')'+

@@ -1,12 +1,16 @@
 import React, { Component } from 'react';
 import ListingMap from './ListingMap';
+import Header from './Header';
 import axios from 'axios';
+import { hashHistory } from 'react-router';
 import GoogleMap from "react-google-map";
 import GoogleMapLoader from "react-google-maps-loader";
 import currency from 'currency-formatter';
 import jquery from 'jquery';
 const google = window.google;
 // let apiKey = (process.env.REACT_APP_STATUS == 'development') ? "http://localhost:8080" : "http://vast-shore-14133.herokuapp.com";
+
+// let apiKey = "http://localhost:8080";
 
 let apiKey="http://vast-shore-14133.herokuapp.com";
 
@@ -21,14 +25,32 @@ class Listing extends Component{
       thumb_photos:[],
       big_photos:[],
       showing_index:0,
-      showing_modal:false
+      showing_modal:false,
+      day:'',
+      inapp:false
     }
   }
   componentWillMount(){
     // axios.get(apiKey + '/info/open_houses').then(
     //   (response)=>{
-        console.log('axios: ',this.props.listing);
-        let listing = this.props.listing
+    let mls=(this.props.params) ? this.props.params.mls : '';
+    let inapp=(this.props.params) ? this.props.params.inapp : '';
+    let day=(this.props.params) ? this.props.params.day : '';
+    let neighborhood=(this.props.params) ? this.props.params.neighborhood : '';
+    if(day && neighborhood){
+      this.setState({
+        day,
+        neighborhood
+      });
+    }
+    window.scrollTo(0,0);
+        // console.log('axios: ',this.props.listing);
+        // let listing = this.props.listing
+    if(mls){
+      axios.get(apiKey + '/info/listing/'+mls).then(
+      (listing)=>{
+        console.log('listing axios: ',listing);
+        listing = listing.data.results[0];
         let showing = (listing) ? listing.image_urls.all_big[0] : '';
         let showing_index = 0;
         let style = {
@@ -67,10 +89,9 @@ class Listing extends Component{
           big_photos,
           listing
         });
-      // }).catch((err)=>{
-      //   console.log('error -',err);
-      // });
+      });
     }
+  }
   componentDidMount(){
     let id2='#'+this.state.showing_index;
     jquery(id2).addClass('thumb-viewing');
@@ -164,7 +185,14 @@ class Listing extends Component{
     });
   }
   navigateBack(){
-    this.props.goBack();
+    // this.props.goBack();
+    if(this.state.day !=='none' && this.state.neighborhood !=='none'){
+      hashHistory.push('/search/'+this.state.day+'/'+this.state.neighborhood);
+    }else if(this.state.day !=='none' && this.state.neighborhood=='none'){
+      hashHistory.push('/search/'+this.state.day+'/none');
+    }else{
+      hashHistory.push('/');
+    }
   }
   showing_modal(){
     console.log('showing');
@@ -172,6 +200,9 @@ class Listing extends Component{
   }
   showing_modal_off(){
     this.setState({showing_modal:false})
+  }
+  reload(){
+    hashHistory.push('/');
   }
   render(){
     let showing=this.state.showing;
@@ -222,7 +253,7 @@ class Listing extends Component{
     ) : '';
     // let beds = ();
     // let baths = ();
-    let sq_ft = (listing) ? (<span className="sqFt">{listing.square_feet}&nbsp;sq ft</span>): '';
+    let sq_ft = (listing && listing.square_feet > 0) ? (<span className="sqFt">{listing.square_feet}&nbsp;sq ft</span>): 'Sq ft unknown';
     price = (listing) ? currency.format(listing.list_price,{ code: 'USD', decimalDigits: 0 }): '';
     price = (listing) ? price.slice(0,price.length-3): '';
     price = (listing) ? (<span className="listing-price-emoji">{price}</span>) : '';
@@ -250,6 +281,8 @@ class Listing extends Component{
     ) : '';
     let parking = (listing) ? (<div>Parking spaces-&nbsp;{(listing) ? listing.parking_spaces || listing.garage_spaces : ''}</div>) : '';
     return (
+      <div>
+      <Header reload={this.reload.bind(this)}/>
       <div className="wrapper listing-page">
         {showing_modal}
         <div className="listing-header row">
@@ -353,6 +386,7 @@ class Listing extends Component{
           </div>
         </div>
       </div>
+    </div>
     );
   }
 }

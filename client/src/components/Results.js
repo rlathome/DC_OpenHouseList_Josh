@@ -10,6 +10,8 @@ import ReactMap from './ReactMap';
 
 let apiKey="http://vast-shore-14133.herokuapp.com";
 
+// let apiKey = "http://localhost:8080";
+
 
 class Results extends Component{
   constructor(props){
@@ -24,6 +26,7 @@ class Results extends Component{
       sorting_spec:'time',
       sort_order:'ascending',
       markers: '',
+      neighborhood:'',
       cache:[]
     }
   }
@@ -32,6 +35,7 @@ class Results extends Component{
     let markers=[];
     let params = this.props.params;
     console.log('params: ',params);
+    let neighborhood = (params) ? params.neighborhood : '';
     let stored_results = this.props.stored_results;
     let i = (stored_results) ? true: false;
     console.log('app has stored results: ',i, ', ',stored_results, ', and raw results: ',this.state.results);
@@ -46,8 +50,9 @@ class Results extends Component{
         this.setState({
           results,
           markers,
+          neighborhood,
           cache:markers,
-          display:'map'
+          display:'list'
         });
       }).catch((err)=>{
         console.log('error -',err);
@@ -58,7 +63,7 @@ class Results extends Component{
         results:this.props.raw_stored_results,
         markers:stored_results,
         cache:stored_results,
-        display:'map'
+        display:'list'
       });
       setTimeout(()=>{jquery('.list-view').addClass('list-btn-pressed');},50);
     }
@@ -153,6 +158,15 @@ class Results extends Component{
     }
     this.viewListing(id);
   }
+  // viewListing(listing){
+  //   let view = this.state.markers.filter((val)=>{
+  //     // console.log('marker: ',val.id, 'listing: ',listing);
+  //     let list = parseInt(listing);
+  //     return val.id == list;
+  //   });
+  //   console.log('viewing the listing: ',view);
+  //   this.props.viewListing(view);
+  // }
   viewListing(listing){
     let view = this.state.markers.filter((val)=>{
       // console.log('marker: ',val.id, 'listing: ',listing);
@@ -237,6 +251,22 @@ class Results extends Component{
     }
     ///////////////
   }
+  sortTimeDesc(){
+    this.setState({
+      // sorting_spec:'time',
+      sort_order:'descending'
+    })
+    setTimeout(()=>{this.sortTime();},15);
+    // this.sortDesc();
+  }
+  sortTimeAsc(){
+    this.setState({
+      // sorting_spec:'time',
+      sort_order:'ascending'
+    })
+    setTimeout(()=>{this.sortTime();},15);
+    // this.sortAsc();
+  }
   sortPrice(e){
     e.preventDefault();
     let $item = jquery('.results-option');
@@ -273,6 +303,15 @@ class Results extends Component{
       sorting_spec:'price'
     });
     this.orderByPrice();
+  }
+  sortByPriceDesc(){
+    let $item = jquery('#down');
+    $item.removeClass('down-btn-pressed');
+    this.setState({
+      dropdown: false,
+      sorting_spec:'price'
+    });
+    this.orderByPriceDesc();
   }
   orderByPrice(){
     let listings = this.state.markers;
@@ -348,6 +387,9 @@ class Results extends Component{
     }
 
   }
+  sortNewest(){
+
+  }
 
   // let ascending_arrow = (this.state.sort_order ==='descending') ? ( <i onClick={this.sortAsc.bind(this)} className="glyphicon glyphicon-triangle-top"></i> ) : '';
   // let descending_arrow = (this.state.sort_order ==='ascending') ? ( <i onClick={this.sortDesc.bind(this)} className="glyphicon glyphicon-triangle-bottom"></i> ) : '';
@@ -367,6 +409,7 @@ class Results extends Component{
 //===================LOADING MAIN LISTING INFORMATION, TAKING IN PREVIOUSLY LOADED INFO=============//
     let markers=[];
     let params = this.props.params;
+    let neighborhood = (this.state.neighborhood) ? this.state.neighborhood : '';
     console.log('params: ',params);
     let stored_results = this.props.stored_results;
     let i = (stored_results) ? true: false;
@@ -418,6 +461,9 @@ class Results extends Component{
         backgroundSize:'cover',
         overlap:'hidden'
       };
+
+      let reactMap = (neighborhood !== 'FullDCArea') ? ( <ReactMap display={false} viewListing={this.viewListing.bind(this)} updateResults={this.updateResults.bind(this)} neighborhood={this.props.params.neighborhood} markers={markers}/> ) : '';
+
       return(
         <div id={listing.id} onClick={this.viewTabListing.bind(this)} className="results-item row">
           <div id={listing.id} style={style} className="results-div col-xs-4 results-item-pic">
@@ -436,6 +482,7 @@ class Results extends Component{
               <div id={listing.id}>{ time }</div>
             </div>
           </div>
+          { reactMap }
         </div>
       );
     }) : '';
@@ -449,7 +496,7 @@ class Results extends Component{
       top:this.state.y
     }
     let map = (
-      <ReactMap viewListing={this.viewListing.bind(this)} updateResults={this.updateResults.bind(this)} neighborhood={this.props.params.neighborhood} markers={markers}/>
+      <ReactMap display={true} viewListing={this.viewListing.bind(this)} updateResults={this.updateResults.bind(this)} neighborhood={this.props.params.neighborhood} markers={markers}/>
       // <Map markers={this.state.markers} />
     );
 
@@ -484,17 +531,26 @@ class Results extends Component{
 
     let dropdown = (this.state.dropdown) ? (
       <div>
-        <div className="sort-dropdown-list">
+        <div className="sort-dropdown-list clearfix">
         <div className="sort-dropdown-opacity">
 
         </div>
         </div>
         <div className="sort-text">
-          <div id='time' {...drop} onClick={this.sortTime.bind(this)} className="sort-values subdivision">
-            SORT BY TIME
+          <div id='time_dsc' {...drop} onClick={this.sortTimeDesc.bind(this)} className="sort-values subdivision">
+            SORT BY TIME (low to high)
+          </div>
+          <div id='time_asc' {...drop} onClick={this.sortTimeAsc.bind(this)} className="sort-values subdivision">
+            SORT BY TIME (high to low)
+          </div>
+          <div id='price_ase' {...drop} onClick={this.sortByPrice.bind(this)}  className="sort-values subdivision">
+            SORT BY PRICE (low to high)
+          </div>
+          <div id='price_dsc' {...drop} onClick={this.sortByPriceDesc.bind(this)}  className="sort-values subdivision">
+            SORT BY PRICE (high to low)
           </div>
           <div id='price' {...drop} onClick={this.sortByPrice.bind(this)}  className="sort-values subdivision">
-            SORT BY PRICE
+            NEWEST
           </div>
           {/* PRICE SORTING OPTIONS */}
           {/* <div className="sort-subvalues">

@@ -2,12 +2,15 @@ import React, { Component } from 'react';
 import jquery from 'jquery';
 import axios from 'axios';
 import currency from 'currency-formatter';
+import { hashHistory } from 'react-router';
 import moment from 'moment';
 let app_status = process.env.REACT_APP_STATUS;
 console.log('listingjs env: ',app_status);
 // let apiKey = (process.env.REACT_APP_STATUS === 'development') ? "http://localhost:8080" : "http://vast-shore-14133.herokuapp.com";
 
 let apiKey="http://vast-shore-14133.herokuapp.com";
+
+// let apiKey = "http://localhost:8080";
 
 class Featured extends Component{
   constructor(props){
@@ -42,11 +45,11 @@ class Featured extends Component{
             overlap:'hidden'
           };
           return(
-            <div id={listing.id} onClick={this.viewListing.bind(this)} className="featured-item col-sm-4">
-              <div id={listing.id} className="pic-holder" style={style}>
-                <div id={listing.id} className="listing-info-opacity">
+            <div id={listing.mls_number} onClick={this.viewListing.bind(this)} className="featured-item col-sm-4">
+              <div id={listing.mls_number} className="pic-holder" style={style}>
+                <div id={listing.mls_number} className="listing-info-opacity">
                 </div>
-                <div id={listing.id} className="listing-info">
+                <div id={listing.mls_number} className="listing-info">
                   {listing.street_number} {listing.street_name} {listing.street_post_dir}<br/>
                   {price} - {new_date}
                 </div>
@@ -66,13 +69,16 @@ class Featured extends Component{
   viewListing(e){
     let listing = e.target.id;
     console.log('listingid: ',listing);
-    console.log('viewlisting results: ',this.state.results);
-    let view = this.state.results.filter((val)=>{
-      let list = parseInt(listing);
-      return val.id == list;
-    });
-    console.log('viewing the listing: ',view);
-    this.props.viewListing(view);
+    let day = (this.props.day) ? this.props.day : 'none';
+    let neighborhood = (this.props.neighborhood) ? this.props.neighborhood : 'none';
+    hashHistory.push('/listing/'+listing+'/'+day+'/'+neighborhood);
+    // console.log('viewlisting results: ',this.state.results);
+    // let view = this.state.results.filter((val)=>{
+    //   let list = parseInt(listing);
+    //   return val.id == list;
+    // });
+    // console.log('viewing the listing: ',view);
+    // this.props.viewListing(view);
   }
   featuredReturn(){
     this.props.setLastPlace(this.props.last_place);

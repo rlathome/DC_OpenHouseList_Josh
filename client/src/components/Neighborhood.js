@@ -4,6 +4,8 @@ import axios from 'axios'
 
 let apiKey="http://vast-shore-14133.herokuapp.com";
 
+// let apiKey = "http://localhost:8080";
+
 
 class Neighborhood extends Component{
   constructor(props){
@@ -89,6 +91,9 @@ class Neighborhood extends Component{
         case 'duPont Circle':
         id='dupontcircle';
         break;
+        case 'Eckington':
+        id='eckington';
+        break;
         case 'Friendship Heights':
         id='friendshipheights';
         break;
@@ -129,11 +134,11 @@ class Neighborhood extends Component{
         <div className="options-title" >PICK A NEIGHBORHOOD</div>
         <div className="options-comment">(More custom neighborhoods coming soon!)</div>
         <div className="search-options">
-          <span ref="neighborhood-list" className="btn-3d btn-3d-blue-neighborhood neighborhood-btn">
-            { selected }
+          <span ref="neighborhood-list" className="btn-3d results-option-neigh neigh-button btn-3d-blue-results-neigh">
+            <div className="neigh-selected">{ selected }</div>
             { dropdown }
           </span>
-          <span  onClick={this.arrowToggle.bind(this)} className="btn-3d btn-3d-blue-down down-btn" href="#"><div className="glyphicon glyphicon-triangle-bottom"></div></span>
+          <span  onClick={this.arrowToggle.bind(this)} className="btn-3d btn-3d-blue-results results-option-neigh sort-by-arrow-neigh" href="#"><div className="glyphicon glyphicon-triangle-bottom"></div></span>
         </div>
       </div>
     );

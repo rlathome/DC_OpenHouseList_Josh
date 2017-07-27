@@ -415,6 +415,48 @@ footer .logo-contain {
   padding-left: 10px;
 }
 
+.btn-3d-blue-results-neigh {
+  display: inline-block;
+  background-color: #35CAFC;
+  position: relative;
+  border: 3px solid #000;
+  top: -20px;
+  left: 3px;
+  transition: all 100ms ease-in;
+  color: #000;
+}
+
+.btn-3d-blue-results-neigh:before {
+  content: '';
+  display: inline-block;
+  position: absolute;
+  opacity: 1;
+  transition: opacity 100ms ease-in;
+  background-color: #fff;
+  width: calc(100% + 5px);
+  height: 24px;
+  top: calc(100%);
+  left: 8px;
+  transform: skew(45deg);
+  border: 3px solid #000;
+}
+
+.btn-3d-blue-results-neigh:after {
+  content: '';
+  display: inline-block;
+  position: absolute;
+  opacity: 1;
+  transition: opacity 100ms ease-in;
+  background-color: #fff;
+  height: calc(100% + 4px);
+  right: -24px;
+  width: 21px;
+  top: 8px;
+  border-top: 3px solid #000;
+  border-right: 3px solid #000;
+  transform: skewY(45deg);
+}
+
 .btn-3d-blue, .btn-3d-blue-neighborhood, .btn-3d-blue-down, .btn-3d-blue-results {
   display: inline-block;
   background-color: #35CAFC;
@@ -616,9 +658,14 @@ footer .logo-contain {
   }
 }
 
+.sort-dropdown-list, .sort-text, .sort-dropdown-opacity {
+  min-height: 25vh;
+  font-size: .85em;
+}
+
 @media (max-width: 950px) {
   .sort-dropdown-list, .sort-text, .sort-dropdown-opacity {
-    height: 25vh;
+    height: 15vh;
   }
 }
 
@@ -630,7 +677,7 @@ footer .logo-contain {
 
 @media only screen and (min-device-width: 375px) and (max-device-width: 667px) and (orientation: portrait) {
   .sort-dropdown-list, .sort-text, .sort-dropdown-opacity {
-    height: 20vh;
+    min-height: 20vh;
     /* STYLES GO HERE */
   }
 }
@@ -672,8 +719,8 @@ footer .logo-contain {
 .neighborhood-btn {
   clear: both;
   position: relative;
-  width: 80%;
-  height: 95px;
+  width: 30%;
+  height: 65px;
   margin-right: -20px;
   font-size: 2.5em;
   line-height: 2.5em;
@@ -681,8 +728,33 @@ footer .logo-contain {
 
 @media (max-width: 950px) {
   .neighborhood-btn {
-    font-size: 2em;
-    height: 73px;
+    font-size: 1em !important;
+    height: 43px;
+  }
+}
+
+.neighborhood-down-btn {
+  clear: both;
+  position: relative;
+  width: 5%;
+  height: 65px;
+  font-size: 2.5em;
+  line-height: 2.5em;
+  top: -19px;
+}
+
+@media (max-width: 950px) {
+  .neighborhood-down-btn {
+    font-size: 1em;
+    height: 43px;
+    width: 5% !important;
+    top: -24px;
+  }
+}
+
+@media (max-width: 950px) {
+  .neighborhood-down-btn {
+    width: 10vw;
   }
 }
 
@@ -820,6 +892,7 @@ footer .logo-contain {
   font-size: 1.25em;
   text-align: left;
   position: relative;
+  cursor: pointer;
 }
 
 .listing-popup div {
@@ -887,6 +960,16 @@ footer .logo-contain {
   .results-option {
     font-size: 2em !important;
   }
+}
+
+.neigh-selected {
+  padding: 0px 25px;
+}
+
+.results-option-neigh {
+  height: 75px;
+  font-size: 1.75em;
+  line-height: 2.75em;
 }
 
 .map-view {
@@ -1107,6 +1190,17 @@ footer .logo-contain {
   .sort-by-arrow span {
     line-height: 2em;
   }
+}
+
+.sort-by-arrow-neigh {
+  width: 75px;
+  z-index: 5003 !important;
+  left: auto;
+  right: 0px;
+}
+
+.sort-by-arrow-neigh span {
+  line-height: 2.5em;
 }
 
 .down-btn-pressed {

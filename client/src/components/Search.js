@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { hashHistory } from 'react-router';
 import Days from './Days';
 import Neighborhood from './Neighborhood';
 import Results from './Results';
@@ -8,6 +9,7 @@ import Header from './Header';
 import axios from 'axios';
 import jquery from 'jquery';
 import Map from './ReactMap';
+// import '../../node_modules/bootstrap/dist/css/bootstrap.min.css';
 
 class Search extends Component{
   constructor(props){
@@ -23,6 +25,25 @@ class Search extends Component{
       stored_results:'',
       raw_stored_results:''
     }
+  }
+  componentWillMount(){
+    let day = (this.props.params.day !=='none') ? this.props.params.day : '';
+    console.log('chosen day: ',day);
+    let neighborhood = (this.props.params.neighborhood !=='none') ? this.props.params.neighborhood : '';
+    console.log('chosen neighborhood: ',neighborhood);
+    if(day && neighborhood){
+      this.setState({
+        step:'results',
+        day,
+        neighborhood
+      })
+    }else if(day && !neighborhood){
+      this.setState({
+        step:'neighborhoods',
+        day
+      })
+    }
+
   }
   pressed_toggle(e){
     e.preventDefault();
@@ -67,6 +88,7 @@ class Search extends Component{
     let $item = jquery(e.target).closest('span');
     this.pressed_toggle(e);
     console.log('setting neighborhood: ',subd);
+    hashHistory.push('/search/'+this.state.day+'/'+subd);
     this.setState({
       neighborhood:subd,
       step:'results',
@@ -79,23 +101,33 @@ class Search extends Component{
   }
   reload(){
     this.setState({
-      step:''
+      step:'',
+      day:'',
+      neighborhood:''
     });
+    hashHistory.push('/');
   }
+  // viewListing(listing){
+  //   console.log('listing to view: ',listing);
+  //   let last_place = this.state.last_place;
+  //   this.setState({
+  //     step:'results',
+  //     last_place,
+  //     selected_listing:listing[0]
+  //   });
+  //   setTimeout(()=>{
+  //     this.setState({
+  //       step:'listing'
+  //     });
+  //   },15);
+  //   window.scrollTo(0,0);
+  // }
   viewListing(listing){
     console.log('listing to view: ',listing);
-    let last_place = this.state.last_place;
-    this.setState({
-      step:'results',
-      last_place,
-      selected_listing:listing[0]
-    });
-    setTimeout(()=>{
-      this.setState({
-        step:'listing'
-      });
-    },15);
-    window.scrollTo(0,0);
+    let day = (this.state.day) ? this.state.day : 'none';
+    let neighborhood = (this.state.neighborhood) ? this.state.neighborhood : 'none';
+    listing = listing[0].mls_number;
+    hashHistory.push('/listing/'+listing+'/'+day+'/'+neighborhood);
   }
   goBack(place){
     console.log('going back');
@@ -154,19 +186,7 @@ class Search extends Component{
             {/* <Map /> */}
               { options }
               {/* <Days saturday={this.saturday.bind(this)} sunday={this.sunday.bind(this)} pressed_toggle={this.pressed_toggle.bind(this)} /> */}
-            <Featured last_place={this.props.last_place} setLastPlace={this.setLastPlace.bind(this)} viewListing={this.viewListing.bind(this)}/>
-            <footer>
-              <div className="footer-info">
-                <span className='logo-contain'>
-                  <img className="footer-logo" src={require('../images/rlah_logo-11-01.png')} alt="logo" />
-                </span>
-                <span className="footer-divider"> | </span>
-                <span className='logo-text'>
-                  IS A LOCALLY OWNED AND OPERATED FRANCHISE. REAL LIVING REAL ESTATE IS A NETWORK BRAND OF HSF
-                  AFFILIATES LLC, WHICH IS MAJORITY OWNED BY HOME SERVICES OF AMERICA, INC. A BERKSHIRE HATHAWAY AFFILIATE.
-                </span>
-              </div>
-            </footer>
+            <Featured last_place={this.props.last_place} day={this.state.day} neighborhood={this.state.neighborhood} setLastPlace={this.setLastPlace.bind(this)} viewListing={this.viewListing.bind(this)}/>
           </div>
       </div>
     );

@@ -11,7 +11,8 @@ ReactDOM.render(
   <Router history= { hashHistory }>
     <Route path = "/" component = { App }>
       <IndexRoute component = { Search } />
-      <Route path="listing" component = { Listing } />
+      <Route path="listing/:mls/:day/:neighborhood" component = { Listing } />
+      <Route path="search/:day/:neighborhood" component = { Search } />
     </Route>
   </Router>,
   document.getElementById('root')

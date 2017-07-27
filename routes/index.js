@@ -2,6 +2,8 @@ var express = require('express');
 var router = express.Router();
 var request = require('request');
 var https = require('https');
+var FormData = require('form-data');
+var form = new FormData();
 
 
 
@@ -12,6 +14,8 @@ var https = require('https');
 // let apiKey=process.env.DISPLET_API_KEY;
 let apiKey = '82b44a7662b0abb55eebf365a61c50399b512935';
 let domain = 'http://vast-shore-14133.herokuapp.com';
+
+// let domain = 'http://localhost:3000";
 
 
 
@@ -27,7 +31,7 @@ router.get('/', function(req, res, next) {
 });
 
 router.get('/featured',function(req,res,next){
-  let url = "https://api.displet.com/residentials/search?authentication_token="+apiKey+"&;return_fields="+params+"&min_bedrooms=2&min_bathrooms=1&min_list_price=350&open_house=y&open_house_within=7&limit=10";
+  let url = "https://api.displet.com/residentials/search?authentication_token="+apiKey+"&;return_fields="+params+"&min_bedrooms=2&min_bathrooms=1&min_list_price=350&open_house=y&open_house_within=7&state=DC&limit=10";
 
   let options = {
     url:url,
@@ -59,6 +63,27 @@ router.get('/open_houses',function(req,res,next){
     }
   }
 
+  request(options, function (error, response, body) {
+    console.log('error:', error); // Print the error if one occurred
+    console.log('statusCode:', response && response.statusCode); // Print the response status code if a response was received
+    // console.log('body:', body); // Print the HTML for the Google homepage.
+    body=JSON.parse(body);
+    res.json(body);
+  });
+});
+
+router.get('/listing/:mls',function(req,res,next){
+  let listing = req.params.mls;
+  // listing = "FX9824807";
+  console.log('mls listing: ',listing);
+  let url = "https://api.displet.com/residentials/search?authentication_token="+apiKey+"&;return_fields="+params+"&mls_number="+listing;
+  let options = {
+    url:url,
+    headers:{
+      'Accept':'application/javascript',
+      'Referer':domain
+    }
+  }
   request(options, function (error, response, body) {
     console.log('error:', error); // Print the error if one occurred
     console.log('statusCode:', response && response.statusCode); // Print the response status code if a response was received
@@ -108,6 +133,32 @@ router.get('/neighborhoods',function(req,res,next){
 router.post('/submitform',function(req,res,next){
   let form_data = req.body;
   console.log('submitting: ',form_data);
+  let to= 'josh@allenb.com';
+  let from = 'Josh Foster <josh@allenb.com>';
+  let first = form_data.first;
+  let last = form_data.last;
+  let subject = "A New Prospect Has Contacted You from DC's Open House List!";
+  let text = form_data.textarea;
+  let phone = form_data.phone;
+  let email = form_data.email;
+
+  let formData = {
+    to,
+    from,
+    first,
+    last,
+    text,
+    phone,
+    email
+  }
+  var domain = 'info.dcopenhouselist.com';
+  var apiKey = 'api:key-602b6fef248551d53fee98ac2dbdef70';
+  var mailgun = require('mailgun-js')({apiKey:apiKey, domain:domain});
+
+  mailgun.messages().send(formData, function (error, body) {
+    console.log('reply: ',body);
+    res.json(body);
+  });
 });
 
 router.get('/price/:id',function(req,res,next){
