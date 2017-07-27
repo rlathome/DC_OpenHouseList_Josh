@@ -600,16 +600,16 @@ class Results extends Component{
         </div>
         <div className="sort-text">
           <div id='time_dsc' {...drop} onClick={this.sortTimeDesc.bind(this)} className="sort-values subdivision">
-            Sort By Time (low to high)
+            Earliest to latest
           </div>
           <div id='time_asc' {...drop} onClick={this.sortTimeAsc.bind(this)} className="sort-values subdivision">
-            Sort By Time (high to low)
+            Latest to earliest
           </div>
           <div id='price_ase' {...drop} onClick={this.sortByPrice.bind(this)}  className="sort-values subdivision">
-            Sort By Price (low to high)
+            Price (low to high)
           </div>
           <div id='price_dsc' {...drop} onClick={this.sortByPriceDesc.bind(this)}  className="sort-values subdivision">
-            Sort By Price (high to low)
+            Price (high to low)
           </div>
           <div id='price' {...drop} onClick={this.sortByNewest.bind(this)}  className="sort-values subdivision">
             Newest
