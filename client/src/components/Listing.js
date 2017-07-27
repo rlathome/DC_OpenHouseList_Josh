@@ -27,6 +27,7 @@ class Listing extends Component{
       showing_index:0,
       showing_modal:false,
       day:'',
+      submitted_email:false,
       inapp:false
     }
   }
@@ -180,6 +181,16 @@ class Listing extends Component{
     }
     axios.post(apiKey + '/info/submitform',data).then((response)=>{
       console.log('successfully submitted',response);
+      if(response.data.message === "Queued. Thank you."){
+        this.setState({
+          submitted_email:true
+        });
+        setTimeout(()=>{
+          this.setState({
+            submitted_email:false
+          });
+        },2000);
+      }
     }).catch((err)=>{
       console.log('err - ',err);
     });
@@ -280,11 +291,21 @@ class Listing extends Component{
       <div>MLS #:&nbsp;{(listing) ? listing.mls_number : ''}</div>
     ) : '';
     let parking = (listing) ? (<div>Parking spaces-&nbsp;{(listing) ? listing.parking_spaces || listing.garage_spaces : ''}</div>) : '';
+
+    //EMAIL SUBMIT MODAL
+    let submit_modal = (this.state.submitted_email) ? (
+      <div className="submit_modal">
+        <div className="submit_message">
+          <div>An agent will be in touch with you shortly!</div>
+        </div>
+      </div>
+    ) : '';
     return (
       <div>
       <Header reload={this.reload.bind(this)}/>
       <div className="wrapper listing-page">
         {showing_modal}
+        {submit_modal}
         <div className="listing-header row">
           <div className="listing-address">
             { st_address }
@@ -368,11 +389,9 @@ class Listing extends Component{
                   <div className="listing-agent-photo col-lg-4">
                     <div className="row listing-agent-column">
                       <div className="agent-photo-holder col-lg-12 col-md-6 col-sm-6 pull-right">
-                        <img src={require('../images/Justin_Levitch.jpg')} className="image-responsive" alt="Agent Image" />
+                        <img src={require('../images/rlah_logo-11-01.png')} className="image-responsive" alt="Agent Image" />
                       </div>
                       <div className="col-lg-12 col-md-6 col-sm-6">
-                        <h3>Justin Levitch</h3>
-                        <div>Real Estate Professional</div>
                         <div>4600 North Park Avenue, Suite 100</div>
                         <div>Chevy Chase, MD 20815</div>
                         <div>Phone: 301-652-0643</div>

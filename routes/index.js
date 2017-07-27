@@ -133,8 +133,8 @@ router.get('/neighborhoods',function(req,res,next){
 router.post('/submitform',function(req,res,next){
   let form_data = req.body;
   console.log('submitting: ',form_data);
+  // let to= 'info@rlahre.com';
   let to= 'josh@allenb.com';
-  let from = 'Josh Foster <josh@allenb.com>';
   let first = form_data.first;
   let last = form_data.last;
   let subject = "A New Prospect Has Contacted You from DC's Open House List!";
@@ -142,23 +142,41 @@ router.post('/submitform',function(req,res,next){
   let phone = form_data.phone;
   let email = form_data.email;
 
-  let formData = {
-    to,
-    from,
-    first,
-    last,
-    text,
-    phone,
-    email
-  }
+  var mailcomposer = require('mailcomposer');
+
   var domain = 'info.dcopenhouselist.com';
-  var apiKey = 'api:key-602b6fef248551d53fee98ac2dbdef70';
+  var apiKey = 'key-602b6fef248551d53fee98ac2dbdef70';
   var mailgun = require('mailgun-js')({apiKey:apiKey, domain:domain});
 
-  mailgun.messages().send(formData, function (error, body) {
-    console.log('reply: ',body);
-    res.json(body);
+  var mail = mailcomposer({
+    subject,
+    to,
+    from:first+' '+last+'<'+email+'>',
+    body:text,
+    phone,
+    email,
+    html:'<div>'+text+'</div>'+'<div>'+phone+'</div>'+'<div>'+email+'</div>'
   });
+
+  mail.build(function(mailBuildError, message){
+    var dataToSend = {
+        to: to,
+        message: message.toString('ascii')
+    };
+    mailgun.messages().sendMime(dataToSend, function (sendError, body) {
+        if (sendError) {
+            console.log(sendError);
+            return;
+        }
+        res.json(body);
+    });
+});
+
+
+  // mailgun.messages().send(formData, function (error, body) {
+  //   console.log('reply: ',body);
+  //   res.json(body);
+  // });
 });
 
 router.get('/price/:id',function(req,res,next){

@@ -387,9 +387,20 @@ class Results extends Component{
     }
 
   }
-  sortNewest(){
-
+  sortByNewest(){
+    let $item = jquery('#down');
+    $item.removeClass('down-btn-pressed');
+    let listings = this.state.markers;
+    listings.sort((a,b)=>{
+      return a.cdom - b.cdom
+    })
+    this.setState({
+      markers:listings,
+      dropdown:false,
+      sorting_spec:'newest'
+    });
   }
+
 
   // let ascending_arrow = (this.state.sort_order ==='descending') ? ( <i onClick={this.sortAsc.bind(this)} className="glyphicon glyphicon-triangle-top"></i> ) : '';
   // let descending_arrow = (this.state.sort_order ==='ascending') ? ( <i onClick={this.sortDesc.bind(this)} className="glyphicon glyphicon-triangle-bottom"></i> ) : '';
@@ -526,8 +537,8 @@ class Results extends Component{
       onMouseLeave:this.highlight_off.bind(this)
     }
 
-    let ascending_arrow = (this.state.sort_order ==='descending') ? ( <i onClick={this.sortAsc.bind(this)} className="glyphicon ascending_arrow glyphicon-triangle-bottom"></i> ) : '';
-    let descending_arrow = (this.state.sort_order ==='ascending') ? ( <i onClick={this.sortDesc.bind(this)} className="glyphicon descending_arrow glyphicon-triangle-top"></i> ) : '';
+    // let ascending_arrow = (this.state.sort_order ==='descending') ? ( <i onClick={this.sortAsc.bind(this)} className="glyphicon ascending_arrow glyphicon-triangle-bottom"></i> ) : '';
+    // let descending_arrow = (this.state.sort_order ==='ascending') ? ( <i onClick={this.sortDesc.bind(this)} className="glyphicon descending_arrow glyphicon-triangle-top"></i> ) : '';
 
     let dropdown = (this.state.dropdown) ? (
       <div>
@@ -549,7 +560,7 @@ class Results extends Component{
           <div id='price_dsc' {...drop} onClick={this.sortByPriceDesc.bind(this)}  className="sort-values subdivision">
             SORT BY PRICE (high to low)
           </div>
-          <div id='price' {...drop} onClick={this.sortByPrice.bind(this)}  className="sort-values subdivision">
+          <div id='price' {...drop} onClick={this.sortByNewest.bind(this)}  className="sort-values subdivision">
             NEWEST
           </div>
           {/* PRICE SORTING OPTIONS */}
@@ -565,8 +576,8 @@ class Results extends Component{
     let spec = this.state.sorting_spec.toUpperCase();
     let updownfilter = (this.state.display == 'list') ? (
       <div className="up-down-filter">
-        { ascending_arrow }
-        { descending_arrow }
+        {/* { ascending_arrow }
+        { descending_arrow } */}
       </div>
   ) : ( <div className="up-down-placeholder"></div> );
     return(
