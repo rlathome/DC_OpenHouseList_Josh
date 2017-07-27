@@ -134,7 +134,7 @@ router.post('/submitform',function(req,res,next){
   let form_data = req.body;
   console.log('submitting: ',form_data);
   // let to= 'info@rlahre.com';
-  let to= 'josh@allenb.com';
+  let to= 'info@rlahre.com';
   let first = form_data.first;
   let last = form_data.last;
   let subject = "A New Prospect Has Contacted You from DC's Open House List!";
