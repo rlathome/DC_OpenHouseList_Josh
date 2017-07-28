@@ -61,7 +61,7 @@ footer .footer-info {
   justify-content: space-after;
 }
 
-@media screen and (min-device-width: 375px) and (max-device-width: 667px) and (orientation: portrait) {
+@media all and (min-device-width: 375px) and (max-device-width: 667px) and (orientation: portrait) {
   footer .footer-info {
     padding: 20px 10px;
   }
@@ -82,13 +82,13 @@ footer .logo-contain {
   width: 10%;
 }
 
-@media screen and (min-device-width: 375px) and (max-device-width: 667px) and (orientation: portrait) {
+@media all and (min-device-width: 375px) and (max-device-width: 667px) and (orientation: portrait) {
   footer .logo-contain {
     width: 20%;
   }
 }
 
-@media screen and (min-device-width: 375px) and (max-device-width: 667px) and (orientation: portrait) {
+@media all and (min-device-width: 375px) and (max-device-width: 667px) and (orientation: portrait) {
   footer .logo-text {
     font-size: .65em;
     width: 75%;
@@ -138,7 +138,7 @@ footer .logo-contain {
   margin: 10px 0px;
 }
 
-@media screen and (min-device-width: 375px) and (max-device-width: 667px) and (orientation: portrait) {
+@media all and (min-device-width: 375px) and (max-device-width: 667px) and (orientation: portrait) {
   .header-title-container img {
     width: 75%;
   }
@@ -170,7 +170,7 @@ footer .logo-contain {
   }
 }
 
-@media screen and (min-device-width: 375px) and (max-device-width: 667px) and (orientation: portrait) {
+@media all and (min-device-width: 375px) and (max-device-width: 667px) and (orientation: portrait) {
   .wrapper {
     margin: 8px;
   }
@@ -195,7 +195,7 @@ footer .logo-contain {
   }
 }
 
-@media screen and (min-device-width: 769px) and (max-device-width: 1024px) {
+@media all and (min-device-width: 769px) and (max-device-width: 1024px) {
   #header-nav {
     height: 50px;
     overflow-y: visible;
@@ -230,7 +230,7 @@ footer .logo-contain {
   }
 }
 
-@media screen and (min-device-width: 769px) and (max-device-width: 1024px) {
+@media all and (min-device-width: 769px) and (max-device-width: 1024px) {
   #header-nav ul {
     width: 25vw;
     float: right;
@@ -319,7 +319,7 @@ footer .logo-contain {
   }
 }
 
-@media screen and (min-device-width: 375px) and (max-device-width: 667px) and (orientation: portrait) {
+@media all and (min-device-width: 375px) and (max-device-width: 667px) and (orientation: portrait) {
   .featured {
     margin-top: 5px;
   }
@@ -666,26 +666,26 @@ footer .logo-contain {
   }
 }
 
-@media screen and (min-device-width: 375px) and (max-device-width: 667px) and (orientation: landscape) {
+@media all and (min-device-width: 375px) and (max-device-width: 667px) and (orientation: landscape) {
   .sort-dropdown-list, .sort-text, .sort-dropdown-opacity {
     /* STYLES GO HERE */
   }
 }
 
-@media screen and (min-device-width: 375px) and (max-device-width: 667px) and (orientation: portrait) {
+@media all and (min-device-width: 375px) and (max-device-width: 667px) and (orientation: portrait) {
   .sort-dropdown-list, .sort-text, .sort-dropdown-opacity {
     min-height: 20vh;
     /* STYLES GO HERE */
   }
 }
 
-@media screen and (min-device-width: 768px) and (max-device-width: 1024px) and (orientation: landscape) {
+@media all and (min-device-width: 768px) and (max-device-width: 1024px) and (orientation: landscape) {
   .sort-dropdown-list, .sort-text, .sort-dropdown-opacity {
     /* STYLES GO HERE */
   }
 }
 
-@media screen and (min-device-width: 768px) and (max-device-width: 1024px) and (orientation: portrait) {
+@media all and (min-device-width: 768px) and (max-device-width: 1024px) and (orientation: portrait) {
   .sort-dropdown-list, .sort-text, .sort-dropdown-opacity {
     height: 25vh;
     /* STYLES GO HERE */
@@ -957,7 +957,7 @@ footer .logo-contain {
   }
 }
 
-@media screen and (min-device-width: 700px) and (max-device-width: 1024px) {
+@media all and (min-device-width: 700px) and (max-device-width: 1024px) {
   .results-option {
     font-size: 2em !important;
   }
@@ -1261,7 +1261,7 @@ footer .logo-contain {
   }
 }
 
-@media screen and (min-device-width: 500px) and (max-device-width: 1024px) {
+@media all and (min-device-width: 500px) and (max-device-width: 1024px) {
   .results-item {
     font-size: 1em;
     height: 25vh;
@@ -1384,14 +1384,14 @@ footer .logo-contain {
   }
 }
 
-@media screen and (min-device-width: 375px) and (max-device-width: 667px) and (orientation: landscape) {
+@media all and (min-device-width: 375px) and (max-device-width: 667px) and (orientation: landscape) {
   .listing-header {
     height: 25vh;
     /* STYLES GO HERE */
   }
 }
 
-@media screen and (min-device-width: 768px) and (max-device-width: 1024px) and (orientation: portrait) {
+@media all and (min-device-width: 768px) and (max-device-width: 1024px) and (orientation: portrait) {
   .listing-header {
     height: 0vh;
     /* STYLES GO HERE */
@@ -1417,13 +1417,13 @@ footer .logo-contain {
   }
 }
 
-@media screen and (min-device-width: 0px) and (max-device-width: 1024px) {
+@media all and (min-device-width: 0px) and (max-device-width: 1024px) {
   .listing-address {
     font-size: 1.5em;
   }
 }
 
-@media screen and (min-device-width: 768px) and (max-device-width: 1024px) and (orientation: portrait) {
+@media all and (min-device-width: 768px) and (max-device-width: 1024px) and (orientation: portrait) {
   .listing-address {
     /* STYLES GO HERE */
     font-size: 2.5em;
@@ -1495,7 +1495,7 @@ footer .logo-contain {
   }
 }
 
-@media screen and (min-device-width: 768px) and (max-device-width: 1024px) and (orientation: portrait) {
+@media all and (min-device-width: 768px) and (max-device-width: 1024px) and (orientation: portrait) {
   .listing-header-specs {
     font-size: 1.75em;
     width: 90%;
@@ -1538,13 +1538,13 @@ footer .logo-contain {
   }
 }
 
-@media screen and (min-device-width: 768px) and (max-device-width: 1024px) and (orientation: portrait) {
+@media all and (min-device-width: 768px) and (max-device-width: 1024px) and (orientation: portrait) {
   .back-button {
     height: 7vh;
   }
 }
 
-@media screen and (min-device-width: 375px) and (max-device-width: 667px) and (orientation: landscape) {
+@media all and (min-device-width: 375px) and (max-device-width: 667px) and (orientation: landscape) {
   .back-button {
     height: 10vh;
     line-height: 1.5em;
@@ -1577,7 +1577,7 @@ footer .logo-contain {
   }
 }
 
-@media screen and (min-device-width: 375px) and (max-device-width: 667px) and (orientation: portrait) {
+@media all and (min-device-width: 375px) and (max-device-width: 667px) and (orientation: portrait) {
   .specs-1, .specs-2 {
     margin-bottom: 5px;
   }
@@ -1597,7 +1597,7 @@ footer .logo-contain {
   padding: 0px 10px;
 }
 
-@media screen and (min-device-width: 375px) and (max-device-width: 667px) and (orientation: portrait) {
+@media all and (min-device-width: 375px) and (max-device-width: 667px) and (orientation: portrait) {
   .specs-form-column {
     width: 100%;
   }
@@ -1653,7 +1653,7 @@ footer .logo-contain {
   color: lightgrey;
 }
 
-@media screen and (min-device-width: 768px) and (max-device-width: 1024px) and (orientation: portrait) {
+@media all and (min-device-width: 768px) and (max-device-width: 1024px) and (orientation: portrait) {
   .listing-form form {
     margin: 10px 0px;
   }
@@ -1672,7 +1672,7 @@ footer .logo-contain {
   font-style: italic;
 }
 
-@media screen and (min-device-width: 375px) and (max-device-width: 667px) and (orientation: portrait) {
+@media all and (min-device-width: 375px) and (max-device-width: 667px) and (orientation: portrait) {
   .listing-form-column {
     margin-left: 0px;
     width: 100%;
@@ -1697,25 +1697,25 @@ footer .logo-contain {
   overflow: hidden;
 }
 
-@media screen and (min-device-width: 768px) and (max-device-width: 1024px) {
+@media all and (min-device-width: 768px) and (max-device-width: 1024px) {
   .listing-photos {
     height: 65vh;
   }
 }
 
-@media screen and (min-device-width: 768px) and (max-device-width: 1024px) and (orientation: portrait) {
+@media all and (min-device-width: 768px) and (max-device-width: 1024px) and (orientation: portrait) {
   .listing-photos {
     height: 35vh;
   }
 }
 
-@media screen and (min-device-width: 355px) and (max-device-width: 667px) and (orientation: portrait) {
+@media all and (min-device-width: 355px) and (max-device-width: 667px) and (orientation: portrait) {
   .listing-photos {
     height: 35vh;
   }
 }
 
-@media screen and (min-device-width: 375px) and (max-device-width: 667px) and (orientation: landscape) {
+@media all and (min-device-width: 375px) and (max-device-width: 667px) and (orientation: landscape) {
   .listing-photos {
     height: 95vh;
     /* STYLES GO HERE */
@@ -1853,33 +1853,33 @@ footer .logo-contain {
   }
 }
 
-@media screen and (min-device-width: 768px) and (max-device-width: 1024px) and (orientation: landscape) {
+@media all and (min-device-width: 768px) and (max-device-width: 1024px) and (orientation: landscape) {
   .showing-modal img {
     /* STYLES GO HERE */
     top: 15vh;
   }
 }
 
-@media screen and (min-device-width: 768px) and (max-device-width: 1024px) and (orientation: portrait) {
+@media all and (min-device-width: 768px) and (max-device-width: 1024px) and (orientation: portrait) {
   .showing-modal img {
     /* STYLES GO HERE */
     top: 30%;
   }
 }
 
-.full-screen-icon {
+.full-all-icon {
   position: absolute;
   bottom: 5px;
   right: 5px;
 }
 
-.full-screen-icon i {
+.full-all-icon i {
   color: white;
   font-size: 2em;
   cursor: pointer;
 }
 
-.full-screen-icon i:hover {
+.full-all-icon i:hover {
   color: #e1e4d1;
 }
 
@@ -1934,7 +1934,7 @@ footer .logo-contain {
   margin-bottom: 25px;
 }
 
-@media screen and (min-device-width: 375px) and (max-device-width: 667px) and (orientation: landscape) {
+@media all and (min-device-width: 375px) and (max-device-width: 667px) and (orientation: landscape) {
   .listing-map {
     height: 40vh;
     /* STYLES GO HERE */
@@ -1950,7 +1950,7 @@ footer .logo-contain {
   font-size: .75em;
 }
 
-@media screen and (min-device-width: 768px) and (max-device-width: 1024px) and (orientation: portrait) {
+@media all and (min-device-width: 768px) and (max-device-width: 1024px) and (orientation: portrait) {
   .listing-specs {
     height: auto;
   }
@@ -1982,7 +1982,7 @@ footer .logo-contain {
   }
 }
 
-@media screen and (min-device-width: 375px) and (max-device-width: 667px) and (orientation: portrait) {
+@media all and (min-device-width: 375px) and (max-device-width: 667px) and (orientation: portrait) {
   .listing-agent-photo {
     font-size: .75em;
     /* STYLES GO HERE */
