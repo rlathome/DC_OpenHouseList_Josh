@@ -27,10 +27,12 @@ class Results extends Component{
       sort_order:'ascending',
       markers: '',
       neighborhood:'',
-      cache:[]
+      cache:[],
+      updated:false
     }
   }
   componentWillMount(){
+    console.log('mounting results');
     let results;
     let markers=[];
     let params = this.props.params;
@@ -54,6 +56,11 @@ class Results extends Component{
           cache:markers,
           display:'list'
         });
+        // if(neighborhood !=='FullDCArea'){
+        //   this.setState({
+        //     display:'loading'
+        //   });
+        // }
       }).catch((err)=>{
         console.log('error -',err);
       });
@@ -65,9 +72,15 @@ class Results extends Component{
         cache:stored_results,
         display:'list'
       });
+      // if(neighborhood !=='FullDCArea'){
+      //   this.setState({
+      //     display:'loading'
+      //   });
+      // }
       setTimeout(()=>{jquery('.list-view').addClass('list-btn-pressed');},50);
     }
 }
+
   componentDidUpdate(){
     if(this.state.display === 'map'){
       jquery('.map-view').addClass('map-btn-pressed');
@@ -406,9 +419,14 @@ class Results extends Component{
   // let descending_arrow = (this.state.sort_order ==='ascending') ? ( <i onClick={this.sortDesc.bind(this)} className="glyphicon glyphicon-triangle-bottom"></i> ) : '';
 
   updateResults(results){
-    this.setState({
-      markers:results
-    });
+    let updated = this.state.updated;
+    if(updated==false){
+      this.setState({
+        markers:results,
+        display:'list',
+        updated:true
+      });
+    }
   }
   render(){
     let results = this.state.markers;
@@ -472,8 +490,8 @@ class Results extends Component{
         backgroundSize:'cover',
         overlap:'hidden'
       };
-
-      let reactMap = (neighborhood !== 'FullDCArea') ? ( <ReactMap display={false} viewListing={this.viewListing.bind(this)} updateResults={this.updateResults.bind(this)} neighborhood={this.props.params.neighborhood} markers={markers}/> ) : '';
+      let indx = results.indexOf(listing)
+      let reactMap = (neighborhood !== 'FullDCArea' && indx==0) ? ( <ReactMap display={false} viewListing={this.viewListing.bind(this)} updateResults={this.updateResults.bind(this)} neighborhood={this.props.params.neighborhood} markers={markers}/> ) : '';
 
       return(
         <div id={listing.id} onClick={this.viewTabListing.bind(this)} className="results-item row">
@@ -493,7 +511,7 @@ class Results extends Component{
               <div id={listing.id}>{ time }</div>
             </div>
           </div>
-          { reactMap }
+          {reactMap}
         </div>
       );
     }) : '';
@@ -561,8 +579,19 @@ class Results extends Component{
       default:
       subd=''
     }
+    let today ='';
+    switch(this.props.params.day){
+      case 'saturday':
+      today = 'Saturday';
+      break;
+      case 'sunday':
+      today = 'Sunday';
+      break;
+      default:
+      today = ''
+    }
 
-    let spinner = (<div className="no-results-msg">Searching for {subd} listings on {this.props.params.day}. Thanks for your patience.<br/><img className="spinner" src={require("../images/loadcontent.gif")} alt="please wait"/></div>);
+    let spinner = (<div className="no-results-msg">Searching for {subd} listings on {today}. Thanks for your patience.<br/><img className="spinner" src={require("../images/loadcontent.gif")} alt="please wait"/></div>);
     results = (results) ? results.filter((val)=>{
       if(val){
         return val;
@@ -571,7 +600,7 @@ class Results extends Component{
     console.log('the results in results render: ',results);
     switch(this.state.display){
       case 'list':
-      display=(results.length) ? results : (<div className="no-results-msg">We're sorry - your search for {this.props.params.neighborhood} listings on {this.props.params.day} didn't return any results.</div>);
+      display=(results.length) ? results : (<div className="no-results-msg">We're sorry - your search for {subd} listings on {today} didn't return any results.</div>);
       break;
       case 'map':
       display=map;
@@ -631,6 +660,9 @@ class Results extends Component{
         { descending_arrow } */}
       </div>
   ) : ( <div className="up-down-placeholder"></div> );
+
+  // let reactMap = (neighborhood !== 'FullDCArea') ? ( <ReactMap display={false} viewListing={this.viewListing.bind(this)} updateResults={this.updateResults.bind(this)} neighborhood={this.props.params.neighborhood} markers={markers}/> ) : '';
+
     return(
       <div>
         <div className="results-search-options">
@@ -652,6 +684,8 @@ class Results extends Component{
       { display }
 
     </div>
+
+    {/* { reactMap } */}
       </div>
     );
   }

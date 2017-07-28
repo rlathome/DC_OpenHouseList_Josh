@@ -1621,6 +1621,38 @@ footer .logo-contain {
   height: 25vh;
 }
 
+.listing-form form textarea::-webkit-input-placeholder {
+  color: lightgrey;
+}
+
+.listing-form form textarea:-moz-placeholder {
+  color: lightgrey;
+}
+
+.listing-form form textarea::-moz-placeholder {
+  color: lightgrey;
+}
+
+.listing-form form textarea:-ms-input-placeholder {
+  color: lightgrey;
+}
+
+.listing-form form input::-webkit-input-placeholder {
+  color: lightgrey;
+}
+
+.listing-form form input:-moz-placeholder {
+  color: lightgrey;
+}
+
+.listing-form form input::-moz-placeholder {
+  color: lightgrey;
+}
+
+.listing-form form input:-ms-input-placeholder {
+  color: lightgrey;
+}
+
 @media only screen and (min-device-width: 768px) and (max-device-width: 1024px) and (orientation: portrait) {
   .listing-form form {
     margin: 10px 0px;

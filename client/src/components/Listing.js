@@ -168,8 +168,8 @@ class Listing extends Component{
       console.log('bot');
       return;
     }
-    if(first==='' || last==='' || email==='' || phone===''){
-      alert('All form fields are required.');
+    if(first==='' || last==='' || email===''){
+      alert('Please fill required fields.');
       return;
     }
     let data = {
@@ -247,7 +247,7 @@ class Listing extends Component{
       </div>
     ) : '';
 
-    let comments = (listing) ? listing.open_house_events[0].open_house_comments : '';
+    let comments = (listing) ? listing.internet_remarks : '';
     let listing_bedrooms = (listing) ? listing.num_bedrooms : '';
     //LISTING SPECS:
     let bed_img = (listing) ? (
@@ -273,7 +273,7 @@ class Listing extends Component{
     let subd = ( <div>Subdivision:&nbsp;{ subdivision }</div> );
     let dom = (listing) ? ( <div>{listing.cdom}&nbsp;days on the market</div> ): '';
 
-    let st_address = (listing) ? (<div>{listing.street_number}&nbsp;{listing.street_name}</div>) : '';
+    let st_address = (listing) ? (<div>{listing.street_number}&nbsp;{listing.street_name}&nbsp;{listing.street_post_dir}</div>) : '';
     let st_address_string = (listing) ? listing.street_number+listing.street_name : '';
     let lng = (listing) ? parseFloat(listing.longitude) : '';
     let lat = (listing) ? parseFloat(listing.latitude) : '';
@@ -343,7 +343,7 @@ class Listing extends Component{
                 </div>
                 <div className="listing-description">
                   <div className="listing-comments">{ comments }</div>
-                  <div className="office">Listing courtesy of:&nbsp;{(listing) ? listing.listing_office_name : ''}</div>
+                  <div className="office">Courtesy of:&nbsp;{(listing) ? listing.listing_office_name : ''}</div>
                 </div>
                 <div className="listing-map">{map}</div>
               </div>

@@ -10,9 +10,14 @@ class Header extends Component{
     e.preventDefault();
     this.props.reload();
   }
+  neighborhood(){
+    // this.props.reload();
+    // this.props.toNeigh();
+    // let day = this.props.day.toLowerCase();
+  }
   render(){
-    let day = (this.props.day) ? (<li>{this.props.day}</li>) : '';
-    let neighborhood = (this.props.neighborhood) ? (<li>{this.props.neighborhood}</li>) : '';
+    let day = (this.props.day) ? (<li onClick={()=>this.props.reload()}>{this.props.day}</li>) : '';
+    let neighborhood = (this.props.neighborhood) ? (<li onClick={this.neighborhood.bind(this)}>{this.props.neighborhood}</li>) : '';
     return(
       <header>
         <div className="grey-bar">

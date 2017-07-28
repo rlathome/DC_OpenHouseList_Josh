@@ -1368,6 +1368,32 @@ footer{
     textarea{
       width:100%;
       height:25vh;
+      &::-webkit-input-placeholder{
+        color:lightgrey;
+      }
+      &:-moz-placeholder{
+        color:lightgrey;
+      }
+      &::-moz-placeholder{
+        color:lightgrey;
+      }
+      &:-ms-input-placeholder{
+        color:lightgrey;
+      }
+    }
+    input{
+      &::-webkit-input-placeholder{
+        color:lightgrey;
+      }
+      &:-moz-placeholder{
+        color:lightgrey;
+      }
+      &::-moz-placeholder{
+        color:lightgrey;
+      }
+      &:-ms-input-placeholder{
+        color:lightgrey;
+      }
     }
   }
   // ipad portrait
