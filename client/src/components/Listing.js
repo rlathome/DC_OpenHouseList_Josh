@@ -300,6 +300,7 @@ class Listing extends Component{
         </div>
       </div>
     ) : '';
+    let first_name=(<div>First Name <sup>*</sup></div>);
     return (
       <div>
       <Header reload={this.reload.bind(this)}/>
@@ -374,11 +375,11 @@ class Listing extends Component{
                     </div>
                     <form onSubmit={this.submitForm.bind(this)}>
                       <div className="form-column">
-                        <input ref="first_name" placeholder="First Name"/>
-                        <input ref="last_name" placeholder="Last Name"/>
+                        <input className="required" ref="first_name" placeholder="First Name"/>
+                        <input className="required" ref="last_name" placeholder="Last Name"/>
                       </div>
                       <div className="form-column">
-                        <input ref="email" placeholder="E-mail"/>
+                        <input className="required" ref="email" placeholder="E-mail"/>
                         <input ref="phone" placeholder="Phone"/>
                       </div>
                       <textarea ref="textarea" placeholder = "What can we do for you?"/>
