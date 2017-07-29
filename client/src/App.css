@@ -1867,19 +1867,19 @@ footer .logo-contain {
   }
 }
 
-.full-all-icon {
+.full-screen-icon {
   position: absolute;
   bottom: 5px;
   right: 5px;
 }
 
-.full-all-icon i {
+.full-screen-icon i {
   color: white;
   font-size: 2em;
   cursor: pointer;
 }
 
-.full-all-icon i:hover {
+.full-screen-icon i:hover {
   color: #e1e4d1;
 }
 
