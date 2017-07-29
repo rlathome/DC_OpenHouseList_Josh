@@ -959,7 +959,7 @@ footer .logo-contain {
 
 @media all and (min-width: 700px) and (max-width: 1024px) {
   .results-option {
-    font-size: 2em !important;
+    font-size: 1em !important;
   }
 }
 
