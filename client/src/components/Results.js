@@ -470,6 +470,7 @@ class Results extends Component{
 
       if(params.day){
         console.log('filtering by day');
+        console.log(params.day,' vs ',dow);
         if(dow !==params.day){
           return;
         }
@@ -490,9 +491,10 @@ class Results extends Component{
         backgroundSize:'cover',
         overlap:'hidden'
       };
-      let indx = results.indexOf(listing)
+      let indx = markers.indexOf(listing);
+      console.log('listing index: ',indx);
       let reactMap = (neighborhood !== 'FullDCArea' && indx==0) ? ( <ReactMap display={false} viewListing={this.viewListing.bind(this)} updateResults={this.updateResults.bind(this)} neighborhood={this.props.params.neighborhood} markers={markers}/> ) : '';
-
+      // if(neighborhood !=='FullDCArea'
       return(
         <div id={listing.id} onClick={this.viewTabListing.bind(this)} className="results-item row">
           <div id={listing.id} style={style} className="results-div col-xs-4 results-item-pic">
