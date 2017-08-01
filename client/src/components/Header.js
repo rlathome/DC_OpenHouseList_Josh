@@ -16,7 +16,7 @@ class Header extends Component{
     // let day = this.props.day.toLowerCase();
   }
   render(){
-    let day = (this.props.day) ? (<li onClick={()=>this.props.reload()}>{this.props.day}</li>) : '';
+    let day = (this.props.day && this.props.day !=='NONE') ? (<li onClick={()=>this.props.reload()}>{this.props.day}</li>) : '';
     let neighborhood = (this.props.neighborhood) ? (<li onClick={this.neighborhood.bind(this)}>{this.props.neighborhood}</li>) : '';
     return(
       <header>

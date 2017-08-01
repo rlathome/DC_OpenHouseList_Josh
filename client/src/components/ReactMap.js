@@ -34,7 +34,7 @@ class FullMap extends Component{
     console.log('r_map markers: ',this.props.markers);
     let neighborhood_polygon = (Neighborhoods[neighb] && neighb !== 'FullDCArea') ? Neighborhoods[neighb] : 'none';
     let map_center = (Neighborhoods[neighb] && neighb !=='FullDCAarea') ? Neighborhoods[neighb][0] : Neighborhoods['dupontcircle'][0];
-    console.log('map center: ',Neighborhoods[neighb]);
+    // console.log('map center: ',Neighborhoods[neighb]);
     console.log('neighborhood params: ',this.props.neighborhood);
     let showing = (this.props.display) ? '' : 'hidden';
     return(
@@ -60,7 +60,7 @@ class FullMap extends Component{
             });
             let viewListing = this.props.viewListing;
 
-            console.log('map markers: ',this.props.markers);
+            // console.log('map markers: ',this.props.markers);
             //FILTER BY NEIGHBORHOOD:
             if(neighb !=='FullDCArea'){
               var neighborhoodPolygon = new google.maps.Polygon({
@@ -99,7 +99,7 @@ class FullMap extends Component{
             let filtered_results = [];
             // if(this.props.markers) return;
             this.props.markers.forEach((val)=>{
-              console.log('this marker is: ',val);
+              // console.log('this marker is: ',val);
               let price = currency.format(val.list_price,{ code: 'USD', decimalDigits: 0 });
               price = price.slice(0,price.length-3);
               //get day of the week:
@@ -127,7 +127,7 @@ class FullMap extends Component{
               let position = new google.maps.LatLng(lat,lng);
               // console.log('gmap position: ',position);
               if(neighb == 'FullDCArea'){
-                console.log('plotting marker!');
+                console.log('plotting DC AREA marker!');
                 marker.setMap(map);
                 let boundary = new google.maps.LatLng(marker.position.lat(), marker.position.lng());
                 bounds.extend(boundary);
@@ -136,7 +136,7 @@ class FullMap extends Component{
                 map_markers.push(marker);
               }else if(google.maps.geometry.poly.containsLocation(position, neighborhoodPolygon)){
                 //place marker
-                console.log('plotting marker!');
+                // console.log('plotting marker!');
                 marker.setMap(map);
                 let boundary = new google.maps.LatLng(marker.position.lat(), marker.position.lng());
                 bounds.extend(boundary);
@@ -145,7 +145,7 @@ class FullMap extends Component{
                 map_markers.push(marker);
               }else{
                 //ignore marker
-                console.log('not plotting marker');
+                // console.log('not plotting marker');
                 //setting grey colored marker:
                 let greymarker = require('../images/map-marker-hi.png');
                 var image = {
@@ -160,7 +160,7 @@ class FullMap extends Component{
               }
               var markerCluster = new MarkerClusterer(map, map_markers,
               {imagePath: '../utils/m'});
-              console.log('clusterer: ',markerCluster);
+              // console.log('clusterer: ',markerCluster);
             //CREATE PROPERTY INFOWINDOW
             // let mls = val.mls_number.toString();
             // console.log('listing id: ',val.id);

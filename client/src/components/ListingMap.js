@@ -30,7 +30,7 @@ class Map extends Component{
   }
   render(){
     let pt_center = (this.props.center.lat >0 ) ? this.props.center : {lat:0,lng:0};
-    console.log('the markerz: ',pt_center,pt_center.lat>0,pt_center.lat==0);
+    // console.log('the markerz: ',pt_center,pt_center.lat>0,pt_center.lat==0);
     let listing_marker = (this.props.listing_marker.position.lat>0) ? this.props.listing_marker : {title:"Toulouse",position:{lat:43.604363,lng: 1.443363}};
     if(pt_center.lat!==0 && listing_marker.position.lat>0){
       return(

@@ -967,6 +967,14 @@ footer .logo-contain {
   padding: 0px 25px;
 }
 
+.rounded {
+  border-radius: 4px;
+}
+
+.listing-form input, .listing-form textarea {
+  border-radius: 4px;
+}
+
 .results-option-neigh {
   height: 75px;
   font-size: 1.75em;

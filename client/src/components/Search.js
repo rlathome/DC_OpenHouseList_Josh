@@ -124,7 +124,7 @@ class Search extends Component{
   // }
   viewListing(listing){
     console.log('listing to view: ',listing);
-    let day = (this.state.day) ? this.state.day : 'none';
+    let day = (this.state.day !=='') ? this.state.day : 'none';
     let neighborhood = (this.state.neighborhood) ? this.state.neighborhood : 'none';
     listing = listing[0].mls_number;
     hashHistory.push('/listing/'+listing+'/'+day+'/'+neighborhood);
@@ -149,7 +149,8 @@ class Search extends Component{
   }
   skipAhead(){
     this.setState({
-      step:'neighborhoods'
+      step:'neighborhoods',
+      day:'none'
     });
   }
   render(){

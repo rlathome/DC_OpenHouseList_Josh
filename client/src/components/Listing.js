@@ -28,7 +28,9 @@ class Listing extends Component{
       showing_modal:false,
       day:'',
       submitted_email:false,
-      inapp:false
+      inapp:false,
+      autoscroll:true,
+      showingpic:false
     }
   }
   componentWillMount(){
@@ -75,8 +77,10 @@ class Listing extends Component{
             borderRight:'4px solid #000'
           }
           index++;
+          let showing = (index==0) ? 'thumb-viewing' : '';
+          let thumb_class = 'thumb-photo-container '+showing;
           return(
-            <div onClick={this.showPic.bind(this)} id={index} style={style} className="thumb-photo-container">
+            <div onClick={this.showPic.bind(this)} id={index} style={style} className={thumb_class}>
 
             </div>
           );
@@ -90,8 +94,76 @@ class Listing extends Component{
           big_photos,
           listing
         });
+        let i=0;
+
+        this.scrollPhotos();
+
       });
     }
+  }
+  // componentDidUpdate(){
+  //   if(this.state.autoscroll==true){
+  //     this.scrollPhotos();
+  //   }
+  // }
+  scrollPhotos(index){
+      let photo=index || this.state.showing_index;
+      let photos = this.state.big_photos;
+      console.log('photo index: ',photo);
+      photo=parseInt(photo);
+      photo++;
+      if(photo==photos.length){
+        photo=0;
+      }
+      setTimeout(()=>{
+        if(this.state.autoscroll==true && this.state.showingpic==false){
+        console.log('incrementing: ',photo);
+          this.setState({
+            showing_index:photo
+          });
+          let newIndex = photo;
+          let id='#'+newIndex;
+          let id2='#'+(this.state.showing_index-1);
+          jquery(id).addClass('thumb-viewing');
+          jquery(id2).removeClass('thumb-viewing');
+          this.scrollPhotos();
+        }else{
+          setTimeout(()=>{
+              this.scrollPhotos();
+          },10000);
+        }
+      },10000);
+  }
+  scrollChecker(){
+    this.setState({
+      autoscroll:false,
+      showingpic:true
+    });
+    setTimeout(()=>{
+      this.setState({
+        showingpic:false
+      });
+      if(this.state.autoscroll==false){
+        this.setState({
+          autoscroll:true
+        });
+      }
+    },10000);
+  }
+  showPic(e){
+    this.scrollChecker();
+    // e.preventDefault();
+    // console.log("showing: ",e.target.id);
+    let newIndex = e.target.id;
+    let id='#'+newIndex;
+    let id2='#'+this.state.showing_index;
+    jquery(id).addClass('thumb-viewing');
+    jquery(id2).removeClass('thumb-viewing');
+
+    this.setState({
+      showing_index:parseInt(e.target.id)
+    });
+
   }
   componentDidMount(){
     let id2='#'+this.state.showing_index;
@@ -99,6 +171,7 @@ class Listing extends Component{
   }
   goRight(e){
     e.preventDefault();
+    this.scrollChecker();
     let index = this.state.showing_index;
     let newIndex=index;
     console.log('now on: ',newIndex);
@@ -126,6 +199,7 @@ class Listing extends Component{
   }
   goLeft(e){
     e.preventDefault();
+    this.scrollChecker();
     let index = this.state.showing_index;
     let newIndex=index;
     console.log('now on: ',newIndex);
@@ -139,19 +213,6 @@ class Listing extends Component{
     }
     this.setState({
       showing_index:newIndex
-    });
-  }
-  showPic(e){
-    e.preventDefault();
-    console.log("showing: ",e.target.id);
-    let newIndex = e.target.id
-    let id='#'+newIndex;
-    let id2='#'+this.state.showing_index;
-    jquery(id).addClass('thumb-viewing');
-    jquery(id2).removeClass('thumb-viewing');
-
-    this.setState({
-      showing_index:parseInt(e.target.id)
     });
   }
   submitForm(e){
@@ -307,7 +368,7 @@ class Listing extends Component{
       <div className="wrapper listing-page">
         {showing_modal}
         {submit_modal}
-        <div className="listing-header row">
+        <div className="listing-header row rounded">
           <div className="listing-address">
             { st_address }
             <div>{(listing) ? listing.city : ''},&nbsp;{(listing) ? listing.state : ''}&nbsp;{(listing) ? listing.zip : ''}</div>
@@ -315,7 +376,7 @@ class Listing extends Component{
           <div className="listing-header-specs">
             { price }  { bed_img }  { bath_img }  {sq_ft}
           </div>
-          <div onClick={this.navigateBack.bind(this)} className="back-button">
+          <div onClick={this.navigateBack.bind(this)} className="back-button rounded">
             Back
           </div>
         </div>
@@ -323,7 +384,7 @@ class Listing extends Component{
           <div className="row">
             <div className="listing-column col-md-8 col-lg-6">
               <div className="photos-map-column">
-                <div className="listing-photos">
+                <div className="listing-photos rounded">
                   <div className="photo-viewer">
                     <div className="full-screen-icon hidden-xs">
                       <i onClick={this.showing_modal.bind(this)} className="glyphicon glyphicon-fullscreen"></i>
@@ -351,7 +412,7 @@ class Listing extends Component{
             </div>
             <div className="listing-column2 col-md-4 col-lg-6">
               <div className="specs-form-column">
-                <div className="listing-specs clearfix">
+                <div className="listing-specs rounded clearfix">
 
 
                   <div className="specs-2">

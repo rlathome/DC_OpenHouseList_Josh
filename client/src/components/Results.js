@@ -95,11 +95,9 @@ class Results extends Component{
       this.props.goHome();
     },500);
   }
-  removeClass(){
-    // jquery('.btn-3d').removeClass('btn-pressed');
+  removePressedClass(){
     jquery('.btn-3d').removeClass('list-btn-pressed');
     jquery('.btn-3d').removeClass('map-btn-pressed');
-    // jquery('.btn-3d').removeClass('down-btn-pressed');
   }
   pressed_toggle(e){
     e.preventDefault();
@@ -117,7 +115,7 @@ class Results extends Component{
     if($item.hasClass('list-btn-pressed')){
       $item.removeClass('list-btn-pressed');
     }else{
-      this.removeClass();
+      this.removePressedClass();
       $item.addClass('list-btn-pressed');
     }
     this.setState({
@@ -128,11 +126,15 @@ class Results extends Component{
     e.preventDefault();
     let $item = jquery(e.target).closest('a');
     if($item.hasClass('map-btn-pressed')){
+      console.log('item has the class');
+      this.removePressedClass();
       $item.removeClass('map-btn-pressed');
     }else{
-      this.removeClass();
+      console.log('item doesnt have class');
+      this.removePressedClass();
       $item.addClass('map-btn-pressed');
     }
+    this.removePressedClass();
     this.setState({
       display:'map'
     });
@@ -420,10 +422,16 @@ class Results extends Component{
 
   updateResults(results){
     let updated = this.state.updated;
-    if(updated==false){
+    if(updated==false && this.state.neighborhood !=='FullDCArea'){
       this.setState({
         markers:results,
         display:'list',
+        updated:true
+      });
+    }else{
+      this.setState({
+        markers:results,
+        display:'map',
         updated:true
       });
     }
@@ -468,7 +476,7 @@ class Results extends Component{
 
       //FILTER DAY:
 
-      if(params.day){
+      if(params.day !=='none'){
         console.log('filtering by day');
         console.log(params.day,' vs ',dow);
         if(dow !==params.day){
@@ -584,16 +592,16 @@ class Results extends Component{
     let today ='';
     switch(this.props.params.day){
       case 'saturday':
-      today = 'Saturday';
+      today = ' on Saturday.';
       break;
       case 'sunday':
-      today = 'Sunday';
+      today = ' on Sunday.';
       break;
       default:
-      today = ''
+      today = '.'
     }
 
-    let spinner = (<div className="no-results-msg">Searching for {subd} listings on {today}. Thanks for your patience.<br/><img className="spinner" src={require("../images/loadcontent.gif")} alt="please wait"/></div>);
+    let spinner = (<div className="no-results-msg">Searching for {subd} open houses{today} Thanks for your patience.<br/><img className="spinner" src={require("../images/loadcontent.gif")} alt="please wait"/></div>);
     results = (results) ? results.filter((val)=>{
       if(val){
         return val;

@@ -815,6 +815,14 @@ footer{
 .neigh-selected{
   padding:0px 25px;
 }
+.rounded{
+  border-radius: 4px;
+}
+.listing-form{
+  input,textarea{
+    border-radius: 4px;
+  }
+}
 .results-option-neigh{
   height:75px;
   font-size: 1.75em;
@@ -1678,7 +1686,7 @@ footer{
 
 }
 .listing-map-object{
-  height:inherit
+  height:inherit;
 }
 .listing-specs,.listing-form,.listing-agent-photo{
   // border: 1px solid #000;
