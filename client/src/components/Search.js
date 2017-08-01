@@ -59,6 +59,7 @@ class Search extends Component{
     this.setState({
       step:''
     });
+    hashHistory.push('/');
   }
   saturday(e){
     e.preventDefault();
