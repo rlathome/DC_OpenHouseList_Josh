@@ -108,12 +108,31 @@ class Listing extends Component{
     axios.get(url).then((response)=>{
       console.log('axios agents: ',response);
       let agents = response.data;
+
+      let agentinfo = agents.map((agent)=>{
+        return {
+          email:agent.email,
+          name:agent.name,
+          headshot_url:agent.headshot_url,
+          id:agent.id,
+          phone:agent.phone
+        }
+      });
+      let agentindex = Math.random();
+      agentindex = agentindex*agentinfo.length;
+      agentindex = Math.floor(agentindex);
+      let agent = agentinfo[agentindex];
+      console.log('agent: ',agent);
+
+
       this.setState({
-        agents
+        agent
       });
     }).catch((err)=>{
       console.log('err - ',err);
     });
+
+
   }
   // componentDidUpdate(){
   //   if(this.state.autoscroll==true){
@@ -379,22 +398,23 @@ class Listing extends Component{
     //
 
     //AGENT INFORMATION:
-    let agentinfo = (this.state.agents) ? this.state.agents.map((agent)=>{
-      return {
-        email:agent.email,
-        name:agent.name,
-        headshot_url:agent.headshot_url,
-        id:agent.id,
-        phone:agent.phone
-      }
-    }) : '';
-    let agentindex = Math.random();
-    agentindex = agentindex*agentinfo.length;
-    agentindex = Math.floor(agentindex);
-    let agent = agentinfo[agentindex];
-    console.log('agent: ',agent);
+    // let agentinfo = (this.state.agents) ? this.state.agents.map((agent)=>{
+    //   return {
+    //     email:agent.email,
+    //     name:agent.name,
+    //     headshot_url:agent.headshot_url,
+    //     id:agent.id,
+    //     phone:agent.phone
+    //   }
+    // }) : '';
+    // let agentindex = Math.random();
+    // agentindex = agentindex*agentinfo.length;
+    // agentindex = Math.floor(agentindex);
+    // let agent = agentinfo[agentindex];
+    // console.log('agent: ',agent);
+    let agent = (this.state.agent) ? this.state.agent : '';
 
-    let listing_agent_column = (agentinfo) ? (
+    let listing_agent_column = (agent) ? (
       <div className="row listing-agent-column">
         <div className="agent-photo-holder col-lg-12 col-md-6 col-sm-6 pull-right">
           <img src={agent.headshot_url} className="image-responsive" alt="Agent Image" />
