@@ -1964,6 +1964,10 @@ footer .logo-contain {
   }
 }
 
+.agent-photo-holder {
+  margin-bottom: 10px;
+}
+
 @media (max-width: 995px) {
   .agent-photo-holder {
     width: 20vw;

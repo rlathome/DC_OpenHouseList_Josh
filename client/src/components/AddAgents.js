@@ -59,7 +59,8 @@ class AddAgents extends Component{
     e.preventDefault();
     let target = e.target;
     let id = target.id;
-    let password = this.refs.del_password.value;
+    let agentid = id;
+    let password = this.refs.agentid.value;
     console.log('password: ',password);
     let data = {
       agentID:id,
@@ -94,7 +95,7 @@ class AddAgents extends Component{
             <div>{agent.name}</div>
             <div>{agent.email}</div>
             <div>{agent.phone}</div>
-            <input ref="del_password" placeholder="Password" />
+            <input ref={agent.id} placeholder="Password" />
             <div id={agent.id} onClick={this.deleteAgent.bind(this)} className='btn btn-default btn-danger'>Delete</div>
           </div>
           <img className='agent-thumb-img pull-right' src={agent.headshot_url} alt="agent photo" />
