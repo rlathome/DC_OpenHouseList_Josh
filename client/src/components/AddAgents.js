@@ -60,7 +60,7 @@ class AddAgents extends Component{
     let target = e.target;
     let id = target.id;
     let agentid = id;
-    let password = this.refs.agentid.value;
+    let password = this.refs[agentid].value;
     console.log('password: ',password);
     let data = {
       agentID:id,
