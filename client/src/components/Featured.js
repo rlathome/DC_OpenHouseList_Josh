@@ -30,10 +30,11 @@ class Featured extends Component{
           let price = currency.format(listing.list_price,{ code: 'USD', decimalDigits: 0 });
           price = price.slice(0,price.length-3);
           //get day of the week:
-          let event_start = listing.open_house_events[0].event_start;
+          let event_start = (listing.open_house_events[0]) ? listing.open_house_events[0].event_start : '';
           let days = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
           let date = moment(event_start);
           let new_date = moment(event_start).calendar();
+          new_date = (new_date !== "Invalid date") ? ' - '+new_date : '';
           console.log('moment: ', date);
           let dow = date.day();
           dow = days[dow];
@@ -51,7 +52,7 @@ class Featured extends Component{
                 </div>
                 <div id={listing.mls_number} className="listing-info">
                   {listing.street_number} {listing.street_name} {listing.street_post_dir}<br/>
-                  {price} - {new_date}
+                  {price} {new_date}
                 </div>
               </div>
             </div>
@@ -93,16 +94,6 @@ class Featured extends Component{
     let params = '';
     let apiKey2=process.env.REACT_APP_DISPLET_API_KEY;
     // let apiKey="82b44a7662b0abb55eebf365a61c50399b512935";
-    jquery.ajax({
-      // url:"https://api.displet.com/agents/?authentication_token=82b44a7662b0abb55eebf365a61c50399b512935",
-      url:apiKey2 + "/info/open_houses",
-      method:'GET',
-      success:(val)=>{
-        console.log('success');
-      }
-    }).done((val)=>{
-      console.log('results: ',val.results);
-    });
     return(
       <div className="featured">
         <div className="featured-title row">FEATURED</div>

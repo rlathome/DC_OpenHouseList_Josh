@@ -179,6 +179,86 @@ router.post('/submitform',function(req,res,next){
   // });
 });
 
+router.post('/createagent',function(req,res,next){
+  let body = req.body;
+  console.log('body: ',body);
+  let firstname = body.firstname;
+  let lastname = body.lastname;
+  let headshot_url = body.headshot_url;
+  let email = body.email;
+  let address = body.address;
+  let phone = body.phone;
+  let facebook_url = body.facebook_url;
+  let instagram_url = body.instagram_url;
+  let linkedin_url = body.linkedin_url;
+  let password = body.password;
+
+  let name=firstname+'%20'+lastname;
+
+  if(password !=="!E28_Ey9scbCgC_)"){
+    console.log('incorrect');
+    res.send('incorrect password');
+  }
+  let url = "https://api.displet.com/agents?name="+name+"&headshot_url="+headshot_url+"&email="+email+"&address="+address+"&phone="+phone+"&facebook_url="+facebook_url+"&instagram_url="+instagram_url+"&linkedin_url="+linkedin_url+"&authentication_token="+apiKey;
+
+  let options = {
+    url:url,
+    headers:{
+      'Accept':'application/javascript',
+      'Referer':domain
+    }
+  }
+
+  request(options, function (error, response, body) {
+    console.log('error:', error); // Print the error if one occurred
+    console.log('statusCode:', response && response.statusCode); // Print the response status code if a response was received
+    body=JSON.parse(body);
+    // console.log('body: ',body);
+    res.json(body);
+  });
+
+});
+
+router.get('/getagent',function(req,res,next){
+  let body=req.body;
+  let agentID = body.agentID;
+  let url="https://api.displet.com/agents/"+agentID+"?authentication_token="+apiKey;
+  let options = {
+    url:url,
+    headers:{
+      'Accept':'application/javascript',
+      'Referer':domain
+    }
+  }
+  request(options, function (error, response, body) {
+    console.log('error:', error); // Print the error if one occurred
+    console.log('statusCode:', response && response.statusCode); // Print the response status code if a response was received
+    body=JSON.parse(body);
+    // console.log('body: ',body);
+    res.json(body);
+  });
+});
+
+router.get('/deleteagent',function(req,res,next){
+  let body=req.body;
+  let agentID = body.agentID;
+  let url="https://api.displet.com/agents/"+agentID+"?authentication_token="+apiKey;
+  let options = {
+    url:url,
+    headers:{
+      'Accept':'application/javascript',
+      'Referer':domain
+    }
+  }
+  request.delete(options, function (error, response, body) {
+    console.log('error:', error); // Print the error if one occurred
+    console.log('statusCode:', response && response.statusCode); // Print the response status code if a response was received
+    body=JSON.parse(body);
+    // console.log('body: ',body);
+    res.json(body);
+  });
+});
+
 router.get('/price/:id',function(req,res,next){
   let price_index = req.params.id;
   console.log('price index: ',price_index);

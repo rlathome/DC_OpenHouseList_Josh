@@ -1732,6 +1732,16 @@ footer{
     /* STYLES GO HERE */ }
 
 }
+.agent-form-container{
+  text-align: center;
+}
+.new-agent-form{
+  width:50vw;
+  display: inline-block;
+  input{
+    margin-bottom:10px;
+  }
+}
 
 .required::-webkit-input-placeholder:after {
     content: " *";

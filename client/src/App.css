@@ -1997,6 +1997,19 @@ footer .logo-contain {
   }
 }
 
+.agent-form-container {
+  text-align: center;
+}
+
+.new-agent-form {
+  width: 50vw;
+  display: inline-block;
+}
+
+.new-agent-form input {
+  margin-bottom: 10px;
+}
+
 .required::-webkit-input-placeholder:after {
   content: " *";
   color: red;
