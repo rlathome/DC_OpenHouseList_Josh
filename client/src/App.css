@@ -2008,6 +2008,10 @@ footer .logo-contain {
   min-height: 10vh;
 }
 
+.agent-thumbnail input {
+  margin-right: 10px;
+}
+
 .agent-thumbnail .agent-thumb-info {
   width: 50%;
   display: inline-block;

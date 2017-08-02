@@ -255,6 +255,7 @@ class Listing extends Component{
     let email = this.refs.email.value;
     let phone = this.refs.phone.value;
     let textarea = this.refs.textarea.value;
+    let agent_email = this.refs.agent_email.value;
     console.log('submitting: ',first,last,email,textarea);
     //FILTER FOR SCRIPTING ATTACKS:
     //CODE HERE
@@ -270,6 +271,7 @@ class Listing extends Component{
       first,
       last,
       email,
+      agent_email,
       phone,
       textarea
     }
@@ -424,7 +426,7 @@ class Listing extends Component{
           <div>4600 North Park Avenue, Suite 100</div>
           <div>Chevy Chase, MD 20815</div>
           <div>Phone: {agent.phone}</div>
-          <div>Email: <a href="info@rlahre.com" alt='email'>{agent.email}</a></div>
+          <div>Email: <a ref="agent_email" href="info@rlahre.com" alt='email'>{agent.email}</a></div>
         </div>
       </div>
     ) : '';

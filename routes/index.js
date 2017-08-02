@@ -141,12 +141,13 @@ router.post('/submitform',function(req,res,next){
   let text = form_data.textarea;
   let phone = form_data.phone;
   let email = form_data.email;
+  let agent_email = form_data.agent_email;
 
   var mailcomposer = require('mailcomposer');
 
   var domain = 'info.dcopenhouselist.com';
   var apiKey = 'key-602b6fef248551d53fee98ac2dbdef70';
-  var mailgun = require('mailgun-js')({apiKey:apiKey, domain:domain});
+  var mailgun = require('mailgun-js')({apiKey:apiKey, domain:agent_email});
 
   var mail = mailcomposer({
     subject,
@@ -193,10 +194,11 @@ router.post('/createagent',function(req,res,next){
   let password =  (body.password) ? body.password : 'na';
 
   let name=firstname+' '+lastname;
-  // if(password !=="!E28_Ey9scbCgC_)"){
-  //   console.log('incorrect');
-  //   res.send('incorrect password');
-  // }
+  if(password !=="!E28_Ey9scbCgC_)"){
+    console.log('incorrect');
+    res.send('incorrect password');
+    return;
+  }
   let data = "name="+name+"&headshot_url="+headshot_url+"&email="+email+"&phone="+phone+"&facebook_url="+facebook_url+"&instagram_url="+instagram_url+"&linkedin_url="+linkedin_url+"&authentication_token="+apiKey;
 
   let url = "https://api.displet.com/agents";
@@ -225,6 +227,12 @@ router.post('/createagent',function(req,res,next){
 router.post('/deleteagent',function(req,res,next){
   let body=req.body;
   let agentID = body.agentID;
+  let password = body.password;
+  if(password !=="!E28_Ey9scbCgC_)"){
+    console.log('incorrect');
+    res.send('incorrect password');
+    return;
+  }
   console.log('agentID: ',agentID);
   let url="https://api.displet.com/agents/"+agentID+"?authentication_token="+apiKey;
   let options = {

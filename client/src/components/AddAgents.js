@@ -59,8 +59,11 @@ class AddAgents extends Component{
     e.preventDefault();
     let target = e.target;
     let id = target.id;
+    let password = this.refs.del_password.value;
+    console.log('password: ',password);
     let data = {
-      agentID:id
+      agentID:id,
+      password
     }
     let url=apiKey+"info/deleteagent";
     console.log('clicked: ',id);
@@ -91,6 +94,7 @@ class AddAgents extends Component{
             <div>{agent.name}</div>
             <div>{agent.email}</div>
             <div>{agent.phone}</div>
+            <input ref="del_password" placeholder="Password" />
             <div id={agent.id} onClick={this.deleteAgent.bind(this)} className='btn btn-default btn-danger'>Delete</div>
           </div>
           <img className='agent-thumb-img pull-right' src={agent.headshot_url} alt="agent photo" />
@@ -106,7 +110,7 @@ class AddAgents extends Component{
           <input className="form-control" ref="lastname" placeholder="Last Name"/>
           <input className="form-control" ref="headshot_url" placeholder="Headshot URL (use MLS photo)"/>
           <input className="form-control" ref="email" placeholder="email"/>
-          <input className="form-control" ref="phone" placeholder="Phone"/>
+          <input className="form-control" ref="phone" placeholder="Phone (xxx) xxx-xxxx"/>
           <input className="form-control" ref="instagram_url" placeholder="Instagram"/>
           <input className="form-control" ref="linkedin_url" placeholder="LinkedIn"/>
           <input className="form-control" ref="facebook_url" placeholder="Facebook"/>
