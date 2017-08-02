@@ -30,12 +30,14 @@ class Listing extends Component{
       submitted_email:false,
       inapp:false,
       autoscroll:true,
-      showingpic:false
+      showingpic:false,
+      agents:''
     }
   }
   componentWillMount(){
     // axios.get(apiKey + '/info/open_houses').then(
     //   (response)=>{
+    this.getAllAgents();
     let mls=(this.props.params) ? this.props.params.mls : '';
     let inapp=(this.props.params) ? this.props.params.inapp : '';
     let day=(this.props.params) ? this.props.params.day : '';
@@ -100,6 +102,18 @@ class Listing extends Component{
 
       });
     }
+  }
+  getAllAgents(){
+    let url=apiKey+"/info/getallagents";
+    axios.get(url).then((response)=>{
+      console.log('axios agents: ',response);
+      let agents = response.data;
+      this.setState({
+        agents
+      });
+    }).catch((err)=>{
+      console.log('err - ',err);
+    });
   }
   // componentDidUpdate(){
   //   if(this.state.autoscroll==true){
@@ -362,6 +376,39 @@ class Listing extends Component{
       </div>
     ) : '';
     let first_name=(<div>First Name <sup>*</sup></div>);
+    //
+
+    //AGENT INFORMATION:
+    let agentinfo = (this.state.agents) ? this.state.agents.map((agent)=>{
+      return {
+        email:agent.email,
+        name:agent.name,
+        headshot_url:agent.headshot_url,
+        id:agent.id,
+        phone:agent.phone
+      }
+    }) : '';
+    let agentindex = Math.random();
+    agentindex = agentindex*agentinfo.length;
+    agentindex = Math.floor(agentindex);
+    let agent = agentinfo[agentindex];
+    console.log('agent: ',agent);
+
+    let listing_agent_column = (agentinfo) ? (
+      <div className="row listing-agent-column">
+        <div className="agent-photo-holder col-lg-12 col-md-6 col-sm-6 pull-right">
+          <img src={agent.headshot_url} className="image-responsive" alt="Agent Image" />
+        </div>
+        <div className="col-lg-12 col-md-6 col-sm-6">
+          <div>{agent.name}</div>
+          <div>4600 North Park Avenue, Suite 100</div>
+          <div>Chevy Chase, MD 20815</div>
+          <div>Phone: {agent.phone}</div>
+          <div>Email: <a href="info@rlahre.com" alt='email'>{agent.email}</a></div>
+        </div>
+      </div>
+    ) : '';
+
     return (
       <div>
       <Header reload={this.reload.bind(this)}/>
@@ -449,7 +496,7 @@ class Listing extends Component{
                     </form>
                   </div>
                   <div className="listing-agent-photo col-lg-4">
-                    <div className="row listing-agent-column">
+                    {/* <div className="row listing-agent-column">
                       <div className="agent-photo-holder col-lg-12 col-md-6 col-sm-6 pull-right">
                         <img src={require('../images/rlah_logo-11-01.png')} className="image-responsive" alt="Agent Image" />
                       </div>
@@ -459,7 +506,8 @@ class Listing extends Component{
                         <div>Phone: 301-652-0643</div>
                         <div>Email: <a href="info@rlahre.com" alt='email'>info@rlahre.com</a></div>
                       </div>
-                    </div>
+                    </div> */}
+                    { listing_agent_column }
                   </div>
                 </div>
               </div>

@@ -14,7 +14,7 @@ ReactDOM.render(
       <IndexRoute component = { Search } />
       <Route path="listing/:mls/:day/:neighborhood" component = { Listing } />
       <Route path="search/:day/:neighborhood" component = { Search } />
-      <Route path="newagent" component = { AddAgents } />
+      <Route path="admin" component = { AddAgents } />
     </Route>
   </Router>,
   document.getElementById('root')
