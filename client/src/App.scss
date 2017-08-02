@@ -50,7 +50,7 @@ footer{
     display: flex;
     flex-direction: row;
     justify-content: space-after;
-    @media  all
+    @media only screen
     and (min-width : 375px)
     and (max-width : 667px)
     and (orientation : portrait) {
@@ -68,7 +68,7 @@ footer{
   .logo-contain{
     height:100%;
     width:10%;
-    @media  all
+    @media only screen
     and (min-width : 375px)
     and (max-width : 667px)
     and (orientation : portrait) {
@@ -77,7 +77,7 @@ footer{
   }
   .logo-text{
           // iphone 6 portrait
-    @media  all
+    @media only screen
     and (min-width : 375px)
     and (max-width : 667px)
     and (orientation : portrait) {
@@ -125,7 +125,7 @@ footer{
   img{
     width: 50%;
     margin:10px 0px;
-    @media  all
+    @media only screen
     and (min-width : 375px)
     and (max-width : 667px)
     and (orientation : portrait) {
@@ -151,7 +151,7 @@ footer{
   @media(max-width: 765px){
     margin:15px;
   }    //    // iphone 6 portrait
-  @media  all
+  @media only screen
   and (min-width : 375px)
   and (max-width : 667px)
   and (orientation : portrait) {
@@ -171,7 +171,7 @@ footer{
     height:50px;
     overflow-y: visible;
   }
-  @media  all
+  @media only screen
     and (min-width : 769px)
     and (max-width : 1024px){
       height:50px;
@@ -197,7 +197,7 @@ footer{
       z-index: 10 !important;
       background-color: inherit;
     }
-    @media  all
+    @media only screen
       and (min-width : 769px)
       and (max-width : 1024px){
         width:25vw;
@@ -267,7 +267,7 @@ footer{
       margin-left:auto;
     }
   }
-  @media  all
+  @media only screen
   and (min-width : 375px)
   and (max-width : 667px)
   and (orientation : portrait) {
@@ -568,27 +568,27 @@ footer{
     height:15vh;
   }
   // iphone 6 landscape
-  @media  all
+  @media only screen
   and (min-width : 375px)
   and (max-width : 667px)
   and (orientation : landscape) {
     /* STYLES GO HERE */}
 
   // iphone 6 portrait
-  @media  all
+  @media only screen
   and (min-width : 375px)
   and (max-width : 667px)
   and (orientation : portrait) {
     min-height:20vh; /* STYLES GO HERE */ }
 
   // ipad landscape
-  @media  all
+  @media only screen
   and (min-width : 768px)
   and (max-width : 1024px)
   and (orientation : landscape) { /* STYLES GO HERE */}
 
   // ipad portrait
-  @media  all
+  @media only screen
   and (min-width : 768px)
   and (max-width : 1024px)
   and (orientation : portrait) {
@@ -853,7 +853,7 @@ footer{
   //   }
   //   // padding-top:.5em;
   // }
-  // @media  all
+  // @media only screen
   //   and (min-width : 700px)
   //   and (max-width : 1024px){
   //     font-size:2em !important;
@@ -1058,7 +1058,7 @@ footer{
     font-size: .75em;
     height:15vh;
   }
-  @media  all
+  @media only screen
     and (min-width : 500px)
     and (max-width : 1024px){
       font-size:1em;
@@ -1111,7 +1111,7 @@ footer{
   }
 }
 .results-item-time{
-  position: relative; 
+  position: relative;
 }
 .results-item-time-box{
   position: absolute;
@@ -1146,14 +1146,14 @@ footer{
     margin-bottom:1em;
   }
   // iphone 6 landscape
-  @media  all
+  @media only screen
   and (min-width : 375px)
   and (max-width : 667px)
   and (orientation : landscape) {
   height:25vh;
      /* STYLES GO HERE */}
      // ipad portrait
-     @media  all
+     @media only screen
   and (min-width : 768px)
   and (max-width : 1024px)
   and (orientation : portrait) {
@@ -1178,13 +1178,13 @@ footer{
   @media(max-width: 765px){
     font-size:1.5em;
   }
-  @media  all
+  @media only screen
     and (min-width : 0px)
     and (max-width : 1024px){
       font-size:1.5em;
     }
     // ipad portrait
-  @media  all
+  @media only screen
   and (min-width : 768px)
   and (max-width : 1024px)
   and (orientation : portrait) {
@@ -1252,7 +1252,7 @@ footer{
     bottom:0px !important;
   }
   // ipad portrait
-  @media  all
+  @media only screen
   and (min-width : 768px)
   and (max-width : 1024px)
   and (orientation : portrait) {
@@ -1290,14 +1290,14 @@ footer{
     padding:1vh;
   }
   // ipad portrait
-  @media  all
+  @media only screen
   and (min-width : 768px)
   and (max-width : 1024px)
   and (orientation : portrait) {
     height:7vh;
   }
   // iphone 6 landscape
-  @media  all
+  @media only screen
   and (min-width : 375px)
   and (max-width : 667px)
   and (orientation : landscape) {
@@ -1325,7 +1325,7 @@ footer{
       font-size:.85em;
     }
   }
-  @media  all
+  @media only screen
   and (min-width : 375px)
   and (max-width : 667px)
   and (orientation : portrait) {
@@ -1337,7 +1337,7 @@ footer{
   @media(max-width: 765px){
     height:90vh;
   }
-  // @media  all
+  // @media only screen
   // and (min-width : 375px)
   // and (max-width : 667px)
   // and (orientation : portrait) {
@@ -1349,7 +1349,7 @@ footer{
 }
 .specs-form-column{
   padding:0px 10px;
-  @media  all
+  @media only screen
   and (min-width : 375px)
   and (max-width : 667px)
   and (orientation : portrait) {
@@ -1406,7 +1406,7 @@ footer{
     }
   }
   // ipad portrait
-  @media  all
+  @media only screen
   and (min-width : 768px)
   and (max-width : 1024px)
   and (orientation : portrait) {
@@ -1432,7 +1432,7 @@ footer{
   @media(max-width: 765px){
     // height:25vh;
   }
-  @media  all
+  @media only screen
   and (min-width : 375px)
   and (max-width : 667px)
   and (orientation : portrait) {
@@ -1457,26 +1457,26 @@ footer{
   width:100%;
   border:1px solid #000;
   overflow: hidden;
-  @media  all
+  @media only screen
     and (min-width : 768px)
     and (max-width : 1024px){
       height:65vh;
     }
     // ipad portrait
-  @media  all
+  @media only screen
   and (min-width : 768px)
   and (max-width : 1024px)
   and (orientation : portrait) {
     height:35vh;
    }   // iphone 6 portrait
-   @media  all
+   @media only screen
    and (min-width : 355px)
    and (max-width : 667px)
    and (orientation : portrait) {
      height:35vh;
    }
        // iphone 6 landscape
-    @media  all
+    @media only screen
     and (min-width : 375px)
     and (max-width : 667px)
     and (orientation : landscape) {
@@ -1494,7 +1494,7 @@ footer{
         background-position: center !important;
       }
 
-      // @media  all
+      // @media only screen
       //   and (min-width : 0px)
       //   and (max-width : 1024px){
       //     background-position: center !important;
@@ -1595,7 +1595,7 @@ footer{
     top:15vh;
     }
     // ipad landscape
-    @media  all
+    @media only screen
     and (min-width : 768px)
     and (max-width : 1024px)
     and (orientation : landscape) {
@@ -1604,7 +1604,7 @@ footer{
      }
 
     // ipad portrait
-    @media  all
+    @media only screen
     and (min-width : 768px)
     and (max-width : 1024px)
     and (orientation : portrait) {
@@ -1649,7 +1649,7 @@ footer{
   display: inline-block;
   overflow-x: scroll;
         // iphone 6 portrait
-  @media  all
+  @media only screen
   and (min-width : 375px)
   and (max-width : 667px)
   and (orientation : portrait) {
@@ -1678,7 +1678,7 @@ footer{
   overflow:hidden;
   margin-bottom: 25px;
   // iphone 6 landscape
-  @media  all
+  @media only screen
   and (min-width : 375px)
   and (max-width : 667px)
   and (orientation : landscape) {
@@ -1696,7 +1696,7 @@ footer{
   height:auto;
   font-size: .75em;
   // ipad portrait
-  @media  all
+  @media only screen
   and (min-width : 768px)
   and (max-width : 1024px)
   and (orientation : portrait) {
@@ -1724,7 +1724,7 @@ footer{
     font-size:1.25em;
   }
   // iphone 6 portrait
-  @media  all
+  @media only screen
   and (min-width : 375px)
   and (max-width : 667px)
   and (orientation : portrait) {
