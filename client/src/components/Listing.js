@@ -279,9 +279,20 @@ class Listing extends Component{
     axios.post(apiKey + '/info/submitform',data).then((response)=>{
       console.log('successfully submitted',response);
       if(response.data.message === "Queued. Thank you."){
+
+        //show modal
         this.setState({
           submitted_email:true
         });
+
+        //clear form
+        this.refs.first_name.value = '';
+        this.refs.last_name.value = '';
+        this.refs.email.value = '';
+        this.refs.phone.value = '';
+        this.refs.textarea.value = '';
+
+        //hide modal
         setTimeout(()=>{
           this.setState({
             submitted_email:false
@@ -302,6 +313,8 @@ class Listing extends Component{
       hashHistory.push('/');
     }
   }
+
+  //large view of listing photos:
   showing_modal(){
     console.log('showing');
     this.setState({showing_modal:true})
@@ -359,8 +372,7 @@ class Listing extends Component{
         <img className="listing-emoji" src={require('../images/bath.svg')} alt="bath" />
       </div>
     ) : '';
-    // let beds = ();
-    // let baths = ();
+
     let sq_ft = (listing && listing.square_feet > 0) ? (<span className="sqFt">{listing.square_feet}&nbsp;sq ft</span>): 'Sq ft unknown';
     price = (listing) ? currency.format(listing.list_price,{ code: 'USD', decimalDigits: 0 }): '';
     price = (listing) ? price.slice(0,price.length-3): '';
@@ -392,29 +404,13 @@ class Listing extends Component{
     //EMAIL SUBMIT MODAL
     let submit_modal = (this.state.submitted_email) ? (
       <div className="submit_modal">
-        <div className="submit_message">
-          <div>An agent will be in touch with you shortly!</div>
+        <div className="submit_message rounded">
+          <div>We'll be in touch shortly!</div>
         </div>
       </div>
     ) : '';
     let first_name=(<div>First Name <sup>*</sup></div>);
-    //
 
-    //AGENT INFORMATION:
-    // let agentinfo = (this.state.agents) ? this.state.agents.map((agent)=>{
-    //   return {
-    //     email:agent.email,
-    //     name:agent.name,
-    //     headshot_url:agent.headshot_url,
-    //     id:agent.id,
-    //     phone:agent.phone
-    //   }
-    // }) : '';
-    // let agentindex = Math.random();
-    // agentindex = agentindex*agentinfo.length;
-    // agentindex = Math.floor(agentindex);
-    // let agent = agentinfo[agentindex];
-    // console.log('agent: ',agent);
     let agent = (this.state.agent) ? this.state.agent : '';
 
     let listing_agent_column = (agent) ? (
@@ -519,17 +515,6 @@ class Listing extends Component{
                     </form>
                   </div>
                   <div className="listing-agent-photo col-lg-4">
-                    {/* <div className="row listing-agent-column">
-                      <div className="agent-photo-holder col-lg-12 col-md-6 col-sm-6 pull-right">
-                        <img src={require('../images/rlah_logo-11-01.png')} className="image-responsive" alt="Agent Image" />
-                      </div>
-                      <div className="col-lg-12 col-md-6 col-sm-6">
-                        <div>4600 North Park Avenue, Suite 100</div>
-                        <div>Chevy Chase, MD 20815</div>
-                        <div>Phone: 301-652-0643</div>
-                        <div>Email: <a href="info@rlahre.com" alt='email'>info@rlahre.com</a></div>
-                      </div>
-                    </div> */}
                     { listing_agent_column }
                   </div>
                 </div>
