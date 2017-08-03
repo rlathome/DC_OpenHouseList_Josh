@@ -957,7 +957,7 @@ footer .logo-contain {
   }
 }
 
-@media all and (min-width: 700px) and (max-width: 1024px) {
+@media only screen and (min-width: 700px) and (max-width: 1024px) {
   .results-option {
     font-size: 1em !important;
   }
@@ -1399,6 +1399,13 @@ footer .logo-contain {
   }
 }
 
+@media only screen and (min-device-width: 375px) and (max-device-width: 1024px) and (orientation: landscape) {
+  .listing-header {
+    height: 25vh;
+    /* STYLES GO HERE */
+  }
+}
+
 @media only screen and (min-width: 768px) and (max-width: 1024px) and (orientation: portrait) {
   .listing-header {
     height: 0vh;
@@ -1499,7 +1506,14 @@ footer .logo-contain {
 @media (max-width: 768px) {
   .listing-header-specs {
     width: 75%;
-    bottom: 0px !important;
+    bottom: 0px;
+  }
+}
+
+@media only screen and (min-device-width: 375px) and (max-device-width: 1024px) and (orientation: landscape) {
+  .listing-header-specs {
+    bottom: 15px;
+    /* STYLES GO HERE */
   }
 }
 
