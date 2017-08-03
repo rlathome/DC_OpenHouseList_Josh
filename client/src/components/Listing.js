@@ -123,10 +123,11 @@ class Listing extends Component{
       agentindex = Math.floor(agentindex);
       let agent = agentinfo[agentindex];
       console.log('agent: ',agent);
-
+      let agent_email=agent.email;
 
       this.setState({
-        agent
+        agent,
+        agent_email
       });
     }).catch((err)=>{
       console.log('err - ',err);
@@ -255,7 +256,7 @@ class Listing extends Component{
     let email = this.refs.email.value;
     let phone = this.refs.phone.value;
     let textarea = this.refs.textarea.value;
-    let agent_email = this.refs.agent_email.value;
+    let agent_email = this.state.agent_email;
     console.log('submitting: ',first,last,email,textarea);
     //FILTER FOR SCRIPTING ATTACKS:
     //CODE HERE
@@ -426,7 +427,7 @@ class Listing extends Component{
           <div>4600 North Park Avenue, Suite 100</div>
           <div>Chevy Chase, MD 20815</div>
           <div>Phone: {agent.phone}</div>
-          <div>Email: <a ref="agent_email" href="info@rlahre.com" alt='email'>{agent.email}</a></div>
+          <div>Email: <a ref="agent_email" href={agent.email} alt='email'>{agent.email}</a></div>
         </div>
       </div>
     ) : '';
