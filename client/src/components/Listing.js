@@ -12,7 +12,7 @@ const google = window.google;
 
 // let apiKey = "http://localhost:8080";
 
-let apiKey="http://vast-shore-14133.herokuapp.com";
+let apiKey="http://dcopenhouselist.com";
 
 console.log('listingjs env: ',process.env.REACT_APP_STATUS);
 
