@@ -421,14 +421,15 @@ class Results extends Component{
   // let descending_arrow = (this.state.sort_order ==='ascending') ? ( <i onClick={this.sortDesc.bind(this)} className="glyphicon glyphicon-triangle-bottom"></i> ) : '';
 
   updateResults(results){
+    console.log('updating results');
     let updated = this.state.updated;
-    if(updated==false && this.state.neighborhood !=='FullDCArea'){
+    if(this.state.display==='list' && updated==false && this.state.neighborhood !=='FullDCArea'){
       this.setState({
         markers:results,
         display:'list',
         updated:true
       });
-    }else{
+    }else if(this.state.display==='map'){
       this.setState({
         markers:results,
         display:'map',
@@ -539,8 +540,8 @@ class Results extends Component{
       // <Map markers={this.state.markers} />
     );
     let subd = '';
-
-    switch(this.props.params.neighborhood){
+    let nbhd = this.props.params.neighborhood.toLowerCase();
+    switch(nbhd){
       case 'FullDCArea':
       subd='Full DC Area';
       break;

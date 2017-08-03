@@ -72,6 +72,7 @@ class Featured extends Component{
     console.log('listingid: ',listing);
     let day = (this.props.day) ? this.props.day : 'none';
     let neighborhood = (this.props.neighborhood) ? this.props.neighborhood : 'none';
+    neighborhood = neighborhood.toLowerCase();
     hashHistory.push('/listing/'+listing+'/'+day+'/'+neighborhood);
     // console.log('viewlisting results: ',this.state.results);
     // let view = this.state.results.filter((val)=>{
