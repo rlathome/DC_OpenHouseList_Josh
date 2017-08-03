@@ -28,8 +28,18 @@ class Results extends Component{
       markers: '',
       neighborhood:'',
       cache:[],
+      listings_shown:'',
+      listings_remaining:'',
       updated:false
     }
+  }
+  mountQueue(markers){
+    let listings_remaining = markers.slice(10,markers.length);
+    let listings_shown = markers.slice(0,10);
+    this.setState({
+      listings_shown,
+      listings_remaining
+    });
   }
   componentWillMount(){
     console.log('mounting results');
@@ -48,6 +58,7 @@ class Results extends Component{
         response.data.results.forEach((listing)=>{
           markers.push(listing);
         });
+        this.mountQueue(markers);
         this.props.storeResults(markers,results);
         this.setState({
           results,
@@ -66,6 +77,7 @@ class Results extends Component{
       });
     }else{
       console.log('setting previous markers');
+      this.mountQueue(markers);
       this.setState({
         results:this.props.raw_stored_results,
         markers:stored_results,
@@ -253,6 +265,8 @@ class Results extends Component{
     if(this.state.sort_order==='ascending'){
       results.reverse();
     }
+
+    this.mountQueue(results);
     this.setState({
       markers:results,
       sorting_spec:'time'
@@ -340,6 +354,8 @@ class Results extends Component{
     // if(this.state.sort_order=="ascending"){
     //   listings.reverse();
     // }
+
+    this.mountQueue(listings);
     this.setState({
       markers:listings,
       sort_order:'descending'
@@ -355,6 +371,8 @@ class Results extends Component{
     });
     console.log('price results: ',listings);
       listings.reverse();
+
+      this.mountQueue(listings);
     this.setState({
       markers:listings,
       sort_order:'ascending'
@@ -365,6 +383,8 @@ class Results extends Component{
     if(this.state.sorting_spec === 'time' && this.state.sort_order==='descending'){
       // this.sortTime();
       let markers=this.state.markers.reverse();
+
+      this.mountQueue(markers);
       this.setState({
         markers,
         sort_order:'ascending'
@@ -409,6 +429,8 @@ class Results extends Component{
     listings.sort((a,b)=>{
       return a.cdom - b.cdom
     })
+
+    this.mountQueue(listings);
     this.setState({
       markers:listings,
       dropdown:false,
@@ -424,12 +446,16 @@ class Results extends Component{
     console.log('updating results');
     let updated = this.state.updated;
     if(this.state.display==='list' && updated==false && this.state.neighborhood !=='FullDCArea'){
+
+      this.mountQueue(results);
       this.setState({
         markers:results,
         display:'list',
         updated:true
       });
     }else if(this.state.display==='map'){
+
+      this.mountQueue(results);
       this.setState({
         markers:results,
         display:'map',
@@ -437,8 +463,19 @@ class Results extends Component{
       });
     }
   }
+  showMore(){
+    let listings_shown=this.state.listings_shown;
+    let listings_remaining= this.state.listings_remaining;
+    let listings_to_add = listings_remaining.slice(0,10);
+    listings_remaining = listings_remaining.slice(10,listings_remaining.length);
+    listings_shown = listings_shown.concat(listings_to_add);
+    this.setState({
+      listings_shown,
+      listings_remaining
+    });
+  }
   render(){
-    let results = this.state.markers;
+    let results = this.state.listings_shown;
     let selected = this.state.selected;
     let sort = this.state.sorting_spec;
     console.log('sort order: ',this.state.sort_order);
@@ -448,10 +485,6 @@ class Results extends Component{
           left:this.state.x,
           top:this.state.y
         }
-        let map = (
-          <ReactMap display={true} viewListing={this.viewListing.bind(this)} updateResults={this.updateResults.bind(this)} neighborhood={this.props.params.neighborhood} markers={markers}/>
-          // <Map markers={this.state.markers} />
-        );
         let subd = '';
         let nbhd = this.props.params.neighborhood.toLowerCase();
         switch(nbhd){
@@ -602,6 +635,10 @@ class Results extends Component{
       );
     }) : '';
 
+    let map = (
+      <ReactMap display={true} viewListing={this.viewListing.bind(this)} updateResults={this.updateResults.bind(this)} neighborhood={this.props.params.neighborhood} markers={this.state.markers}/>
+      // <Map markers={this.state.markers} />
+    );
 ///////////////////
 
 
@@ -697,7 +734,7 @@ class Results extends Component{
       </div>
     <div className="results">
       { display }
-
+      {(this.state.display==='list') ? (<div onClick={this.showMore.bind(this)} className="more">Load More</div>) : ''}
     </div>
 
     {/* { reactMap } */}
