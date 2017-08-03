@@ -134,7 +134,7 @@ router.post('/submitform',function(req,res,next){
   let form_data = req.body;
   console.log('submitting: ',form_data);
   // let to= 'info@rlahre.com';
-  let to= 'info@rlahre.com';
+
   let first = form_data.first;
   let last = form_data.last;
   let subject = "A New Prospect Has Contacted You from DC's Open House List!";
@@ -142,12 +142,13 @@ router.post('/submitform',function(req,res,next){
   let phone = form_data.phone;
   let email = form_data.email;
   let agent_email = form_data.agent_email;
+  let to=agent_email;
 
   var mailcomposer = require('mailcomposer');
 
   var domain = 'info.dcopenhouselist.com';
   var apiKey = 'key-602b6fef248551d53fee98ac2dbdef70';
-  var mailgun = require('mailgun-js')({apiKey:apiKey, domain:agent_email});
+  var mailgun = require('mailgun-js')({apiKey:apiKey, domain:domain});
 
   var mail = mailcomposer({
     subject,
