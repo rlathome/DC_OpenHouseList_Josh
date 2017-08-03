@@ -7,6 +7,7 @@ import GoogleMap from "react-google-map";
 import GoogleMapLoader from "react-google-maps-loader";
 import currency from 'currency-formatter';
 import jquery from 'jquery';
+import moment from 'moment';
 const google = window.google;
 // let apiKey = (process.env.REACT_APP_STATUS == 'development') ? "http://localhost:8080" : "http://vast-shore-14133.herokuapp.com";
 
@@ -343,8 +344,17 @@ class Listing extends Component{
       backgroundSize:'cover',
       overlap:'hidden'
     }
+    let d = this.state.day.slice(0,1).toUpperCase();
+    let ay = this.state.day.slice(1,(this.state.day.length));
+    let tday = d+ay;
+    let date = (listing.open_house_events) ? moment(listing.open_house_events[0].event_start) : '';
+    let time = (date) ? date.format('h:mmA') : '';
+
+
     showing = (
-      <div style={style} className="photo-container"></div>
+      <div style={style} className="photo-container">
+        <div className="photo-container-day">{tday} {time}</div>
+      </div>
     )
     //FULLSCREEN IMAGES
     let showing_modal = (this.state.showing_modal) ? (
@@ -373,12 +383,13 @@ class Listing extends Component{
       </div>
     ) : '';
 
-    let sq_ft = (listing && listing.square_feet > 0) ? (<span className="sqFt">{listing.square_feet}&nbsp;sq ft</span>): 'Sq ft unknown';
+    let sq_ft = (listing && listing.square_feet > 0) ? (<span className="sqFt">{listing.square_feet}&nbsp;sq ft</span>): (<span>Built: {listing.year_built}</span>);
     price = (listing) ? currency.format(listing.list_price,{ code: 'USD', decimalDigits: 0 }): '';
     price = (listing) ? price.slice(0,price.length-3): '';
     price = (listing) ? (<span className="listing-price-emoji">{price}</span>) : '';
     let stories = (listing) ? (<div>{listing.stories}&nbsp;story</div>) : '';
-    let built = (listing) ? ( <div>Built:&nbsp;{listing.year_built}</div> ): '';
+    // let built = (listing) ? ( <div>Built:&nbsp;{listing.year_built}</div> ): '';
+    let built = (listing.square_feet > 0) ? ( <div>Built:&nbsp;{listing.year_built}</div> ):(<span className="sqFt">Sq ft unknown</span>);
     let subd = ( <div>Subdivision:&nbsp;{ subdivision }</div> );
     let dom = (listing) ? ( <div>{listing.cdom}&nbsp;days on the market</div> ): '';
 

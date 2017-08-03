@@ -443,6 +443,79 @@ class Results extends Component{
     let sort = this.state.sorting_spec;
     console.log('sort order: ',this.state.sort_order);
 
+        let display;
+        let divstyle = {
+          left:this.state.x,
+          top:this.state.y
+        }
+        let map = (
+          <ReactMap display={true} viewListing={this.viewListing.bind(this)} updateResults={this.updateResults.bind(this)} neighborhood={this.props.params.neighborhood} markers={markers}/>
+          // <Map markers={this.state.markers} />
+        );
+        let subd = '';
+        let nbhd = this.props.params.neighborhood.toLowerCase();
+        switch(nbhd){
+          case 'FullDCArea':
+          subd='Full DC Area';
+          break;
+          case 'adamsmorgan':
+          subd='Adams Morgan';
+          break;
+          case 'anacostia':
+          subd='Anacostia';
+          break;
+          case 'brookland':
+          subd='Brookland';
+          break;
+          case 'capitolhill':
+          subd='Capitol Hill';
+          break;
+          case 'columbiaheights':
+          subd='Columbia Heights';
+          break;
+          case 'deanwood':
+          subd='Deanwood';
+          break;
+          case 'dupontcircle':
+          subd='duPont Circle';
+          break;
+          case 'eckington':
+          subd='Eckington';
+          break;
+          case 'friendshipheights':
+          subd='Friendship Heights';
+          break;
+          case 'georgetown':
+          subd='Georgetown';
+          break;
+          case 'logancircle':
+          subd='Logan Circle';
+          break;
+          case 'petworth':
+          subd='Petworth';
+          break;
+          case 'southwestwaterfront':
+          subd='Southwest Waterfront';
+          break;
+          case 'westend':
+          subd='Westend';
+          break;
+          default:
+          subd=''
+        }
+        let today ='';
+        switch(this.props.params.day){
+          case 'saturday':
+          today = ' on Saturday.';
+          break;
+          case 'sunday':
+          today = ' on Sunday.';
+          break;
+          default:
+          today = '.'
+        }
+
+    ///////////
 
 //===================LOADING MAIN LISTING INFORMATION, TAKING IN PREVIOUSLY LOADED INFO=============//
     let markers=[];
@@ -504,6 +577,7 @@ class Results extends Component{
       console.log('listing index: ',indx);
       let reactMap = (neighborhood !== 'FullDCArea' && indx==0) ? ( <ReactMap display={false} viewListing={this.viewListing.bind(this)} updateResults={this.updateResults.bind(this)} neighborhood={this.props.params.neighborhood} markers={markers}/> ) : '';
       // if(neighborhood !=='FullDCArea'
+      let result_subd = (<span className='result-subd'>{subd}</span>);
       return(
         <div id={listing.id} onClick={this.viewTabListing.bind(this)} className="results-item row">
           <div id={listing.id} style={style} className="results-div col-xs-4 results-item-pic">
@@ -514,7 +588,8 @@ class Results extends Component{
           <div id={listing.id} className="results-div col-xs-4 results-item-info">
             <div id={listing.id}>
               { listing.street_number } { listing.street_name } { listing.street_post_dir } ({dowUC})<br/>
-              { price } <br/>
+              { price }<br/>
+              {result_subd}
             </div>
           </div>
           <div  id={listing.id} className="results-div col-xs-4 results-item-time">
@@ -530,77 +605,6 @@ class Results extends Component{
 ///////////////////
 
 
-    let display;
-    let divstyle = {
-      left:this.state.x,
-      top:this.state.y
-    }
-    let map = (
-      <ReactMap display={true} viewListing={this.viewListing.bind(this)} updateResults={this.updateResults.bind(this)} neighborhood={this.props.params.neighborhood} markers={markers}/>
-      // <Map markers={this.state.markers} />
-    );
-    let subd = '';
-    let nbhd = this.props.params.neighborhood.toLowerCase();
-    switch(nbhd){
-      case 'FullDCArea':
-      subd='Full DC Area';
-      break;
-      case 'adamsmorgan':
-      subd='Adams Morgan';
-      break;
-      case 'anacostia':
-      subd='Anacostia';
-      break;
-      case 'brookland':
-      subd='Brookland';
-      break;
-      case 'capitolhill':
-      subd='Capitol Hill';
-      break;
-      case 'columbiaheights':
-      subd='Columbia Heights';
-      break;
-      case 'deanwood':
-      subd='Deanwood';
-      break;
-      case 'dupontcircle':
-      subd='duPont Circle';
-      break;
-      case 'eckington':
-      subd='Eckington';
-      break;
-      case 'friendshipheights':
-      subd='Friendship Heights';
-      break;
-      case 'georgetown':
-      subd='Georgetown';
-      break;
-      case 'logancircle':
-      subd='Logan Circle';
-      break;
-      case 'petworth':
-      subd='Petworth';
-      break;
-      case 'southwestwaterfront':
-      subd='Southwest Waterfront';
-      break;
-      case 'westend':
-      subd='Westend';
-      break;
-      default:
-      subd=''
-    }
-    let today ='';
-    switch(this.props.params.day){
-      case 'saturday':
-      today = ' on Saturday.';
-      break;
-      case 'sunday':
-      today = ' on Sunday.';
-      break;
-      default:
-      today = '.'
-    }
 
     let spinner = (<div className="no-results-msg">Searching for {subd} open houses{today} Thanks for your patience.<br/><img className="spinner" src={require("../images/loadcontent.gif")} alt="please wait"/></div>);
     results = (results) ? results.filter((val)=>{
