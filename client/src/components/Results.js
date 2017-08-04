@@ -716,7 +716,7 @@ class Results extends Component{
       </div>
     <div className="results">
       { display }
-      <div onClick={this.showMore.bind(this)} className="more">Show More</div>
+      {/* <div onClick={this.showMore.bind(this)} className="more">Show More</div> */}
     </div>
 
     {/* { reactMap } */}

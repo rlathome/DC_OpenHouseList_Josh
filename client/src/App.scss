@@ -33,9 +33,17 @@ header{
   }
 }
 footer{
-  margin:100px 0px 25px 0px;
+  margin:25px 0px 25px 0px;
   span{
     display: inline-block;
+    /* iPhone 5 ----------- */
+    @media only screen and (min-device-width: 320px)
+    and (max-device-height: 568px)
+    and (orientation : landscape)
+    and (-webkit-device-pixel-ratio: 2){
+      margin-right:10px;
+    /* Styles */
+    }
   }
   div{
     text-align: left;
@@ -56,14 +64,40 @@ footer{
     and (orientation : portrait) {
       padding:20px 10px;
     }
+    @media only screen and (min-device-width: 320px)
+    and (max-device-height: 568px) and (orientation : portrait)
+    and (-webkit-device-pixel-ratio: 2){
+      padding:10px 5px;
+    /* Styles */
+    }
+    /* iPhone 5 ----------- */
+    @media only screen and (min-device-width: 320px)
+    and (max-device-height: 568px)
+    and (orientation : landscape)
+    and (-webkit-device-pixel-ratio: 2){
+      padding:20px 20px;
+    /* Styles */
+    }
   }
   .footer-logo{
     width:50px;
     padding-top:5px;
+    @media only screen and (min-device-width: 320px)
+    and (max-device-height: 568px) and (orientation : portrait)
+    and (-webkit-device-pixel-ratio: 2){
+      // font-size:.5em;
+    /* Styles */
+    width:25px;
+    }
   }
   .footer-divider{
     width:5%;
     font-size: 1.5em !important;
+    @media only screen and (min-device-width: 320px)
+    and (max-device-height: 568px) and (orientation : portrait)
+    and (-webkit-device-pixel-ratio: 2){
+      font-size:1em !important;
+    }
   }
   .logo-contain{
     height:100%;
@@ -84,6 +118,28 @@ footer{
       font-size: .65em;
       width:75%;
     }
+    /* iPhone 5 ----------- */
+    @media only screen and (min-device-width: 320px)
+    and (max-device-height: 568px) and (orientation : landscape)
+    and (-webkit-device-pixel-ratio: 2){
+
+    /* Styles */
+    }
+
+    @media only screen and (min-device-width: 320px)
+    and (max-device-height: 568px) and (orientation : portrait)
+    and (-webkit-device-pixel-ratio: 2){
+      font-size:.65em;
+    /* Styles */
+    }
+  }
+  /* iPhone 5 ----------- */
+  @media only screen and (min-device-width: 320px)
+  and (max-device-height: 568px)
+  and (orientation : landscape)
+  and (-webkit-device-pixel-ratio: 2){
+    margin-top:300px;
+  /* Styles */
   }
 }
 #header-image{
@@ -356,6 +412,25 @@ footer{
     padding-left: 10px;
   }
 }
+.sort-by-arrow-neigh{
+  width:75px;
+  z-index: 5003 !important;
+  left:auto;
+  right:0px;
+  span{
+    line-height: 2.5em;
+  }
+  /* iPhone 5 ----------- */
+  @media only screen and (min-device-width: 320px) and (max-device-height: 568px) and (orientation : landscape) and (-webkit-device-pixel-ratio: 2){
+  /* Styles */
+
+  }
+
+  @media only screen and (min-device-width: 320px) and (max-device-height: 568px) and (orientation : portrait) and (-webkit-device-pixel-ratio: 2){
+  /* Styles */
+    width:15vw;
+  }
+}
 .btn-3d-blue-results-neigh{
   display: inline-block;
   background-color: #35CAFC;
@@ -395,6 +470,16 @@ footer{
     border-top:3px solid #000;
     border-right:3px solid #000;
     transform: skewY(45deg);
+  }
+  /* iPhone 5 ----------- */
+  @media only screen and (min-device-width: 320px) and (max-device-height: 568px) and (orientation : landscape) and (-webkit-device-pixel-ratio: 2){
+  /* Styles */
+
+  }
+
+  @media only screen and (min-device-width: 320px) and (max-device-height: 568px) and (orientation : portrait) and (-webkit-device-pixel-ratio: 2){
+  /* Styles */
+    // width:60vw;
   }
 }
 .btn-3d-blue, .btn-3d-blue-neighborhood, .btn-3d-blue-down, .btn-3d-blue-results{
@@ -1001,27 +1086,7 @@ footer{
     }
   }
 }
-.sort-by-arrow-neigh{
-  width:75px;
-  z-index: 5003 !important;
-  left:auto;
-  right:0px;
-  span{
-    line-height: 2.5em;
-  }
-  // @media(max-width:950px){
-  //   width:35px;
-  // }
-  // @media(max-width:765px){
-  //   width:5vw;
-  //   right:auto;
-  //   top:-11px;
-  //   line-height: 1em;
-  //   span{
-  //     line-height: 2em;
-  //   }
-  // }
-}
+
 .down-btn-pressed{
   right:-20px;
   @media(max-width:950px){
@@ -1533,6 +1598,14 @@ footer{
           height:6vh;
           padding-bottom:10px;
         }
+        /* iPhone 5 ----------- */
+        @media only screen and (min-device-width: 320px)
+        and (max-device-height: 568px)
+        and (orientation : landscape)
+        and (-webkit-device-pixel-ratio: 2){
+          height:15vh;
+        /* Styles */
+        }
       }
       @media(max-width: 965px){
         background-position: center !important;
@@ -1776,6 +1849,12 @@ footer{
     font-size: .75em;
     /* STYLES GO HERE */ }
 
+  //iphone 5 portrait
+  @media only screen and (min-device-width: 320px)
+  and (max-device-height: 568px) and (orientation : portrait)
+  and (-webkit-device-pixel-ratio: 2){
+    font-size:1em;
+  }
 }
 .agent-form-container{
   text-align: center;

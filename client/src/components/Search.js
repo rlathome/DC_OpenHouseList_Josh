@@ -9,7 +9,6 @@ import Header from './Header';
 import axios from 'axios';
 import jquery from 'jquery';
 import Map from './ReactMap';
-// import '../../node_modules/bootstrap/dist/css/bootstrap.min.css';
 
 class Search extends Component{
   constructor(props){
@@ -108,21 +107,7 @@ class Search extends Component{
     });
     hashHistory.push('/');
   }
-  // viewListing(listing){
-  //   console.log('listing to view: ',listing);
-  //   let last_place = this.state.last_place;
-  //   this.setState({
-  //     step:'results',
-  //     last_place,
-  //     selected_listing:listing[0]
-  //   });
-  //   setTimeout(()=>{
-  //     this.setState({
-  //       step:'listing'
-  //     });
-  //   },15);
-  //   window.scrollTo(0,0);
-  // }
+
   viewListing(listing){
     console.log('listing to view: ',listing);
     let day = (this.state.day !=='') ? this.state.day : 'none';

@@ -74,55 +74,19 @@ class Featured extends Component{
     let neighborhood = (this.props.neighborhood) ? this.props.neighborhood : 'none';
     neighborhood = neighborhood.toLowerCase();
     hashHistory.push('/listing/'+listing+'/'+day+'/'+neighborhood);
-    // console.log('viewlisting results: ',this.state.results);
-    // let view = this.state.results.filter((val)=>{
-    //   let list = parseInt(listing);
-    //   return val.id == list;
-    // });
-    // console.log('viewing the listing: ',view);
-    // this.props.viewListing(view);
+
   }
   featuredReturn(){
     this.props.setLastPlace(this.props.last_place);
   }
   render(){
-    var days = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
-    var now = new Date();
-    var day = days[now.getDay()];
-    console.log('today: ',day,', date: ',now);
     let featured = this.state.featured;
-    // let params = 'latitude,longitude,image_urls,street_name,street_number,square_feet,mls_number,list_price,open_house_events,address,full_baths,num_bedrooms,half_baths';
-    let params = '';
-    let apiKey2=process.env.REACT_APP_DISPLET_API_KEY;
-    // let apiKey="82b44a7662b0abb55eebf365a61c50399b512935";
     return(
       <div className="featured">
         <div className="featured-title row">FEATURED</div>
         <div className="featured-results row">
           { featured }
-          {/* <div className="featured-item col-sm-4">
-            <div className="pic-holder">
-              <img className="listing-img" src="../images/download.jpg" alt="house" />
-              <div className="listing-info-opacity">
-              </div>
-              <div className="listing-info">
-                1234 Some property
-                Some address
-              </div>
-            </div>
-          </div>
-          <div className="featured-item col-sm-4">
-            <div className="pic-holder">
-              <img className="listing-img" src="../images/download-1.jpg" alt="house" />
-              <div className="listing-info"></div>
-            </div>
-          </div>
-          <div className="featured-item col-sm-4">
-            <div className="pic-holder">
-              <img className="listing-img" src="../images/download-2.jpg" alt="house" />
-              <div className="listing-info"></div>
-            </div>
-          </div> */}
+
         </div>
       </div>
     );

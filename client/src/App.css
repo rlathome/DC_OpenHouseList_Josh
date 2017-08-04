@@ -37,12 +37,21 @@ header {
 }
 
 footer {
-  margin: 100px 0px 25px 0px;
+  margin: 25px 0px 25px 0px;
   font-size: .75em;
+  /* iPhone 5 ----------- */
 }
 
 footer span {
   display: inline-block;
+  /* iPhone 5 ----------- */
+}
+
+@media only screen and (min-device-width: 320px) and (max-device-height: 568px) and (orientation: landscape) and (-webkit-device-pixel-ratio: 2) {
+  footer span {
+    margin-right: 10px;
+    /* Styles */
+  }
 }
 
 footer div {
@@ -59,6 +68,7 @@ footer .footer-info {
   display: flex;
   flex-direction: row;
   justify-content: space-after;
+  /* iPhone 5 ----------- */
 }
 
 @media only screen and (min-width: 375px) and (max-width: 667px) and (orientation: portrait) {
@@ -67,14 +77,41 @@ footer .footer-info {
   }
 }
 
+@media only screen and (min-device-width: 320px) and (max-device-height: 568px) and (orientation: portrait) and (-webkit-device-pixel-ratio: 2) {
+  footer .footer-info {
+    padding: 10px 5px;
+    /* Styles */
+  }
+}
+
+@media only screen and (min-device-width: 320px) and (max-device-height: 568px) and (orientation: landscape) and (-webkit-device-pixel-ratio: 2) {
+  footer .footer-info {
+    padding: 20px 20px;
+    /* Styles */
+  }
+}
+
 footer .footer-logo {
   width: 50px;
   padding-top: 5px;
 }
 
+@media only screen and (min-device-width: 320px) and (max-device-height: 568px) and (orientation: portrait) and (-webkit-device-pixel-ratio: 2) {
+  footer .footer-logo {
+    /* Styles */
+    width: 25px;
+  }
+}
+
 footer .footer-divider {
   width: 5%;
   font-size: 1.5em !important;
+}
+
+@media only screen and (min-device-width: 320px) and (max-device-height: 568px) and (orientation: portrait) and (-webkit-device-pixel-ratio: 2) {
+  footer .footer-divider {
+    font-size: 1em !important;
+  }
 }
 
 footer .logo-contain {
@@ -88,10 +125,34 @@ footer .logo-contain {
   }
 }
 
+footer .logo-text {
+  /* iPhone 5 ----------- */
+}
+
 @media only screen and (min-width: 375px) and (max-width: 667px) and (orientation: portrait) {
   footer .logo-text {
     font-size: .65em;
     width: 75%;
+  }
+}
+
+@media only screen and (min-device-width: 320px) and (max-device-height: 568px) and (orientation: landscape) and (-webkit-device-pixel-ratio: 2) {
+  footer .logo-text {
+    /* Styles */
+  }
+}
+
+@media only screen and (min-device-width: 320px) and (max-device-height: 568px) and (orientation: portrait) and (-webkit-device-pixel-ratio: 2) {
+  footer .logo-text {
+    font-size: .65em;
+    /* Styles */
+  }
+}
+
+@media only screen and (min-device-width: 320px) and (max-device-height: 568px) and (orientation: landscape) and (-webkit-device-pixel-ratio: 2) {
+  footer {
+    margin-top: 300px;
+    /* Styles */
   }
 }
 
@@ -415,6 +476,31 @@ footer .logo-contain {
   padding-left: 10px;
 }
 
+.sort-by-arrow-neigh {
+  width: 75px;
+  z-index: 5003 !important;
+  left: auto;
+  right: 0px;
+  /* iPhone 5 ----------- */
+}
+
+.sort-by-arrow-neigh span {
+  line-height: 2.5em;
+}
+
+@media only screen and (min-device-width: 320px) and (max-device-height: 568px) and (orientation: landscape) and (-webkit-device-pixel-ratio: 2) {
+  .sort-by-arrow-neigh {
+    /* Styles */
+  }
+}
+
+@media only screen and (min-device-width: 320px) and (max-device-height: 568px) and (orientation: portrait) and (-webkit-device-pixel-ratio: 2) {
+  .sort-by-arrow-neigh {
+    /* Styles */
+    width: 15vw;
+  }
+}
+
 .btn-3d-blue-results-neigh {
   display: inline-block;
   background-color: #35CAFC;
@@ -424,6 +510,7 @@ footer .logo-contain {
   left: 3px;
   transition: all 100ms ease-in;
   color: #000;
+  /* iPhone 5 ----------- */
 }
 
 .btn-3d-blue-results-neigh:before {
@@ -455,6 +542,18 @@ footer .logo-contain {
   border-top: 3px solid #000;
   border-right: 3px solid #000;
   transform: skewY(45deg);
+}
+
+@media only screen and (min-device-width: 320px) and (max-device-height: 568px) and (orientation: landscape) and (-webkit-device-pixel-ratio: 2) {
+  .btn-3d-blue-results-neigh {
+    /* Styles */
+  }
+}
+
+@media only screen and (min-device-width: 320px) and (max-device-height: 568px) and (orientation: portrait) and (-webkit-device-pixel-ratio: 2) {
+  .btn-3d-blue-results-neigh {
+    /* Styles */
+  }
 }
 
 .btn-3d-blue, .btn-3d-blue-neighborhood, .btn-3d-blue-down, .btn-3d-blue-results {
@@ -1195,17 +1294,6 @@ footer .logo-contain {
   }
 }
 
-.sort-by-arrow-neigh {
-  width: 75px;
-  z-index: 5003 !important;
-  left: auto;
-  right: 0px;
-}
-
-.sort-by-arrow-neigh span {
-  line-height: 2.5em;
-}
-
 .down-btn-pressed {
   right: -20px;
 }
@@ -1767,6 +1855,7 @@ footer .logo-contain {
   color: white;
   height: 10vh;
   font-size: 3em;
+  /* iPhone 5 ----------- */
 }
 
 @media (max-width: 965px) {
@@ -1774,6 +1863,13 @@ footer .logo-contain {
     font-size: 2em;
     height: 6vh;
     padding-bottom: 10px;
+  }
+}
+
+@media only screen and (min-device-width: 320px) and (max-device-height: 568px) and (orientation: landscape) and (-webkit-device-pixel-ratio: 2) {
+  .listing-photos .photo-viewer .photo-container .photo-container-day {
+    height: 15vh;
+    /* Styles */
   }
 }
 
@@ -2035,6 +2131,12 @@ footer .logo-contain {
   .listing-agent-photo {
     font-size: .75em;
     /* STYLES GO HERE */
+  }
+}
+
+@media only screen and (min-device-width: 320px) and (max-device-height: 568px) and (orientation: portrait) and (-webkit-device-pixel-ratio: 2) {
+  .listing-agent-photo {
+    font-size: 1em;
   }
 }
 
