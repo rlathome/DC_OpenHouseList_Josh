@@ -350,10 +350,17 @@ class Listing extends Component{
     let date = (listing.open_house_events) ? moment(listing.open_house_events[0].event_start) : '';
     let time = (date) ? date.format('h:mmA') : '';
 
+    let event_start = (listing.open_house_events) ? listing.open_house_events[0].event_start : '';
+    let days = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
+    let new_date = moment(event_start).calendar();
+    new_date = (new_date !== "Invalid date") ? ' - '+new_date : '';
+    let dow = moment(event_start).day();
+    dow = days[dow];
+    console.log('open house is on: ',dow);
 
     showing = (
       <div style={style} className="photo-container">
-        <div className="photo-container-day">{tday} {time}</div>
+        <div className="photo-container-day">{dow} {time}</div>
       </div>
     )
     //FULLSCREEN IMAGES
