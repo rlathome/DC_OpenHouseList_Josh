@@ -36,6 +36,13 @@ header {
   }
 }
 
+@media only screen and (min-device-width: 320px) and (max-device-height: 568px) and (orientation: portrait) and (-webkit-device-pixel-ratio: 2) {
+  .navbar-right {
+    width: 45vw !important;
+    z-index: 500000000 !important;
+  }
+}
+
 footer {
   margin: 25px 0px 25px 0px;
   font-size: .75em;
@@ -156,6 +163,12 @@ footer .logo-text {
   }
 }
 
+@media only screen and (min-device-width: 320px) and (max-device-height: 568px) and (orientation: portrait) and (-webkit-device-pixel-ratio: 2) {
+  footer {
+    margin-top: 100px;
+  }
+}
+
 #header-image {
   width: 100%;
   height: 20vh;
@@ -202,6 +215,12 @@ footer .logo-text {
 @media only screen and (min-width: 375px) and (max-width: 667px) and (orientation: portrait) {
   .header-title-container img {
     width: 75%;
+  }
+}
+
+@media only screen and (min-device-width: 320px) and (max-device-height: 568px) and (orientation: portrait) and (-webkit-device-pixel-ratio: 2) {
+  .header-title-container img {
+    width: 100%;
   }
 }
 
@@ -389,12 +408,20 @@ footer .logo-text {
 .featured-item {
   padding: 0px;
   height: 25vh;
+  /* iPhone 5 ----------- */
 }
 
 @media (max-width: 768px) {
   .featured-item {
     height: 25vh;
     margin-bottom: 20px;
+  }
+}
+
+@media only screen and (min-device-width: 320px) and (max-device-height: 568px) and (orientation: landscape) and (-webkit-device-pixel-ratio: 2) {
+  .featured-item {
+    /* Styles */
+    height: 40vh;
   }
 }
 
@@ -430,6 +457,14 @@ footer .logo-text {
   border: 1px solid #000;
   overflow-y: hidden;
   cursor: pointer;
+  /* iPhone 5 ----------- */
+}
+
+@media only screen and (min-device-width: 320px) and (max-device-height: 568px) and (orientation: landscape) and (-webkit-device-pixel-ratio: 2) {
+  .pic-holder {
+    /* Styles */
+    height: 40vh;
+  }
 }
 
 .btn-3d-blue {
@@ -617,6 +652,13 @@ footer .logo-text {
 @media (max-width: 950px) {
   .day-btn {
     width: 275px;
+  }
+}
+
+@media only screen and (min-device-width: 320px) and (max-device-height: 568px) and (orientation: portrait) and (-webkit-device-pixel-ratio: 2) {
+  .day-btn {
+    width: 65vw;
+    margin-bottom: 3vh;
   }
 }
 
@@ -878,17 +920,17 @@ footer .logo-text {
 
 .day-text {
   line-height: 1em;
-  margin: 0px 55px;
-  display: flex;
   height: 100%;
-  justify-content: space-around;
-  flex-direction: column;
 }
 
-@media (max-width: 768px) {
+.day-text span {
+  display: inline-block;
+  text-align: left;
+}
+
+@media only screen and (min-device-width: 320px) and (max-device-height: 568px) and (orientation: portrait) and (-webkit-device-pixel-ratio: 2) {
   .day-text {
-    display: block;
-    margin: 45px 35px;
+    font-size: .85em;
   }
 }
 
@@ -896,8 +938,19 @@ footer .logo-text {
   margin-bottom: 5px;
 }
 
+.day-holder {
+  padding: 50px 0px;
+}
+
+@media (min-width: 950px) {
+  .day-holder {
+    padding: 40px 0px;
+  }
+}
+
 .day-text-1, .day-text-2, .neigh-selected {
   text-transform: uppercase;
+  width: 100%;
 }
 
 .day-text-1 {
@@ -1424,6 +1477,16 @@ footer .logo-text {
   }
 }
 
+@media only screen and (min-device-width: 320px) and (max-device-height: 568px) and (orientation: portrait) and (-webkit-device-pixel-ratio: 2) {
+  .results-item-info {
+    padding: 0px 5px;
+  }
+}
+
+.result-subd {
+  font-size: .75em;
+}
+
 .results-item-time {
   position: relative;
 }
@@ -1444,6 +1507,12 @@ footer .logo-text {
   .results-item-time-box {
     font-size: 2em;
     line-height: 4em;
+  }
+}
+
+@media only screen and (min-device-width: 320px) and (max-device-height: 568px) and (orientation: portrait) and (-webkit-device-pixel-ratio: 2) {
+  .results-item-time-box {
+    font-size: 1.5em;
   }
 }
 
@@ -1533,6 +1602,12 @@ footer .logo-text {
   }
 }
 
+@media only screen and (min-device-width: 320px) and (max-device-height: 568px) and (orientation: portrait) and (-webkit-device-pixel-ratio: 2) {
+  .listing-address {
+    font-size: 1.35em;
+  }
+}
+
 @media (max-width: 950px) {
   .sqFt {
     font-size: 1em;
@@ -1609,6 +1684,12 @@ footer .logo-text {
   .listing-header-specs {
     font-size: 1.75em;
     width: 90%;
+  }
+}
+
+@media only screen and (min-device-width: 320px) and (max-device-height: 568px) and (orientation: portrait) and (-webkit-device-pixel-ratio: 2) {
+  .listing-header-specs {
+    font-size: .75em;
   }
 }
 
@@ -1955,6 +2036,17 @@ footer .logo-text {
   width: 50vw;
   top: 40vh;
   left: 25vw;
+}
+
+.submit_message div {
+  margin-bottom: 10px;
+}
+
+@media only screen and (min-device-width: 320px) and (max-device-height: 568px) and (orientation: portrait) and (-webkit-device-pixel-ratio: 2) {
+  .submit_message {
+    width: 85vw;
+    left: 7.5vw;
+  }
 }
 
 .showing-modal {

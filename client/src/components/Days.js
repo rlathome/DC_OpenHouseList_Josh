@@ -21,26 +21,26 @@ class Days extends Component{
         <div className="search-options">
           <span id="saturday" onClick={this.saturday.bind(this)} className={btn_style}>
             <div className="day-text">
-              <div>
-                <div className="day-text-1">
+              <span className="day-holder">
+                <span className="day-text-1">
                   This
-                </div>
-                <div className="day-text-2">
+                </span><br/>
+                <span className="day-text-2">
                   Saturday
-                </div>
-              </div>
+                </span>
+              </span>
             </div>
           </span>
             <span id="sunday" onClick={this.sunday.bind(this)} className={btn_style}>
               <div className="day-text">
-                  <div>
-                  <div className="day-text-1">
+                  <span className="day-holder">
+                  <span className="day-text-1">
                     This
-                  </div>
-                  <div className="day-text-2">
+                  </span><br/>
+                  <span className="day-text-2">
                     Sunday
-                  </div>
-                </div>
+                  </span>
+                </span>
               </div>
             </span>
           </div>

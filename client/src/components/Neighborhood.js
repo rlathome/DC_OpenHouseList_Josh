@@ -18,7 +18,7 @@ class Neighborhood extends Component{
   }
   componentWillMount(){
     //temporary - loading neighborhoods from DB while API key is for Columbia
-    let neighborhoods = ["Full DC Area", "Adams Morgan", "Anacostia", "Brookland", "Capitol Hill", "Columbia Heights", "Deanwood", "duPont Circle", "Eckington", "Friendship Heights", "Georgetown", "Logan Circle", "Petworth", "Southwest Waterfront", "Westend"];
+    let neighborhoods = ["Full DC Area", "Adams Morgan", "Anacostia", "Brookland", "Capitol Hill", "Columbia Heights", "Deanwood", "Dupont Circle", "Eckington", "Friendship Heights", "Georgetown", "Logan Circle", "Petworth", "Southwest Waterfront", "Westend"];
     // axios.get(apiKey + '/info/neighborhoods').then(
     //   (neighborhoods)=>{
     //     console.log('neighborhoods: ',neighborhoods.data);
@@ -63,7 +63,17 @@ class Neighborhood extends Component{
   }
   render(){
     let neighborhoods = this.state.neighborhoods;
-    let selected = ( <span> {this.state.selected} </span> );
+    let picked = this.state.selected.toLowerCase();
+    neighborhoods.forEach((val)=>{
+      let val2=val.toLowerCase();
+      val2=val2.replace(/ /g,'');
+      console.log('minified: ',val2,' vs: ',picked);
+      if(val2==picked){
+        picked = val;
+      }
+    });
+
+    let selected = ( <span> {picked} </span> );
     neighborhoods = neighborhoods.map((subd)=>{
       let id = '';
       switch(subd){
@@ -88,7 +98,7 @@ class Neighborhood extends Component{
         case 'Deanwood':
         id='deanwood';
         break;
-        case 'duPont Circle':
+        case 'Dupont Circle':
         id='dupontcircle';
         break;
         case 'Eckington':

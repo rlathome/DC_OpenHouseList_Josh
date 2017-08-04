@@ -424,6 +424,7 @@ class Listing extends Component{
       <div className="submit_modal">
         <div className="submit_message rounded">
           <div>We'll be in touch shortly!</div>
+          <img src="../images/DC_open House_sm-10.svg" alt='rlah logo' />
         </div>
       </div>
     ) : '';
