@@ -310,15 +310,6 @@ footer .logo-text {
   }
 }
 
-@media only screen and (min-width: 769px) and (max-width: 1024px) {
-  #header-nav ul {
-    width: 25vw;
-    float: right;
-    z-index: 10 !important;
-    background-color: inherit;
-  }
-}
-
 .skip-ahead {
   cursor: pointer;
 }
@@ -1384,7 +1375,7 @@ footer .logo-text {
 }
 
 .results-item {
-  height: 30vh;
+  height: 35vh;
   cursor: pointer;
   margin: 15px 5px;
   background-color: #fff;
@@ -1468,12 +1459,14 @@ footer .logo-text {
 @media (max-width: 950px) {
   .results-item-info div {
     font-size: 1.5em;
+    top: 15px;
   }
 }
 
 @media (max-width: 765px) {
   .results-item-info div {
     font-size: 1em;
+    top: 15px;
   }
 }
 
@@ -2156,7 +2149,7 @@ footer .logo-text {
 }
 
 .thumb-viewing {
-  border: 1px solid #fff !important;
+  border: 2px solid #fff !important;
 }
 
 .listing-map {

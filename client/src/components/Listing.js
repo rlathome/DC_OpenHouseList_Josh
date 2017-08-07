@@ -6,7 +6,7 @@ import { hashHistory } from 'react-router';
 import GoogleMap from "react-google-map";
 import GoogleMapLoader from "react-google-maps-loader";
 import currency from 'currency-formatter';
-import jquery from 'jquery';
+import $ from 'jquery';
 import moment from 'moment';
 const google = window.google;
 // let apiKey = (process.env.REACT_APP_STATUS == 'development') ? "http://localhost:8080" : "http://vast-shore-14133.herokuapp.com";
@@ -156,18 +156,20 @@ class Listing extends Component{
           this.setState({
             showing_index:photo
           });
+          let x = (photo !==0) ? this.scrollAlong(photo-1) : this.scrollAlong(photo);
+          if(x ==false){return;}
           let newIndex = photo;
           let id='#'+newIndex;
-          let id2='#'+(this.state.showing_index-1);
-          jquery(id).addClass('thumb-viewing');
-          jquery(id2).removeClass('thumb-viewing');
+          let id2= (photo !==0) ? '#'+(this.state.showing_index-1) : '#'+(this.state.thumb_photos.length-1);
+          $(id).addClass('thumb-viewing');
+          $(id2).removeClass('thumb-viewing');
           this.scrollPhotos();
         }else{
           setTimeout(()=>{
               this.scrollPhotos();
-          },10000);
+          },5000);
         }
-      },10000);
+      },5000);
   }
   scrollChecker(){
     this.setState({
@@ -183,8 +185,34 @@ class Listing extends Component{
           autoscroll:true
         });
       }
-    },10000);
+    },5000);
   }
+  // scrollPhotos(){
+  //   let photo=index || this.state.showing_index;
+  //   let photos = this.state.big_photos;
+  //   console.log('photo index: ',photo);
+  //   photo=parseInt(photo);
+  //   photo++;
+  //   if(photo==photos.length){
+  //     photo=0;
+  //   }
+  //     console.log('incrementing: ',photo);
+  //       this.setState({
+  //         showing_index:photo
+  //       });
+  //       let x = (photo !==0) ? this.scrollAlong(photo-1) : this.scrollAlong(photo);
+  //       if(x ==false){return;}
+  //       let newIndex = photo;
+  //       let id='#'+newIndex;
+  //       let id2= (photo !==0) ? '#'+(this.state.showing_index-1) : '#'+(this.state.thumb_photos.length-1);
+  //       $(id).addClass('thumb-viewing');
+  //       $(id2).removeClass('thumb-viewing');
+  // }
+  // scrollChecker(){
+  //   setInterval(()=>{
+  //       this.scrollPhotos();
+  //   },5000);
+  // }
   showPic(e){
     this.scrollChecker();
     // e.preventDefault();
@@ -192,8 +220,8 @@ class Listing extends Component{
     let newIndex = e.target.id;
     let id='#'+newIndex;
     let id2='#'+this.state.showing_index;
-    jquery(id).addClass('thumb-viewing');
-    jquery(id2).removeClass('thumb-viewing');
+    $(id).addClass('thumb-viewing');
+    $(id2).removeClass('thumb-viewing');
 
     this.setState({
       showing_index:parseInt(e.target.id)
@@ -202,32 +230,57 @@ class Listing extends Component{
   }
   componentDidMount(){
     let id2='#'+this.state.showing_index;
-    jquery(id2).addClass('thumb-viewing');
+    $(id2).addClass('thumb-viewing');
+  }
+  scrollAlong(index){
+    let idx = index || this.state.showing_index;
+    let pic = $('#'+idx);
+    let width = pic.width();
+    let off = pic.offset();
+    let scroller_width = $('.scroller').width();
+    let scroller_pos = $('.scroller').position();
+    if(!scroller_pos){
+      return false;
+    }
+    let scroller_right_offset = scroller_pos.left+scroller_width;
+    let scroller_left_offset = scroller_pos.left;
+    let pic_offset_left = off.left;
+    let pic_abs_left = pic.position().left;
+    let num_pics = scroller_width/width;
+
+    //SCROLL RIGHT:
+    if(pic_offset_left+width>scroller_right_offset-width){
+      console.log('passed! ',(pic_offset_left+width));
+      $('.scroller').scrollLeft(pic_abs_left-((num_pics-2)*width));
+    }
+    //SCROLL LEFT:
+    if(pic_offset_left-width<scroller_left_offset){
+      console.log('passed!');
+      $('.scroller').scrollLeft(pic_abs_left-width);
+    }
   }
   goRight(e){
     e.preventDefault();
     this.scrollChecker();
     let index = this.state.showing_index;
     let newIndex=index;
+    this.scrollAlong();
     console.log('now on: ',newIndex);
     if(index!==this.state.thumb_photos.length-1){
       newIndex = this.state.showing_index+1;
       console.log('navigating to: ',newIndex);
       let id='#'+newIndex;
       let id2='#'+(newIndex-1);
-      jquery(id).addClass('thumb-viewing');
-      jquery(id2).removeClass('thumb-viewing');
+      $(id).addClass('thumb-viewing');
+      $(id2).removeClass('thumb-viewing');
+    }else{
+      newIndex = 0;
+      console.log('navigating to: ',newIndex);
+      let id='#'+newIndex;
+      let id2='#'+(newIndex.length-1);
+      $(id).addClass('thumb-viewing');
+      $(id2).removeClass('thumb-viewing');
     }
-    // let width=jquery('#1').width();
-    // let scroll_width=(index+2)*width;
-    // console.log('width: ',scroll_width);
-    // let container_width=jquery('.scroller').width();
-    // console.log('container: ',container_width);
-    // if(scroll_width>container_width){
-    //   let left = (-(scroll_width-container_width));
-    //   console.log('past bounds! adjusting: ');
-    //   jquery('.photo-carousel-interior').css('left',left);
-    // }
     this.setState({
       showing_index:newIndex
     });
@@ -238,13 +291,22 @@ class Listing extends Component{
     let index = this.state.showing_index;
     let newIndex=index;
     console.log('now on: ',newIndex);
+    this.scrollAlong();
     if(index!==0){
       newIndex = this.state.showing_index-1;
       console.log('navigating to: ',newIndex);
       let id='#'+newIndex;
       let id2='#'+(newIndex+1);
-      jquery(id).addClass('thumb-viewing');
-      jquery(id2).removeClass('thumb-viewing');
+      $(id).addClass('thumb-viewing');
+      $(id2).removeClass('thumb-viewing');
+    }
+    else{
+      newIndex = this.state.thumb_photos.length-1;
+      console.log('navigating to: ',newIndex);
+      let id='#'+newIndex;
+      let id2='#0';
+      $(id).addClass('thumb-viewing');
+      $(id2).removeClass('thumb-viewing');
     }
     this.setState({
       showing_index:newIndex
@@ -329,7 +391,7 @@ class Listing extends Component{
   render(){
     let showing=this.state.showing;
     let listing=this.state.listing;
-    console.log('listing to display: ',listing);
+    // console.log('listing to display: ',listing);
     let subdivision=(listing) ? listing.subdivision : '';
     let price = (listing) ? listing.list_price : '';
     subdivision=subdivision.toLowerCase();

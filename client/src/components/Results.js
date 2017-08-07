@@ -445,6 +445,14 @@ class Results extends Component{
       });
     }
   }
+  queueMarkers(markers){
+    let listings_remaining = markers.slice(10,markers.length);
+    let listings_shown = markers.slice(0,10);
+    this.setState({
+      listings_shown,
+      listings_remaining
+    });
+  }
   showMore(){
     let listings_shown=this.state.listings_shown;
     let listings_remaining= this.state.listings_remaining;
@@ -467,10 +475,10 @@ class Results extends Component{
           left:this.state.x,
           top:this.state.y
         }
-        let map = (
-          <ReactMap display={true} viewListing={this.viewListing.bind(this)} updateResults={this.updateResults.bind(this)} neighborhood={this.props.params.neighborhood} markers={results}/>
-          // <Map markers={this.state.markers} />
-        );
+        // let map = (
+        //   <ReactMap display={true} viewListing={this.viewListing.bind(this)} updateResults={this.updateResults.bind(this)} neighborhood={this.props.params.neighborhood} markers={results}/>
+        //   // <Map markers={this.state.markers} />
+        // );
         let subd = '';
         let nbhd = this.props.params.neighborhood.toLowerCase();
         switch(nbhd){
@@ -605,7 +613,7 @@ class Results extends Component{
             {/* <img src="./images/download-2.jpg" alt="listing image" /> */}
           </div>
           <div id={listing.id} className="results-div col-xs-4 results-item-info">
-            <div id={listing.id}>
+            <div className="item-info-container" id={listing.id}>
               { listing.street_number } { listing.street_name } { listing.street_post_dir } ({dowUC})<br/>
               { price }<br/>
               {result_subd}
@@ -620,6 +628,10 @@ class Results extends Component{
         </div>
       );
     }) : '';
+
+    let map = (markers.length) ? (
+      <ReactMap display={true} viewListing={this.viewListing.bind(this)} updateResults={this.updateResults.bind(this)} neighborhood={this.props.params.neighborhood} markers={markers}/>
+    ) : '';
 
 ///////////////////
 

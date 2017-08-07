@@ -272,14 +272,7 @@ footer{
       z-index: 10 !important;
       background-color: inherit;
     }
-    @media only screen
-      and (min-width : 769px)
-      and (max-width : 1024px){
-        width:25vw;
-        float: right;
-        z-index: 10 !important;
-        background-color: inherit;
-    }
+
   }
 }
 .skip-ahead{
@@ -1173,7 +1166,7 @@ footer{
   }
 }
 .results-item{
-  height:30vh;
+  height:35vh;
   // width:100%;
   cursor:pointer;
   margin:15px 5px;
@@ -1228,8 +1221,11 @@ footer{
   font-size: 1.5em;
   cursor: pointer;
 }
+
 .results-item-info{
   position: relative;
+  .item-info-container{
+  }
   div{
     position: absolute;
     top:15px;
@@ -1238,9 +1234,11 @@ footer{
     margin-bottom:15px;
     @media(max-width: 950px){
       font-size: 1.5em;
+      top:15px;
     }
     @media(max-width:765px){
       font-size:1em;
+      top:15px;
     }
   }
   //iphone 5 portrait
@@ -1882,7 +1880,7 @@ footer{
   width:100px;
 }
 .thumb-viewing{
-  border:1px solid #fff !important;
+  border:2px solid #fff !important;
 }
 .listing-map{
   height:25vh;
