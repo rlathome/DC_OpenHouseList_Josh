@@ -50,16 +50,14 @@ class Results extends Component{
         response.data.results.forEach((listing)=>{
           markers.push(listing);
         });
-        let listings_remaining = markers.slice(10,markers.length);
-        let listings_shown = markers.slice(0,10);
+        // let listings_remaining = markers.slice(10,markers.length);
+        // let listings_shown = markers.slice(0,10);
         this.props.storeResults(markers,results);
         this.setState({
           results,
           markers,
           neighborhood,
           cache:markers,
-          listings_remaining,
-          listings_shown,
           display:'list'
         });
         // if(neighborhood !=='FullDCArea'){
@@ -72,8 +70,8 @@ class Results extends Component{
       });
     }else{
       console.log('setting previous markers');
-      let listings_remaining = stored_results.slice(10,markers.length);
-      let listings_shown = stored_results.slice(0,10);
+      // let listings_remaining = stored_results.slice(10,markers.length);
+      // let listings_shown = stored_results.slice(0,10);
       this.setState({
         results:this.props.raw_stored_results,
         markers:stored_results,
@@ -445,27 +443,28 @@ class Results extends Component{
       });
     }
   }
-  queueMarkers(markers){
-    let listings_remaining = markers.slice(10,markers.length);
-    let listings_shown = markers.slice(0,10);
-    this.setState({
-      listings_shown,
-      listings_remaining
-    });
-  }
-  showMore(){
-    let listings_shown=this.state.listings_shown;
-    let listings_remaining= this.state.listings_remaining;
-    let listings_to_add = listings_remaining.slice(0,10);
-    listings_remaining = listings_remaining.slice(10,listings_remaining.length);
-    listings_shown = listings_shown.concat(listings_to_add);
-    this.setState({
-      listings_shown,
-      listings_remaining
-    });
-  }
+  // queueMarkers(markers){
+  //   let listings_remaining = markers.slice(10,markers.length);
+  //   let listings_shown = markers.slice(0,10);
+  //   this.setState({
+  //     listings_shown,
+  //     listings_remaining
+  //   });
+  // }
+  // showMore(){
+  //   let listings_shown=this.state.listings_shown;
+  //   let listings_remaining= this.state.listings_remaining;
+  //   let listings_to_add = listings_remaining.slice(0,10);
+  //   listings_remaining = listings_remaining.slice(10,listings_remaining.length);
+  //   listings_shown = listings_shown.concat(listings_to_add);
+  //   this.setState({
+  //     listings_shown,
+  //     listings_remaining
+  //   });
+  // }
   render(){
     let results = this.state.markers;
+    console.log('results in results render: ',results);
     let selected = this.state.selected;
     let sort = this.state.sorting_spec;
     console.log('sort order: ',this.state.sort_order);
@@ -549,9 +548,9 @@ class Results extends Component{
     let params = this.props.params;
     let neighborhood = (this.state.neighborhood) ? this.state.neighborhood : '';
     console.log('params: ',params);
-    let stored_results = this.props.stored_results;
-    let i = (stored_results) ? true: false;
-    console.log('app has stored results: ',i, ', ',stored_results, ', and raw results: ',this.state.results);
+    // let stored_results = this.props.stored_results;
+    // let i = (stored_results) ? true: false;
+    // console.log('app has stored results: ',i, ', ',stored_results, ', and raw results: ',this.state.results);
     results = (results) ? results.map((listing)=>{
       // console.log('listing in render: ',listing);
       let price = currency.format(listing.list_price,{ code: 'USD', decimalDigits: 0 });
