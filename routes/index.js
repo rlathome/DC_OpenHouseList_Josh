@@ -137,12 +137,13 @@ router.post('/submitform',function(req,res,next){
 
   let first = form_data.first;
   let last = form_data.last;
+  let mls = form_data.mls;
   let subject = "A New Prospect Has Contacted You from DC's Open House List!";
   let text = form_data.textarea;
   let phone = form_data.phone;
   let email = form_data.email;
   let agent_email = form_data.agent_email;
-  let to=agent_email;
+  let to = agent_email;
 
   var mailcomposer = require('mailcomposer');
 
@@ -157,7 +158,8 @@ router.post('/submitform',function(req,res,next){
     body:text,
     phone,
     email,
-    html:'<div>'+text+'</div>'+'<div>'+phone+'</div>'+'<div>'+email+'</div>'
+    mls,
+    html:'<div>Re:MLS#'+mls+'&nbsp;'+text+'</div>'+'<div>'+phone+'</div>'+'<div>'+email+'</div>'
   });
 
   mail.build(function(mailBuildError, message){

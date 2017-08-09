@@ -320,6 +320,7 @@ class Listing extends Component{
     let phone = this.refs.phone.value;
     let textarea = this.refs.textarea.value;
     let agent_email = this.state.agent_email;
+    let mls = this.props.params.mls;
     console.log('submitting: ',first,last,email,textarea);
     //FILTER FOR SCRIPTING ATTACKS:
     //CODE HERE
@@ -336,6 +337,7 @@ class Listing extends Component{
       last,
       email,
       agent_email,
+      mls,
       phone,
       textarea
     }
@@ -410,7 +412,9 @@ class Listing extends Component{
     let ay = this.state.day.slice(1,(this.state.day.length));
     let tday = d+ay;
     let date = (listing.open_house_events) ? moment(listing.open_house_events[0].event_start) : '';
-    let time = (date) ? date.format('h:mmA') : '';
+    let date2 = (listing.open_house_events) ? moment(listing.open_house_events[0].event_end) : '';
+    let time = (date) ? date.format('h') : '';
+    let time2 = (date2) ? date2.format('hA') : '';
 
     let event_start = (listing.open_house_events) ? listing.open_house_events[0].event_start : '';
     let days = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
@@ -422,7 +426,7 @@ class Listing extends Component{
 
     showing = (
       <div style={style} className="photo-container">
-        <div className="photo-container-day">{dow} {time}</div>
+        <div className="photo-container-day">Open {dow} {time} - {time2}</div>
       </div>
     )
     //FULLSCREEN IMAGES
@@ -438,6 +442,7 @@ class Listing extends Component{
 
     let comments = (listing) ? listing.internet_remarks : '';
     let listing_bedrooms = (listing) ? listing.num_bedrooms : '';
+    let halfbaths = (listing && listing.half_baths) ? '/'+listing.half_baths : '';
     //LISTING SPECS:
     let bed_img = (listing) ? (
       <div className="listing-beds">
@@ -447,7 +452,7 @@ class Listing extends Component{
     ) : '';
     let bath_img = (listing) ? (
       <div className="listing-baths">
-        <div>{listing.full_baths}/{listing.half_baths}</div>
+        <div>{listing.full_baths}{halfbaths}</div>
         <img className="listing-emoji" src={require('../images/bath.svg')} alt="bath" />
       </div>
     ) : '';
@@ -479,7 +484,7 @@ class Listing extends Component{
     let mls = (listing) ? (
       <div>MLS #:&nbsp;{(listing) ? listing.mls_number : ''}</div>
     ) : '';
-    let parking = (listing) ? (<div>Parking spaces-&nbsp;{(listing) ? listing.parking_spaces || listing.garage_spaces : ''}</div>) : '';
+    let parking = (listing.parking_spaces) ? (<div>Parking spaces-&nbsp;{(listing) ? listing.parking_spaces || listing.garage_spaces : ''}</div>) : '';
 
     //EMAIL SUBMIT MODAL
     let submit_modal = (this.state.submitted_email) ? (
