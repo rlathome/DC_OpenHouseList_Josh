@@ -53,7 +53,7 @@ router.get('/featured',function(req,res,next){
 router.get('/open_houses',function(req,res,next){
   console.log('api key: ',apiKey);
   // let params='';
-  let url = "https://api.displet.com/residentials/search?authentication_token="+apiKey+"&open_house=y&limit=2000";
+  let url = "https://api.displet.com/residentials/search?authentication_token="+apiKey+"&open_house=y&state=DC&limit=2000";
 
   let options = {
     url:url,

@@ -46,7 +46,7 @@ class Search extends Component{
   }
   pressed_toggle(e){
     e.preventDefault();
-    let $item = jquery(e.target).closest('span');
+    let $item = jquery(e.target).closest('.day-btn');
     if($item.hasClass('btn-pressed')){
       $item.removeClass('btn-pressed');
     }else{
@@ -69,7 +69,7 @@ class Search extends Component{
         step:'neighborhoods'
       });
     },250);
-    let $item = jquery(e.target).closest('span');
+    let $item = jquery(e.target).closest('.day-btn');
     this.pressed_toggle(e);
   }
   sunday(e){

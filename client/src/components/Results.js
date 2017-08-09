@@ -8,9 +8,9 @@ import moment from 'moment';
 import ReactMap from './ReactMap';
 // let apiKey = (process.env.REACT_APP_STATUS == 'development') ? "http://localhost:8080" : "http://vast-shore-14133.herokuapp.com";
 
-let apiKey="http://vast-shore-14133.herokuapp.com";
+// let apiKey="http://vast-shore-14133.herokuapp.com";
 
-// let apiKey = "http://localhost:8080";
+let apiKey = "http://localhost:8080";
 
 
 class Results extends Component{
@@ -628,9 +628,13 @@ class Results extends Component{
       );
     }) : '';
 
-    let map = (markers.length) ? (
+    // let map = (markers.length) ? (
+    //   <ReactMap display={true} viewListing={this.viewListing.bind(this)} updateResults={this.updateResults.bind(this)} neighborhood={this.props.params.neighborhood} markers={markers}/>
+    // ) : '';
+
+    let map = (
       <ReactMap display={true} viewListing={this.viewListing.bind(this)} updateResults={this.updateResults.bind(this)} neighborhood={this.props.params.neighborhood} markers={markers}/>
-    ) : '';
+    );
 
 ///////////////////
 

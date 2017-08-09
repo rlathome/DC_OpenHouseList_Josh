@@ -414,7 +414,11 @@ footer{
   left: -20px;
   transition: all 100ms ease-in;
   color: #000;
+  z-index: 2;
   text-align: center;
+  .day-holder{
+    z-index: -1;
+  }
 }
 .btn-pressed,.list-btn-pressed,.map-btn-pressed,.down-btn-pressed{
   top:0px !important;
