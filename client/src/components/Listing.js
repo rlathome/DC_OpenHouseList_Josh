@@ -136,11 +136,6 @@ class Listing extends Component{
 
 
   }
-  // componentDidUpdate(){
-  //   if(this.state.autoscroll==true){
-  //     this.scrollPhotos();
-  //   }
-  // }
   scrollPhotos(index){
       let photo=index || this.state.showing_index;
       let photos = this.state.big_photos;
@@ -187,32 +182,6 @@ class Listing extends Component{
       }
     },5000);
   }
-  // scrollPhotos(){
-  //   let photo=index || this.state.showing_index;
-  //   let photos = this.state.big_photos;
-  //   console.log('photo index: ',photo);
-  //   photo=parseInt(photo);
-  //   photo++;
-  //   if(photo==photos.length){
-  //     photo=0;
-  //   }
-  //     console.log('incrementing: ',photo);
-  //       this.setState({
-  //         showing_index:photo
-  //       });
-  //       let x = (photo !==0) ? this.scrollAlong(photo-1) : this.scrollAlong(photo);
-  //       if(x ==false){return;}
-  //       let newIndex = photo;
-  //       let id='#'+newIndex;
-  //       let id2= (photo !==0) ? '#'+(this.state.showing_index-1) : '#'+(this.state.thumb_photos.length-1);
-  //       $(id).addClass('thumb-viewing');
-  //       $(id2).removeClass('thumb-viewing');
-  // }
-  // scrollChecker(){
-  //   setInterval(()=>{
-  //       this.scrollPhotos();
-  //   },5000);
-  // }
   showPic(e){
     this.scrollChecker();
     // e.preventDefault();
