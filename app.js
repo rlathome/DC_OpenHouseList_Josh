@@ -8,6 +8,7 @@ var bodyParser = require('body-parser');
 var cors = require('cors');
 var index = require('./routes/index');
 var users = require('./routes/users');
+var mongoose = require('mongoose');
 
 var app = express();
 
@@ -15,6 +16,8 @@ var app = express();
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 console.log('port: ',process.env.PORT);
+
+mongoose.connect(process.env.DB_CONN_TEST,{useMongoClient:true});
 // app.set('port', ('8080'));
 
 // uncomment after placing your favicon in /public

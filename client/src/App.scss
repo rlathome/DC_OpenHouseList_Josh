@@ -1326,6 +1326,24 @@ footer{
   //  z-index: -1;
 
 }
+.listing-section-wrapper{
+  // ipad portrait
+  @media only screen
+  and (min-width : 768px)
+  and (max-width : 1024px)
+  and (orientation : portrait) {
+    /* STYLES GO HERE */
+    margin:0%;
+    width:100%;
+  }
+  // iphone 6 portrait
+  @media only screen
+  and (min-width : 355px)
+  and (max-width : 667px)
+  and (orientation : portrait) {
+    margin:0%;
+  }
+}
 .listing-address{
   display:inline-block;
   font-size:2.25em;
@@ -1528,6 +1546,23 @@ footer{
   //   width:100%;
   //   // padding:0px 5px;
   // }
+}
+.listing-column,.listing-column2{
+  // ipad portrait
+  @media only screen
+  and (min-width : 768px)
+  and (max-width : 1024px)
+  and (orientation : portrait) {
+    /* STYLES GO HERE */
+    padding:0px;
+  }
+  // iphone 6 portrait
+  @media only screen
+  and (min-width : 355px)
+  and (max-width : 667px)
+  and (orientation : portrait) {
+    padding:0px;
+  }
 }
 .specs-form-column{
   padding:0px 10px;
@@ -1920,7 +1955,7 @@ footer{
 
 }
 .agent-photo-holder{
-  margin-bottom:10px;
+  // margin-bottom:10px;
   @media(max-width:995px){
     width:20vw;
   }
@@ -1957,11 +1992,15 @@ footer{
 .agent-form-container{
   text-align: center;
 }
+.admin-saved{
+  margin:0vh 15vw;
+}
 .agent-thumbnail{
   padding:10px;
   text-align: left;
   border:1px solid #000;
   min-height:10vh;
+  margin-bottom:5px;
   input{
     margin-right:10px;
   }

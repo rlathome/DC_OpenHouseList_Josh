@@ -3,6 +3,7 @@ var router = express.Router();
 var request = require('request');
 var https = require('https');
 var FormData = require('form-data');
+var Featured = require('../models/featured.js');
 var formData = new FormData();
 var curl = require('curlrequest');
 
@@ -159,7 +160,7 @@ router.post('/submitform',function(req,res,next){
     phone,
     email,
     mls,
-    html:'<div>Re:MLS#'+mls+'&nbsp;'+text+'</div>'+'<div>'+phone+'</div>'+'<div>'+email+'</div>'
+    html:'<div>Re: MLS# '+mls+'<br/>'+text+'</div>'+'<div>'+phone+'</div>'+'<div>'+email+'</div>'
   });
 
   mail.build(function(mailBuildError, message){
@@ -226,6 +227,63 @@ router.post('/createagent',function(req,res,next){
 
 });
 
+router.post('/addfeatured',function(req,res,next){
+  let body = req.body;
+  console.log('body: ',body);
+  let mls = body.mls;
+
+  let password =  (body.password) ? body.password : 'na';
+
+  if(password !=="!E28_Ey9scbCgC_)"){
+    console.log('incorrect');
+    res.send('incorrect password');
+    return;
+  }
+
+  let newFeatured = new Featured({mls});
+  newFeatured.save(function(err,mls){
+    if(err) console.log('err! ',err);
+    res.json(mls);
+  });
+});
+
+router.get('/getfeaturedlistings',function(req,res,next){
+  console.log('getting featured');
+  Featured.find({},'',function(err,response){
+    if(err) console.log('err - ',err);
+    // res.json(response);
+    // var numbs = JSON.stringify(response);
+    console.log('response: ',response);
+    var results = [];
+    let listings = [];
+    let params = '';
+    for(let i=0;i<response.length;i++){
+      listings.push(response[i]["mls"]);
+    }
+    listings = listings.join(',');
+      // listing = JSON.parse(listing);
+      // results.push(listing);
+      let url = "https://api.displet.com/residentials/search?authentication_token="+apiKey+"&;return_fields="+params+"&mls_number="+listings;
+      console.log('url: ',url);
+      let options = {
+        url:url,
+        headers:{
+          'Accept':'application/javascript',
+          'Referer':domain
+        }
+      }
+      request(options, function (error, response, body) {
+        console.log('error:', error); // Print the error if one occurred
+        console.log('statusCode:', response && response.statusCode); // Print the response status code if a response was received
+        console.log('body:', body); // Print the HTML for the Google homepage.
+        body = JSON.parse(body);
+        res.json(body);
+      });
+  });
+});
+
+router.post('/deletefeatured',function(req,res,next){
+});
 
 router.post('/deleteagent',function(req,res,next){
   let body=req.body;

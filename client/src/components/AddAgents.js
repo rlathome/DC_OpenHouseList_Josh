@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-// let apiKey="http://localhost:8080/";
-let apiKey="http://vast-shore-14133.herokuapp.com/";
+let apiKey="http://localhost:8080/";
+// let apiKey="http://vast-shore-14133.herokuapp.com/";
 
 class AddAgents extends Component{
   constructor(props){
@@ -12,6 +12,7 @@ class AddAgents extends Component{
   }
   componentWillMount(){
     this.getAllAgents();
+    this.getAllListings();
   }
   getAllAgents(){
     let url=apiKey+"info/getallagents";
@@ -20,6 +21,18 @@ class AddAgents extends Component{
       let agents = response.data;
       this.setState({
         agents
+      });
+    }).catch((err)=>{
+      console.log('err - ',err);
+    });
+  }
+  getAllListings(){
+    let url=apiKey+"info/getfeaturedlistings";
+    axios.get(url).then((response)=>{
+      console.log('axios listings: ',response);
+      let listings = response.data.results;
+      this.setState({
+        listings
       });
     }).catch((err)=>{
       console.log('err - ',err);
@@ -55,6 +68,22 @@ class AddAgents extends Component{
       console.log('err - ',err);
     });
   }
+  submitListing(){
+    let url=apiKey+"info/addfeatured";
+    console.log('submitting');
+    let mls = this.refs.mls.value;
+    let password = this.refs.password.value;
+    let data = {
+      mls,
+      password
+    }
+    axios.post(url,data).then((response)=>{
+      console.log('successfully submitted',response);
+      // this.getAllListings();
+    }).catch((err)=>{
+      console.log('err - ',err);
+    });
+  }
   deleteAgent(e){
     e.preventDefault();
     let target = e.target;
@@ -77,6 +106,30 @@ class AddAgents extends Component{
         console.log('err - ',err);
       });
     }
+  }
+  deleteListing(e){
+    e.preventDefault();
+    let target = e.target;
+    let id = target.id;
+    let listingid = id;
+    let password = this.refs[listingid].value;
+    console.log('password: ',password);
+    console.log('listing: ',listingid);
+    let data = {
+      listingID:id,
+      password
+    }
+    let url=apiKey+"info/deletefeatured";
+    console.log('clicked: ',id);
+    let confirm = window.confirm('are you sure?');
+    // if(confirm){
+    //   axios.post(url,data).then((response)=>{
+    //     console.log('successfully submitted',response);
+    //     this.getAllListings();
+    //   }).catch((err)=>{
+    //     console.log('err - ',err);
+    //   });
+    // }
   }
   render(){
     let agentinfo = (this.state.agents) ? this.state.agents.map((agent)=>{
@@ -102,6 +155,34 @@ class AddAgents extends Component{
         </div>
       );
     }) : '';
+
+    let listinginfo = (this.state.listings) ? this.state.listings.map((listing)=>{
+      return {
+        street_name:listing.street_name,
+        street_number:listing.street_number,
+        price:'$'+listing.list_price,
+        mls_number:listing.mls_number,
+        image:listing.image_urls.all_thumb[0],
+        id:listing.id,
+        agent_name:listing.agent_first_name+' '+listing.agent_last_name
+      }
+    }) : '';
+    let listings = (listinginfo) ? listinginfo.map((listing)=>{
+      return(
+        <div className='agent-thumbnail clearfix'>
+          <div className='agent-thumb-info'>
+            <span>{listing.street_number}</span>
+            <span>&nbsp;{listing.street_name}</span>
+            <div>Agent:&nbsp;{listing.agent_name}</div>
+            <div>{listing.price}&nbsp;</div>
+            <div>{listing.mls_number}</div>
+            <input ref={listing.id} placeholder="Password" />
+            <div id={listing.id} onClick={this.deleteListing.bind(this)} className='btn btn-default btn-danger'>Delete</div>
+          </div>
+          <img className='agent-thumb-img pull-right image-responsive' src={listing.image} alt="agent photo" />
+        </div>
+      );
+    }) : '';
     return(
       <div className="wrapper agent-form-container">
         <h1>Add Agent</h1>
@@ -117,9 +198,21 @@ class AddAgents extends Component{
           <input className="form-control" ref="facebook_url" placeholder="Facebook"/>
           <input onClick={this.submitForm.bind(this)} className="btn btn-default btn-success" value="Add"/>
         </form>
-        <div className="agent-list">
-          <h1>Agents</h1>
-          { agents }
+        <div className="admin-saved">
+          <h1>Featured Open House</h1>
+          <form className="new-agent-form form form-default">
+            <input className="form-control" ref="password" placeholder="Password"/>
+            <input className="form-control" ref="mls" placeholder="MLS number (of an open house)"/>
+            <input onClick={this.submitListing.bind(this)} className="btn btn-default btn-success" value="Add"/>
+          </form>
+          <div className="agent-list">
+            <h1>Agents</h1>
+            { agents }
+          </div>
+          <div className="agent-list">
+            <h1>Featured Open Houses</h1>
+            { listings }
+          </div>
         </div>
       </div>
       );

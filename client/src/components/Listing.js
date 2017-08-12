@@ -505,9 +505,9 @@ class Listing extends Component{
           <img src={agent.headshot_url} className="image-responsive" alt="Agent Image" />
         </div>
         <div className="col-lg-12 col-md-6 col-sm-6">
-          <div>{agent.name}</div>
-          <div>4600 North Park Avenue, Suite 100</div>
-          <div>Chevy Chase, MD 20815</div>
+          <div><h3>{agent.name}</h3></div>
+          <div>11 Dupont Circle NW, Ste 650</div>
+          <div>Washington, DC 20036</div>
           <div>Phone: {agent.phone}</div>
           <div>Email: <a ref="agent_email" href={agent.email} alt='email'>{agent.email}</a></div>
         </div>
@@ -533,7 +533,7 @@ class Listing extends Component{
           </div>
         </div>
         <div className="listing-section">
-          <div className="row">
+          <div className="listing-section-wrapper row">
             <div className="listing-column col-md-8 col-lg-6">
               <div className="photos-map-column">
                 <div className="listing-photos rounded">
