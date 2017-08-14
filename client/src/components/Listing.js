@@ -371,31 +371,42 @@ class Listing extends Component{
     let thumb_photos=this.state.thumb_photos;
     let big_photos=this.state.big_photos;
 
-    let style = {
+    let is_vert = false;
+    let pic_image = document.createElement('img');
+    pic_image.src=big_photos[showing_index];
+    console.log('pic height: ',pic_image.height);
+    if(pic_image.height>pic_image.width){
+      console.log('vertical!!!');
+      is_vert = true;
+    }
+    let pic_size = (is_vert) ? 'contain' : 'cover';
+    let pic_pos = (is_vert) ? 'center' : 'left';
+    let showing_image = {
       backgroundImage:'url('+big_photos[showing_index]+')',
-      backgroundPosition:'left',
-      backgroundSize:'cover',
+      backgroundRepeat:'no-repeat',
+      backgroundPosition:pic_pos,
+      backgroundSize:pic_size,
       overlap:'hidden'
     }
     let d = this.state.day.slice(0,1).toUpperCase();
     let ay = this.state.day.slice(1,(this.state.day.length));
     let tday = d+ay;
-    let date = (listing.open_house_events) ? moment(listing.open_house_events[0].event_start) : '';
-    let date2 = (listing.open_house_events) ? moment(listing.open_house_events[0].event_end) : '';
+    let date = (listing.open_house_events && listing.open_house_events.length > 0) ? moment(listing.open_house_events[0].event_start) : '';
+    let date2 = (listing.open_house_events && listing.open_house_events.length > 0) ? moment(listing.open_house_events[0].event_end) : '';
     let time = (date) ? date.format('h') : '';
-    let time2 = (date2) ? date2.format('hA') : '';
+    let time2 = (date2) ? ' - '+date2.format('hA') : '';
 
-    let event_start = (listing.open_house_events) ? listing.open_house_events[0].event_start : '';
+    let event_start = (listing.open_house_events && listing.open_house_events.length > 0) ? listing.open_house_events[0].event_start : '';
     let days = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
     let new_date = moment(event_start).calendar();
-    new_date = (new_date !== "Invalid date") ? ' - '+new_date : '';
+    new_date = (new_date !== "Invalid date") ? ' - '+ new_date : '';
     let dow = moment(event_start).day();
     dow = days[dow];
     console.log('open house is on: ',dow);
-
+    dow = (dow) ? 'Open '+dow : '';
     showing = (
-      <div style={style} className="photo-container">
-        <div className="photo-container-day">Open {dow} {time} - {time2}</div>
+      <div style={showing_image} className="photo-container">
+        <div className="photo-container-day">{dow} {time} {time2}</div>
       </div>
     )
     //FULLSCREEN IMAGES

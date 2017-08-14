@@ -283,7 +283,20 @@ router.get('/getfeaturedlistings',function(req,res,next){
 });
 
 router.post('/deletefeatured',function(req,res,next){
+  let listingID = req.body.listingID;
+  console.log('id: ',listingID);
+  let password = req.body.password;
+  if(password !=="!E28_Ey9scbCgC_)"){
+    console.log(password,'is incorrect');
+    res.send('incorrect password');
+    return;
+  }
+  Featured.findOneAndRemove({mls:listingID},function(err,response){
+    if(err) console.log('err - ',err);
+    res.json(response);
+  });
 });
+
 
 router.post('/deleteagent',function(req,res,next){
   let body=req.body;
