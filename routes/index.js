@@ -32,7 +32,7 @@ router.get('/', function(req, res, next) {
 });
 
 router.get('/featured',function(req,res,next){
-  let url = "https://api.displet.com/residentials/search?authentication_token="+apiKey+"&;return_fields="+params+"&min_bedrooms=2&min_bathrooms=1&min_list_price=350&open_house=y&open_house_within=7&state=DC&limit=10";
+  let url = "https://api.displet.com/residentials/search?authentication_token="+apiKey+"&;return_fields="+params+"&open_house=y&open_house_within=7&state=DC&limit=10";
 
   let options = {
     url:url,
