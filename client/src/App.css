@@ -1107,6 +1107,7 @@ footer .logo-text {
 
 .neigh-selected {
   padding: 0px 25px;
+  padding-right: 2em;
 }
 
 .rounded {
@@ -1400,7 +1401,7 @@ footer .logo-text {
   }
 }
 
-@media only screen and (min-width: 500px) and (max-width: 1024px) and (orientation: landscape) {
+@media only screen and (min-width: 500px) and (max-width: 950px) and (orientation: landscape) {
   .results-item {
     font-size: 1em;
     height: 30vh;

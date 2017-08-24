@@ -446,8 +446,24 @@ class Listing extends Component{
     let built = (listing.square_feet > 0) ? ( <div>Built:&nbsp;{listing.year_built}</div> ):(<span className="sqFt">Sq ft unknown</span>);
     let subd = ( <div>Subdivision:&nbsp;{ subdivision }</div> );
     let dom = (listing) ? ( <div>{listing.cdom}&nbsp;days on the market</div> ): '';
-
-    let st_address = (listing) ? (<div>{listing.street_number}&nbsp;{listing.street_name}&nbsp;{listing.street_post_dir}</div>) : '';
+    let dir;
+    switch(listing.street_pre_direction){
+      case 'Northwest':
+      dir = 'NW';
+      break;
+      case 'Southwest':
+      dir = 'SW';
+      break;
+      case 'Souteast':
+      dir = 'SE';
+      break;
+      case 'Northeast':
+      dir = 'NE';
+      break;
+      default:
+      dir = '';
+    };
+    let st_address = (listing) ? (<div>{listing.street_number}&nbsp;{listing.street_name}&nbsp;{listing.street_post_dir} {dir}</div>) : '';
     let st_address_string = (listing) ? listing.street_number+listing.street_name : '';
     let lng = (listing) ? parseFloat(listing.longitude) : '';
     let lat = (listing) ? parseFloat(listing.latitude) : '';

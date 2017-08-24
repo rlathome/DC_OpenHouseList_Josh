@@ -959,6 +959,7 @@ footer{
 }
 .neigh-selected{
   padding:0px 25px;
+  padding-right:2em;
 }
 .rounded{
   border-radius: 4px;
@@ -1185,7 +1186,7 @@ footer{
   }
   @media only screen
     and (min-width : 500px)
-    and (max-width : 1024px)
+    and (max-width : 950px)
     and (orientation:landscape){
       font-size:1em;
       height:30vh;

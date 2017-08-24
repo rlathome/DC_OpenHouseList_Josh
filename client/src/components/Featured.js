@@ -65,6 +65,24 @@ class Featured extends Component{
       console.log('moment: ', date);
       let dow = date.day();
       dow = days[dow];
+      let dir;
+      switch(listing.street_pre_direction){
+        case 'Northwest':
+        dir = 'NW';
+        break;
+        case 'Southwest':
+        dir = 'SW';
+        break;
+        case 'Souteast':
+        dir = 'SE';
+        break;
+        case 'Northeast':
+        dir = 'NE';
+        break;
+        default:
+        dir = '';
+      };
+      console.log('direction: ',dir);
       console.log('open house is on: ',dow);
       let style = {
         backgroundImage:'url('+listing.image_urls.all_thumb[0]+')',
@@ -78,7 +96,7 @@ class Featured extends Component{
             <div id={listing.mls_number} className="listing-info-opacity">
             </div>
             <div id={listing.mls_number} className="listing-info">
-              {listing.street_number} {listing.street_name} {listing.street_post_dir}<br/>
+              {listing.street_number} {listing.street_name} {listing.street_post_dir} {dir}<br/>
               {price} {new_date}
             </div>
           </div>

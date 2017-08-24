@@ -46,7 +46,7 @@ class Search extends Component{
   }
   pressed_toggle(e){
     e.preventDefault();
-    let $item = jquery(e.target).closest('.day-btn');
+    let $item = jquery(e.target).closest('.btn-3d');
     if($item.hasClass('btn-pressed')){
       $item.removeClass('btn-pressed');
     }else{

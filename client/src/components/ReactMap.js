@@ -166,13 +166,30 @@ class FullMap extends Component{
             // console.log('listing id: ',val.id);
             // let mls = val.id.toString();
             let mls = val.id;
+            let dir;
+            switch(val.street_pre_direction){
+              case 'Northwest':
+              dir = 'NW';
+              break;
+              case 'Southwest':
+              dir = 'SW';
+              break;
+              case 'Souteast':
+              dir = 'SE';
+              break;
+              case 'Northeast':
+              dir = 'NE';
+              break;
+              default:
+              dir = '';
+            };
             var contentString = (
               '<div id='+mls+' class="listing-popup" style='+
                 'backgroundImage:url('+val.image_urls.all_thumb[1]+')'+
                 '>'+
                 '<div class="listing-popup-opacity"></div>'+
                 '<div class="listing-popup-text">'+
-                 val.street_number + ' ' + val.street_name + ' ' + val.street_post_dir + ' ('+dowUC+')<br/>'+
+                 val.street_number + ' ' + val.street_name + ' ' + val.street_post_dir +  ' ' + dir + ' '+ '('+dowUC+')'+ '<br/>'+
                  price +' <br/>'+
                 '</div>'+
               '</div>'

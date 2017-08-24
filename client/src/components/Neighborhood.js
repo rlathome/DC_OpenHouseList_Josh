@@ -148,7 +148,7 @@ class Neighborhood extends Component{
             <div className="neigh-selected">{ selected }</div>
             { dropdown }
           </span>
-          <span  onClick={this.arrowToggle.bind(this)} className="btn-3d btn-3d-blue-results results-option-neigh sort-by-arrow-neigh" href="#"><div className="glyphicon glyphicon-triangle-bottom"></div></span>
+          <span onClick={this.arrowToggle.bind(this)} className="btn-3d btn-3d-blue-results results-option-neigh sort-by-arrow-neigh" href="#"><div className="glyphicon glyphicon-triangle-bottom"></div></span>
         </div>
       </div>
     );

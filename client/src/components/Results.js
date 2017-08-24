@@ -564,6 +564,23 @@ class Results extends Component{
       dow = (date) ? days[dow] : '';
       dow = (date) ? dow.toLowerCase() : '';
 
+      let dir;
+      switch(listing.street_pre_direction){
+        case 'Northwest':
+        dir = 'NW';
+        break;
+        case 'Southwest':
+        dir = 'SW';
+        break;
+        case 'Souteast':
+        dir = 'SE';
+        break;
+        case 'Northeast':
+        dir = 'NE';
+        break;
+        default:
+        dir = '';
+      };
       //FILTER BY MLS SUBDIVISION:
 
       // if(params.neighborhood && params.neighborhood !=='Full DC Area'){
@@ -613,7 +630,7 @@ class Results extends Component{
           </div>
           <div id={listing.id} className="results-div col-xs-4 results-item-info">
             <div className="item-info-container" id={listing.id}>
-              { listing.street_number } { listing.street_name } { listing.street_post_dir } ({dowUC})<br/>
+              { listing.street_number } { listing.street_name } { listing.street_post_dir } {dir} ({dowUC})<br/>
               { price }<br/>
               {result_subd}
             </div>
