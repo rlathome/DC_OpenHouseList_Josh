@@ -1,11 +1,16 @@
 import React, { Component } from 'react';
+// import mocha from 'mocha';
+import chai from 'chai';
 import jquery from 'jquery';
 import axios from 'axios';
 import currency from 'currency-formatter';
 import { hashHistory } from 'react-router';
 import moment from 'moment';
 let app_status = process.env.REACT_APP_STATUS;
+// mocha.setup('bdd');
+let expect = chai.expect();
 console.log('listingjs env: ',app_status);
+// mocha.run();
 // let apiKey = (process.env.REACT_APP_STATUS === 'development') ? "http://localhost:8080" : "http://vast-shore-14133.herokuapp.com";
 
 let apiKey="http://vast-shore-14133.herokuapp.com";
@@ -20,11 +25,14 @@ class Featured extends Component{
       results:[]
     }
   }
+  test(){
+    return 'yeah baby';
+  }
   componentWillMount(){
     this.getChosenListings();
   }
   getChosenListings(){
-    let url=apiKey+"/info/getfeaturedlistings";
+    let url=apiKey+"/info/featured";
     axios.get(url).then((response)=>{
 //REVERT TO TOP PRICED LISTINGS IF LESS THAN 3 OPEN HOUSES STORED:
       let len = response.data.results.length;
@@ -129,6 +137,7 @@ class Featured extends Component{
           { featured }
 
         </div>
+        <div id="mocha"></div>
       </div>
     );
   }

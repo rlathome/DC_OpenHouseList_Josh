@@ -6,7 +6,7 @@ var FormData = require('form-data');
 var Featured = require('../models/featured.js');
 var formData = new FormData();
 var curl = require('curlrequest');
-
+var dcdata = require('./dcjson.json');
 
 
 // let domain = (process.env.NODE_ENV==='development') ? 'http://localhost:3000' : 'http://vast-shore-14133.herokuapp.com';
@@ -47,7 +47,7 @@ router.get('/featured',function(req,res,next){
     console.log('statusCode:', response && response.statusCode); // Print the response status code if a response was received
     // console.log('body:', body); // Print the HTML for the Google homepage.
     body=JSON.parse(body);
-    res.json(body);
+    res.json(dcdata);
   });
 });
 
@@ -70,7 +70,7 @@ router.get('/open_houses',function(req,res,next){
     console.log('statusCode:', response && response.statusCode); // Print the response status code if a response was received
     // console.log('body:', body); // Print the HTML for the Google homepage.
     body=JSON.parse(body);
-    res.json(body);
+    res.json(dcdata);
   });
 });
 

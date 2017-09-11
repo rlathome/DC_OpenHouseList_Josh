@@ -47,24 +47,16 @@ class Results extends Component{
       axios.get(apiKey + '/info/open_houses').then(
       (response)=>{
         console.log('axios: ',response);
-        response.data.results.forEach((listing)=>{
-          markers.push(listing);
-        });
         // let listings_remaining = markers.slice(10,markers.length);
         // let listings_shown = markers.slice(0,10);
         this.props.storeResults(markers,results);
         this.setState({
           results,
-          markers,
+          markers:response.data.results,
           neighborhood,
-          cache:markers,
+          cache:response.data.results,
           display:'list'
         });
-        // if(neighborhood !=='FullDCArea'){
-        //   this.setState({
-        //     display:'loading'
-        //   });
-        // }
       }).catch((err)=>{
         console.log('error -',err);
       });
@@ -202,7 +194,8 @@ class Results extends Component{
     let item = e.target;
     console.log('selecting');
   }
-  selectAll(e){
+  selectAll(){
+    console.log('imported!');
   }
   sortTime(e){
     let $item = jquery('#down');
@@ -503,7 +496,7 @@ class Results extends Component{
           subd='Deanwood';
           break;
           case 'dupontcircle':
-          subd='duPont Circle';
+          subd='Dupont Circle';
           break;
           case 'eckington':
           subd='Eckington';
@@ -532,10 +525,10 @@ class Results extends Component{
         let today ='';
         switch(this.props.params.day){
           case 'saturday':
-          today = ' on Saturday.';
+          today = ' on Saturday';
           break;
           case 'sunday':
-          today = ' on Sunday.';
+          today = ' on Sunday';
           break;
           default:
           today = '.'
@@ -572,7 +565,7 @@ class Results extends Component{
         case 'Southwest':
         dir = 'SW';
         break;
-        case 'Souteast':
+        case 'Southeast':
         dir = 'SE';
         break;
         case 'Northeast':
@@ -617,7 +610,7 @@ class Results extends Component{
         overlap:'hidden'
       };
       let indx = markers.indexOf(listing);
-      console.log('listing index: ',indx);
+      console.log('listing index: ',indx, ' neighborhood: ',neighborhood);
       let reactMap = (neighborhood !== 'FullDCArea' && indx==0) ? ( <ReactMap display={false} viewListing={this.viewListing.bind(this)} updateResults={this.updateResults.bind(this)} neighborhood={this.props.params.neighborhood} markers={markers}/> ) : '';
       // if(neighborhood !=='FullDCArea'
       let result_subd = (<span className='result-subd'>{subd}</span>);
@@ -666,7 +659,7 @@ class Results extends Component{
     console.log('the results in results render: ',results);
     switch(this.state.display){
       case 'list':
-      display=(results.length) ? results : (<div className="no-results-msg">We're sorry - your search for {subd} listings on {today} didn't return any results.</div>);
+      display=(results.length) ? results : (<div className="no-results-msg">We're sorry - your search for {subd} listings {today} didn't return any results.</div>);
       break;
       case 'map':
       display=map;

@@ -174,7 +174,7 @@ class FullMap extends Component{
               case 'Southwest':
               dir = 'SW';
               break;
-              case 'Souteast':
+              case 'Southeast':
               dir = 'SE';
               break;
               case 'Northeast':
