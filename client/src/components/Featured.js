@@ -13,9 +13,9 @@ console.log('listingjs env: ',app_status);
 // mocha.run();
 // let apiKey = (process.env.REACT_APP_STATUS === 'development') ? "http://localhost:8080" : "http://vast-shore-14133.herokuapp.com";
 
-let apiKey="https://dcopenhouselist.herokuapp.com";
+// let apiKey="https://dcopenhouselist.herokuapp.com";
 
-// let apiKey = "http://localhost:8080";
+let apiKey = "http://localhost:8080";
 
 class Featured extends Component{
   constructor(props){
