@@ -13,7 +13,7 @@ const google = window.google;
 
 // let apiKey = "http://localhost:8080";
 
-let apiKey="http://dcopenhouselist.com";
+let apiKey="http://www.dcopenhouselist.com";
 
 // let apiKey="https://dcopenhouselist.herokuapp.com";
 

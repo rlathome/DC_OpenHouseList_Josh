@@ -12,7 +12,7 @@ import ReactMap from './ReactMap';
 
 // let apiKey = "http://localhost:8080";
 
-let apiKey="http://dcopenhouselist.com";
+let apiKey="http://www.dcopenhouselist.com";
 
 class Results extends Component{
   constructor(props){

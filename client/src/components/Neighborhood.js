@@ -6,7 +6,7 @@ import axios from 'axios'
 
 // let apiKey = "http://localhost:8080";
 
-let apiKey="http://dcopenhouselist.com";
+let apiKey="http://www.dcopenhouselist.com";
 
 
 class Neighborhood extends Component{
