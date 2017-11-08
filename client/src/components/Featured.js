@@ -15,7 +15,8 @@ console.log('listingjs env: ',app_status);
 
 // let apiKey="https://dcopenhouselist.herokuapp.com";
 
-let apiKey = "http://localhost:8080";
+// let apiKey = "http://localhost:8080";
+let apiKey="http://dcopenhouselist.com";
 
 class Featured extends Component{
   constructor(props){

@@ -11,7 +11,9 @@ import moment from 'moment';
 const google = window.google;
 // let apiKey = (process.env.REACT_APP_STATUS == 'development') ? "http://localhost:8080" : "http://vast-shore-14133.herokuapp.com";
 
-let apiKey = "http://localhost:8080";
+// let apiKey = "http://localhost:8080";
+
+let apiKey="http://dcopenhouselist.com";
 
 // let apiKey="https://dcopenhouselist.herokuapp.com";
 
@@ -56,7 +58,7 @@ class Listing extends Component{
       axios.get(apiKey + '/info/listing/'+mls).then(
       (listing)=>{
         console.log('listing axios: ',listing);
-        listing = listing.data.results[0];
+        listing = (listing.data.results) ? listing.data.results[0] : '';
         let showing = (listing) ? listing.image_urls.all_big[0] : '';
         let showing_index = 0;
         let style = {

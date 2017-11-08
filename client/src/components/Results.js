@@ -10,8 +10,9 @@ import ReactMap from './ReactMap';
 
 // let apiKey="https://dcopenhouselist.herokuapp.com";
 
-let apiKey = "http://localhost:8080";
+// let apiKey = "http://localhost:8080";
 
+let apiKey="http://dcopenhouselist.com";
 
 class Results extends Component{
   constructor(props){

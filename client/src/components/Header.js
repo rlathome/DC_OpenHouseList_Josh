@@ -16,8 +16,8 @@ class Header extends Component{
     // let day = this.props.day.toLowerCase();
   }
   render(){
-    let day = (this.props.day && this.props.day !=='NONE') ? (<li onClick={()=>this.props.reload()}><i className="glyphicon glyphicon-play"></i>{this.props.day}</li>) : '';
-    let neighborhood = (this.props.neighborhood) ? (<li onClick={this.neighborhood.bind(this)}><i className="glyphicon glyphicon-play"></i>{this.props.neighborhood}</li>) : '';
+    let day = (this.props.day && this.props.day !=='NONE') ? (<a href="#" alt="day"><li onClick={()=>this.props.reload()}><i className="glyphicon glyphicon-play"></i>{this.props.day}</li></a>) : '';
+    let neighborhood = (this.props.neighborhood) ? (<a href="#" alt="neighborhood"><li onClick={this.neighborhood.bind(this)}><i className="glyphicon glyphicon-play"></i>{this.props.neighborhood}</li></a>) : '';
     return(
       <header>
         <div className="grey-bar">
