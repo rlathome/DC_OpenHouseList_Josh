@@ -336,7 +336,8 @@ router.get('/getallagents',function(req,res,next){
     url:url,
     headers:{
       'Accept':'application/javascript',
-      'Referer':domain
+      'Referer':domain,
+      'If-Modified-Since':'Wed, 21 Oct 2015 07:28:00 GMT'
     }
   }
   request(options, function (error, response, body) {
@@ -357,7 +358,8 @@ router.get('/getagent',function(req,res,next){
     url:url,
     headers:{
       'Accept':'application/javascript',
-      'Referer':domain
+      'Referer':domain,
+      'If-Modified-Since':'Wed, 21 Oct 2015 07:28:00 GMT'
     }
   }
   request(options, function (error, response, body) {
