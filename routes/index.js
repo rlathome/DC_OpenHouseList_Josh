@@ -14,7 +14,8 @@ var dcdata = require('./dcjson.json');
 
 // let apiKey=process.env.DISPLET_API_KEY;
 let apiKey = '82b44a7662b0abb55eebf365a61c50399b512935';
-let domain = 'http://vast-shore-14133.herokuapp.com';
+// let domain = 'http://vast-shore-14133.herokuapp.com';
+let domain = 'http://dcopenhouselist.com';
 
 // let domain = 'http://localhost:3000";
 
