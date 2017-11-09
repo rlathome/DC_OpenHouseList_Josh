@@ -73,7 +73,7 @@ class AddAgents extends Component{
     let url=apiKey+"info/addfeatured";
     console.log('submitting');
     let mls = this.refs.mls.value;
-    let password = this.refs.password.value;
+    let password = this.refs.password2.value;
     let data = {
       mls,
       password
@@ -211,7 +211,7 @@ class AddAgents extends Component{
           <div className="col-sm-6">
           <h1>Featured Open House</h1>
           <form className="new-agent-form form form-default">
-            <input className="form-control" ref="password" placeholder="Password"/>
+            <input className="form-control" ref="password2" placeholder="Password"/>
             <input className="form-control" ref="mls" placeholder="MLS number (of an open house)"/>
             <input onClick={this.submitListing.bind(this)} className="btn btn-default btn-success" value="Add"/>
           </form>
