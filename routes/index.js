@@ -54,7 +54,8 @@ router.get('/open_houses',function(req,res,next){
   console.log('api key: ',apiKey);
   let params='';
   // let params = 'latitude,longitude,image_urls,street_name,street_pre_direction,street_post_direction, subdivision,street_number,square_feet,mls_number,list_price,open_house_events,address,full_baths,num_bedrooms,half_baths';
-  let url = "https://api.displet.com/residentials/search?authentication_token="+apiKey+"&open_house=y&state=DC";
+  let page_req='';
+  let url = "https://api.displet.com/residentials/search?authentication_token="+apiKey+"&open_house=y&state=DC"+page_req;
 
   let options = {
     url:url,
@@ -67,10 +68,69 @@ router.get('/open_houses',function(req,res,next){
 
   request(options, function (error, response, body) {
     console.log('error:', error); // Print the error if one occurred
-    console.log('statusCode:', response && response.statusCode); // Print the response status code if a response was received
+    // console.log('statusCode:', response && response.statusCode); // Print the response status code if a response was received
     // console.log('body:', body); // Print the HTML for the Google homepage.
     body=JSON.parse(body);
-    res.json(body);
+    console.log('page_count: ',body.meta.count);
+    let pages_needed = Math.ceil(body.meta.count/100);
+    console.log('pages needed: ',pages_needed);
+    let counter = 2;
+    let output = [];
+    output = output.concat(body.results);
+
+    const retrieveData = (counter) =>{
+      return new Promise((resolve,reject)=>{
+        console.log('getting data');
+        page_req = '&page='+counter;
+        let url = "https://api.displet.com/residentials/search?authentication_token="+apiKey+"&open_house=y&state=DC"+page_req;
+        let options = {
+          url:url,
+          headers:{
+            'Accept':'application/javascript',
+            'Referer':domain,
+            'If-Modified-Since':'Wed, 21 Oct 2015 07:28:00 GMT'
+          }
+        }
+          request(options, function(error,response,page){
+            if(error){
+              console.log('error - ',error);
+              reject(error);
+            }
+            page = JSON.parse(page);
+            output = output.concat(page.results);
+            console.log('new output len: ',output.length);
+            resolve(output);
+          });
+      });
+    };
+
+    const getAllData = () =>{
+        retrieveData(counter).then((new_data)=>{
+          if(counter<pages_needed){
+            console.log('counter: ',counter);
+            counter++;
+            getAllData();
+          }else{
+            res.json(new_data);
+          }
+        });
+    }
+
+    getAllData();
+
+      // getAllData().then((final)=>{
+      //   console.log('counter: ',counter);
+      //   if(counter==pages_needed){
+      //     res.json(final);
+      //   }else{
+      //     counter++;
+      //     getAllData().then(()=>{
+      //
+      //     });
+      //   }
+      // });
+
+
   });
 });
 

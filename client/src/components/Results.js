@@ -10,9 +10,9 @@ import ReactMap from './ReactMap';
 
 // let apiKey="https://dcopenhouselist.herokuapp.com";
 
-// let apiKey = "http://localhost:8080";
+let apiKey = "http://localhost:8080";
 
-let apiKey="http://www.dcopenhouselist.com";
+// let apiKey="http://www.dcopenhouselist.com";
 
 class Results extends Component{
   constructor(props){
@@ -48,15 +48,24 @@ class Results extends Component{
       axios.get(apiKey + '/info/open_houses').then(
       (response)=>{
         console.log('axios: ',response);
-        
-        const pages_needed = Math.ceil(response.data.meta.count/100);
-        console.log('pages needed: ',pages_needed)
+        // let total_items = [];
+        // const pages_needed = Math.ceil(response.data.meta.count/100);
+        // console.log('pages needed: ',pages_needed)
+        // total_items.push(response.data.results);
+        // let counter = 1;
+        // while(counter < pages_needed){
+        //   axios.get(apiKey + '/info/open_houses').then(
+        //   (response)=>{
+        //     console.log('next page: ',response.data.results);
+        //     counter++;
+        //   });
+        // }
         this.props.storeResults(markers,results);
         this.setState({
           results,
-          markers:response.data.results,
+          markers:response.data,
           neighborhood,
-          cache:response.data.results,
+          cache:response.data,
           display:'list'
         });
       }).catch((err)=>{
