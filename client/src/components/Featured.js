@@ -33,7 +33,7 @@ class Featured extends Component{
     this.getChosenListings();
   }
   getChosenListings(){
-    let url=apiKey+"/info/featured";
+    let url=apiKey+"/info/getfeaturedlistings";
     axios.get(url).then((response)=>{
 //REVERT TO TOP PRICED LISTINGS IF LESS THAN 3 OPEN HOUSES STORED:
       let len = response.data.results.length;
