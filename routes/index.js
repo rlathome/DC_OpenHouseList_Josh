@@ -54,7 +54,7 @@ router.get('/open_houses',function(req,res,next){
   console.log('api key: ',apiKey);
   let params='';
   // let params = 'latitude,longitude,image_urls,street_name,street_pre_direction,street_post_direction, subdivision,street_number,square_feet,mls_number,list_price,open_house_events,address,full_baths,num_bedrooms,half_baths';
-  let url = "https://api.displet.com/residentials/search?authentication_token="+apiKey+"&open_house=y&state=DC&limit=2000";
+  let url = "https://api.displet.com/residentials/search?authentication_token="+apiKey+"&open_house=y&state=DC";
 
   let options = {
     url:url,

@@ -48,8 +48,9 @@ class Results extends Component{
       axios.get(apiKey + '/info/open_houses').then(
       (response)=>{
         console.log('axios: ',response);
-        // let listings_remaining = markers.slice(10,markers.length);
-        // let listings_shown = markers.slice(0,10);
+        
+        const pages_needed = Math.ceil(response.data.meta.count/100);
+        console.log('pages needed: ',pages_needed)
         this.props.storeResults(markers,results);
         this.setState({
           results,
