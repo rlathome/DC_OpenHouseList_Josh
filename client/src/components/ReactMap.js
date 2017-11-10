@@ -25,7 +25,7 @@ class FullMap extends Component{
     }
   }
   viewListing(){
-    console.log('viewing');
+    console.log('imported viewListing');
   }
   render(){
     let neighb = this.props.neighborhood;
@@ -33,6 +33,7 @@ class FullMap extends Component{
     console.log('West End: ',Neighborhoods[neighb]);
     console.log('r_map markers: ',this.props.markers);
     let neighborhood_polygon = (Neighborhoods[neighb] && neighb !== 'FullDCArea') ? Neighborhoods[neighb] : 'none';
+    console.log('neigh poly: ',neighborhood_polygon);
     let map_center = (Neighborhoods[neighb] && neighb !=='FullDCAarea') ? Neighborhoods[neighb][0] : Neighborhoods['dupontcircle'][0];
     // console.log('map center: ',Neighborhoods[neighb]);
     console.log('neighborhood params: ',this.props.neighborhood);

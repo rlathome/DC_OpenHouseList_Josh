@@ -21,6 +21,7 @@ class Neighborhood extends Component{
   componentWillMount(){
     //temporary - loading neighborhoods from DB while API key is for Columbia
     let neighborhoods = ["Full DC Area", "Adams Morgan", "Anacostia", "Brookland", "Capitol Hill", "Columbia Heights", "Deanwood", "Dupont Circle", "Eckington", "Friendship Heights", "Georgetown", "Logan Circle", "Petworth", "Southwest Waterfront", "Westend"];
+    let quadrants = ['Northwest DC','Northeast DC','Southwest DC','Southeast DC'];
     // axios.get(apiKey + '/info/neighborhoods').then(
     //   (neighborhoods)=>{
     //     console.log('neighborhoods: ',neighborhoods.data);
@@ -35,6 +36,7 @@ class Neighborhood extends Component{
     // });
     this.setState({
       neighborhoods,
+      quadrants,
       selected:neighborhoods[0]
     });
   }
@@ -65,8 +67,10 @@ class Neighborhood extends Component{
   }
   render(){
     let neighborhoods = this.state.neighborhoods;
+    let quadrants = this.state.quadrants;
+    let all = neighborhoods.concat(quadrants);
     let picked = this.state.selected.toLowerCase();
-    neighborhoods.forEach((val)=>{
+    all.forEach((val)=>{
       let val2=val.toLowerCase();
       val2=val2.replace(/ /g,'');
       console.log('minified: ',val2,' vs: ',picked);
@@ -127,17 +131,45 @@ class Neighborhood extends Component{
         default:
         id=''
       }
-      return(
-        <div id={id} onMouseEnter={this.highlight.bind(this)} onMouseLeave={this.highlight_off.bind(this)} onClick={this.select.bind(this)} className="subdivision">
-          {subd}
-        </div>
-      );
-    });
+
+        return(
+          <div id={id} onMouseEnter={this.highlight.bind(this)} onMouseLeave={this.highlight_off.bind(this)} onClick={this.select.bind(this)} className="subdivision">
+            {subd}
+          </div>
+        );
+      });
+
+      quadrants = quadrants.map((quad)=>{
+        let id = '';
+        switch(quad){
+          case 'Northwest DC':
+          id='nw';
+          break;
+          case 'Northeast DC':
+          id='ne';
+          break;
+          case 'Southwest DC':
+          id='sw';
+          break;
+          case 'Southeast DC':
+          id='se';
+          break;
+          default:
+          id='';
+        };
+        return(
+          <div id={id} onMouseEnter={this.highlight.bind(this)} onMouseLeave={this.highlight_off.bind(this)} onClick={this.select.bind(this)} className="subdivision">
+            {quad}
+          </div>
+        );
+
+      });
     let dropdown = (this.state.dropdown) ? (
         <div className="neighborhood-dropdown-container">
           <div className="neighborhood-dropdown-opacity"></div>
           <div className="neighborhood-text">
             { neighborhoods }
+            { quadrants }
           </div>
         </div>
     ): '';

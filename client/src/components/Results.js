@@ -31,7 +31,8 @@ class Results extends Component{
       cache:[],
       listings_shown:'',
       listings_remaining:'',
-      updated:false
+      updated:false,
+      pages:{0:[]}
     }
   }
   componentWillMount(){
@@ -44,23 +45,42 @@ class Results extends Component{
     let stored_results = this.props.stored_results;
     let i = (stored_results) ? true: false;
     console.log('app has stored results: ',i, ', ',stored_results, ', and raw results: ',this.state.results);
+    let storage_query = params.neighborhood+params.day;
+    let stored = sessionStorage.getItem(storage_query);
+    if(stored){
+      console.log('stored listings: ',stored);
+    }
     if(stored_results==false){
       axios.get(apiKey + '/info/open_houses').then(
       (response)=>{
         console.log('axios: ',response);
-        // let total_items = [];
-        // const pages_needed = Math.ceil(response.data.meta.count/100);
-        // console.log('pages needed: ',pages_needed)
-        // total_items.push(response.data.results);
-        // let counter = 1;
-        // while(counter < pages_needed){
-        //   axios.get(apiKey + '/info/open_houses').then(
-        //   (response)=>{
-        //     console.log('next page: ',response.data.results);
-        //     counter++;
-        //   });
-        // }
         this.props.storeResults(markers,results);
+        sessionStorage.setItem(storage_query,response.data);
+        // let to_paginate = response.data;
+        // let pages=this.state.pages;
+        // let page_ct = 0;
+        // let page = [];
+        // while(to_paginate.length>0){
+        //   for(let i=0; i<20; i++){
+        //     if(to_paginate.length>0){
+        //       console.log('paginating');
+        //       let piece = to_paginate.shift();
+        //       console.log('topag length: ',to_paginate.length);
+        //       page.push(piece);
+        //     }
+        //   }
+        //   pages[page_ct]=page;
+        //   page_ct++;
+        // }
+
+        // while(to_paginate.length>0){
+        //   console.log('slicing');
+        //   let lump = to_paginate.slice(0,20);
+        //   to_paginate.slice(20,to_paginate.length);
+        //   pages[page_ct] = lump;
+        //   page_ct++;
+        // }
+        // console.log('page list: ',pages);
         this.setState({
           results,
           markers:response.data,
@@ -81,11 +101,7 @@ class Results extends Component{
         cache:stored_results,
         display:'list'
       });
-      // if(neighborhood !=='FullDCArea'){
-      //   this.setState({
-      //     display:'loading'
-      //   });
-      // }
+
       setTimeout(()=>{jquery('.list-view').addClass('list-btn-pressed');},50);
     }
 }
@@ -182,15 +198,6 @@ class Results extends Component{
     }
     this.viewListing(id);
   }
-  // viewListing(listing){
-  //   let view = this.state.markers.filter((val)=>{
-  //     // console.log('marker: ',val.id, 'listing: ',listing);
-  //     let list = parseInt(listing);
-  //     return val.id == list;
-  //   });
-  //   console.log('viewing the listing: ',view);
-  //   this.props.viewListing(view);
-  // }
   viewListing(listing){
     let view = this.state.markers.filter((val)=>{
       // console.log('marker: ',val.id, 'listing: ',listing);
@@ -302,20 +309,6 @@ class Results extends Component{
       dropdown: false,
       display:'loading'
     });
-
-    // let id = e.target.id;
-    // console.log('searching price: ',id);
-    // axios.get(apiKey + '/info/price/'+id).then((res)=>{
-    //   console.log('priced results: ',res);
-    //   this.setState({
-    //     markers:res.data.results,
-    //     display:'list',
-    //     sorting_spec:'price',
-    //     loading:'false'
-    //   });
-    // }).catch((err)=>{
-    //   console.log('err - ',err);
-    // });
     if(this.state.markers){
       this.orderByPrice();
     }
@@ -447,25 +440,6 @@ class Results extends Component{
       });
     }
   }
-  // queueMarkers(markers){
-  //   let listings_remaining = markers.slice(10,markers.length);
-  //   let listings_shown = markers.slice(0,10);
-  //   this.setState({
-  //     listings_shown,
-  //     listings_remaining
-  //   });
-  // }
-  // showMore(){
-  //   let listings_shown=this.state.listings_shown;
-  //   let listings_remaining= this.state.listings_remaining;
-  //   let listings_to_add = listings_remaining.slice(0,10);
-  //   listings_remaining = listings_remaining.slice(10,listings_remaining.length);
-  //   listings_shown = listings_shown.concat(listings_to_add);
-  //   this.setState({
-  //     listings_shown,
-  //     listings_remaining
-  //   });
-  // }
   render(){
     let results = this.state.markers;
     console.log('results in results render: ',results);
@@ -526,6 +500,27 @@ class Results extends Component{
           break;
           case 'southwestwaterfront':
           subd='Southwest Waterfront';
+          break;
+          case 'woodleypark':
+          subd='Woodley Park';
+          break;
+          case 'clevelandpark':
+          subd='Cleveland Park';
+          break;
+          case 'foggybottom':
+          subd='Foggy Bottom';
+          break;
+          case 'ne':
+          subd='Northeast DC';
+          break;
+          case 'nw':
+          subd='Northwest DC';
+          break;
+          case 'se':
+          subd='Southeast DC';
+          break;
+          case 'sw':
+          subd='Southwest DC';
           break;
           case 'westend':
           subd='Westend';
@@ -661,7 +656,7 @@ class Results extends Component{
 
 
 
-    let spinner = (<div className="no-results-msg">Searching for {subd} open houses{today} Thanks for your patience.<br/><img className="spinner" src={require("../images/loadcontent.gif")} alt="please wait"/></div>);
+    let spinner = (<div className="no-results-msg">Searching for {subd} open houses{today}. Thanks for your patience.<br/><img className="spinner" src={require("../images/loadcontent.gif")} alt="please wait"/></div>);
     results = (results) ? results.filter((val)=>{
       if(val){
         return val;
@@ -687,8 +682,6 @@ class Results extends Component{
       onMouseLeave:this.highlight_off.bind(this)
     }
 
-    // let ascending_arrow = (this.state.sort_order ==='descending') ? ( <i onClick={this.sortAsc.bind(this)} className="glyphicon ascending_arrow glyphicon-triangle-bottom"></i> ) : '';
-    // let descending_arrow = (this.state.sort_order ==='ascending') ? ( <i onClick={this.sortDesc.bind(this)} className="glyphicon descending_arrow glyphicon-triangle-top"></i> ) : '';
 
     let dropdown = (this.state.dropdown) ? (
       <div>
@@ -731,7 +724,6 @@ class Results extends Component{
       </div>
   ) : ( <div className="up-down-placeholder"></div> );
 
-  // let reactMap = (neighborhood !== 'FullDCArea') ? ( <ReactMap display={false} viewListing={this.viewListing.bind(this)} updateResults={this.updateResults.bind(this)} neighborhood={this.props.params.neighborhood} markers={markers}/> ) : '';
 
     return(
       <div>
@@ -752,10 +744,8 @@ class Results extends Component{
       </div>
     <div className="results">
       { display }
-      {/* <div onClick={this.showMore.bind(this)} className="more">Show More</div> */}
     </div>
 
-    {/* { reactMap } */}
       </div>
     );
   }
