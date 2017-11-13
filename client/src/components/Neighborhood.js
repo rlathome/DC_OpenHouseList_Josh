@@ -21,7 +21,7 @@ class Neighborhood extends Component{
   componentWillMount(){
     //temporary - loading neighborhoods from DB while API key is for Columbia
     let neighborhoods = ["Full DC Area", "Adams Morgan", "Anacostia", "Brookland", "Capitol Hill", "Columbia Heights", "Deanwood", "Dupont Circle", "Eckington", "Friendship Heights", "Georgetown", "Logan Circle", "Petworth", "Southwest Waterfront", "Westend"];
-    let quadrants = ['Northwest DC','Northeast DC','Southwest DC','Southeast DC'];
+    let quadrants = ['NW','NE','SW','SE'];
     // axios.get(apiKey + '/info/neighborhoods').then(
     //   (neighborhoods)=>{
     //     console.log('neighborhoods: ',neighborhoods.data);
@@ -142,16 +142,16 @@ class Neighborhood extends Component{
       quadrants = quadrants.map((quad)=>{
         let id = '';
         switch(quad){
-          case 'Northwest DC':
+          case 'NW':
           id='nw';
           break;
-          case 'Northeast DC':
+          case 'NE':
           id='ne';
           break;
-          case 'Southwest DC':
+          case 'SW':
           id='sw';
           break;
-          case 'Southeast DC':
+          case 'SE':
           id='se';
           break;
           default:
@@ -168,8 +168,8 @@ class Neighborhood extends Component{
         <div className="neighborhood-dropdown-container">
           <div className="neighborhood-dropdown-opacity"></div>
           <div className="neighborhood-text">
+            { quadrants } 
             { neighborhoods }
-            { quadrants }
           </div>
         </div>
     ): '';

@@ -647,7 +647,7 @@ footer .logo-text {
   height: 150px;
 }
 
-@media (max-width: 950px) {
+@media (max-width: 1075px) {
   .day-btn {
     width: 275px;
   }
@@ -661,6 +661,7 @@ footer .logo-text {
 }
 
 .neighborhood-text {
+  padding-top: .75em;
   overflow: scroll;
   text-align: left;
   height: 40vh;
@@ -965,7 +966,7 @@ footer .logo-text {
   line-height: .75em;
 }
 
-@media (max-width: 950px) {
+@media (max-width: 1075px) {
   .day-text-2 {
     font-size: 2.5em;
   }

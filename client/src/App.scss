@@ -583,7 +583,7 @@ footer{
   width: 430px;
   margin:1vw 2.5vw;
   height:150px;
-  @media(max-width:950px){
+  @media(max-width:1075px){
     width:275px;
   }
   @media only screen and (min-device-width: 320px)
@@ -596,6 +596,7 @@ footer{
 }
 
 .neighborhood-text{
+  padding-top:.75em;
   overflow: scroll;
   text-align: left;
   height:40vh;
@@ -844,7 +845,7 @@ footer{
   font-size: 4em;
   height: .75em;
   line-height: .75em;
-  @media(max-width:950px){
+  @media(max-width:1075px){
     font-size:2.5em;
   }
 }

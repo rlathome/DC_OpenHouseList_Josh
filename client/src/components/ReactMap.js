@@ -10,7 +10,7 @@ import GoogleMapLoader from "react-google-maps-loader"
 const google = window.google;
 let Neighborhoods = new newN;
 
-// console.log('West End: ',Neighborhoods.adamsmorgan);
+// console.log('West End: ',Neighborhoods[this.props.neighborhood]);
 
 const MY_API_KEY = "82b44a7662b0abb55eebf365a61c50399b512935" // fake
 let style={
@@ -69,7 +69,7 @@ class FullMap extends Component{
                 strokeColor: '#FF0000',
                 strokeOpacity: 0.8,
                 strokeWeight: 2,
-                fillColor: '#FF0000',
+                fillColor: '#FF0320',
                 fillOpacity: 0.35
               });
               neighborhoodPolygon.setMap(map);
@@ -204,7 +204,14 @@ class FullMap extends Component{
               let index = '#'+mls;
               let style = 'url('+val.image_urls.all_thumb[0]+')'
               jquery(index).css('background-image',style);
+              jquery(index).css('background-image',style);
             });
+            map.addListener('click',function(){
+              infowindow.close(map,marker);
+            });
+            marker.addListener('mouseleave',function(){
+              infowindow.close(map,marker);
+            })
             google.maps.event.addListener(infowindow, 'domready', function() {
               let index = '#'+mls;
               jquery(index).on("click", function() {

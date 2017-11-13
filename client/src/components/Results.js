@@ -42,20 +42,37 @@ class Results extends Component{
     let params = this.props.params;
     console.log('params: ',params);
     let neighborhood = (params) ? params.neighborhood : '';
+    console.log('neighborhood in cwm: ',neighborhood);
     let stored_results = this.props.stored_results;
     let i = (stored_results) ? true: false;
     console.log('app has stored results: ',i, ', ',stored_results, ', and raw results: ',this.state.results);
-    let storage_query = params.neighborhood+params.day;
-    let stored = sessionStorage.getItem(storage_query);
-    if(stored){
-      console.log('stored listings: ',stored);
-    }
-    if(stored_results==false){
+    let timestamp = moment();
+    timestamp = timestamp.format('YYYY M MM d dd h hh');
+    let storage_query = timestamp;
+    let stored = localStorage.getItem(storage_query);
+    let stored1 =localStorage.getItem(storage_query+'1');
+    console.log('timestamp: ',JSON.parse(stored));
+    if(!stored && stored_results==false){
       axios.get(apiKey + '/info/open_houses').then(
       (response)=>{
         console.log('axios: ',response);
         this.props.storeResults(markers,results);
-        sessionStorage.setItem(storage_query,response.data);
+        // localStorage.setItem(storage_query,JSON.stringify(response.data));
+        // try {
+        //   let items = response.data;
+        //   // localStorage.setItem(storage_query,JSON.stringify(items.slice(0,items.length/2)));
+        //   localStorage.setItem(storage_query+'1',JSON.stringify(items.slice(items.length/2,items.length)));
+        //   console.log('successfully stored');
+        // } catch(e) {
+        //   if (e.code == 22) {
+        //     // Storage full, maybe notify user or do some clean-up
+        //     console.log('code22');
+        //     localStorage.clear();
+        //     localStorage.setItem(storage_query,JSON.stringify(response.data));
+        //     // localStorage.clear();
+        //     // this.componentWillMount();
+        //   }
+        // }
         // let to_paginate = response.data;
         // let pages=this.state.pages;
         // let page_ct = 0;
@@ -81,28 +98,53 @@ class Results extends Component{
         //   page_ct++;
         // }
         // console.log('page list: ',pages);
+        response = response.data.filter((val)=>{
+          return val !==null;
+        });
         this.setState({
           results,
-          markers:response.data,
+          markers:response,
           neighborhood,
-          cache:response.data,
+          cache:response,
           display:'list'
         });
       }).catch((err)=>{
         console.log('error -',err);
+        let exception = new RegExp('quota');
+        if(exception.test(err)){
+          console.log('full storage!!');
+          localStorage.clear();
+          // this.componentWillMount();
+        }
       });
     }else{
       console.log('setting previous markers');
       // let listings_remaining = stored_results.slice(10,markers.length);
       // let listings_shown = stored_results.slice(0,10);
-      this.setState({
-        results:this.props.raw_stored_results,
-        markers:stored_results,
-        cache:stored_results,
-        display:'list'
-      });
+      // if(!stored){
+        this.setState({
+          results:this.props.raw_stored_results,
+          markers:stored_results,
+          cache:stored_results,
+          display:'list'
+        });
+      // }
 
       setTimeout(()=>{jquery('.list-view').addClass('list-btn-pressed');},50);
+    }
+
+    if(stored){
+      stored = stored.concat(stored1);
+      // console.log('stored listings: ', JSON.parse(stored));
+      stored = JSON.parse(stored);
+      this.props.storeResults(markers,results);
+      this.setState({
+        results,
+        markers:stored,
+        neighborhood,
+        cache:stored,
+        display:'list'
+      });
     }
 }
 
@@ -550,8 +592,11 @@ class Results extends Component{
     // let stored_results = this.props.stored_results;
     // let i = (stored_results) ? true: false;
     // console.log('app has stored results: ',i, ', ',stored_results, ', and raw results: ',this.state.results);
+    results = (results) ? results.filter((listing)=>{
+      return listing !==null;
+    }) : '';
     results = (results) ? results.map((listing)=>{
-      // console.log('listing in render: ',listing);
+      console.log('listing in render: ',listing);
       let price = currency.format(listing.list_price,{ code: 'USD', decimalDigits: 0 });
       price = price.slice(0,price.length-3);
       //get day of the week:
