@@ -71,6 +71,7 @@ router.get('/open_houses',function(req,res,next){
     // console.log('statusCode:', response && response.statusCode); // Print the response status code if a response was received
     // console.log('body:', body); // Print the HTML for the Google homepage.
     body=JSON.parse(body);
+    console.log('results: ',body.results.length);
     console.log('page_count: ',body.meta.count);
     let pages_needed = Math.ceil(body.meta.count/100);
     console.log('pages needed: ',pages_needed);
@@ -117,19 +118,6 @@ router.get('/open_houses',function(req,res,next){
     }
 
     getAllData();
-
-      // getAllData().then((final)=>{
-      //   console.log('counter: ',counter);
-      //   if(counter==pages_needed){
-      //     res.json(final);
-      //   }else{
-      //     counter++;
-      //     getAllData().then(()=>{
-      //
-      //     });
-      //   }
-      // });
-
 
   });
 });

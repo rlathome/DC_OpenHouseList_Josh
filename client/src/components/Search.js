@@ -55,10 +55,11 @@ class Search extends Component{
     }
   }
   goHome(){
-    this.setState({
-      step:''
-    });
-    hashHistory.push('/');
+    // this.setState({
+    //   step:''
+    // });
+    // hashHistory.push('/');
+    this.reload();
   }
   saturday(e){
     e.preventDefault();
@@ -209,6 +210,27 @@ class Search extends Component{
       break;
       case 'southwestwaterfront':
       subd='Southwest Waterfront';
+      break;
+      case 'woodleypark':
+      subd='Woodley Park';
+      break;
+      case 'clevelandpark':
+      subd='Cleveland Park';
+      break;
+      case 'foggybottom':
+      subd='Foggy Bottom';
+      break;
+      case 'ne':
+      subd='Northeast DC';
+      break;
+      case 'nw':
+      subd='Northwest DC';
+      break;
+      case 'se':
+      subd='Southeast DC';
+      break;
+      case 'sw':
+      subd='Southwest DC';
       break;
       case 'westend':
       subd='Westend';

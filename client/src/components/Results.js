@@ -56,6 +56,10 @@ class Results extends Component{
       axios.get(apiKey + '/info/open_houses').then(
       (response)=>{
         console.log('axios: ',response);
+        let streetnames = response.data.map((val)=>{
+          return val !==null && val.street_address;
+        });
+        console.log('axios streetnames: ',streetnames);
         this.props.storeResults(markers,results);
         // localStorage.setItem(storage_query,JSON.stringify(response.data));
         // try {
@@ -603,6 +607,7 @@ class Results extends Component{
       let days = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
       let date = (listing.open_house_events[0]) ? moment(listing.open_house_events[0].event_start) : '';
       let dow = (date) ? date.day() : '';
+      console.log('todays open house is: ',days[dow]);
       let time = (date) ? date.format('h:mmA') : '';
       let dowUC = (date) ? days[dow] : '';
       dow = (date) ? days[dow] : '';

@@ -20,7 +20,7 @@ class Neighborhood extends Component{
   }
   componentWillMount(){
     //temporary - loading neighborhoods from DB while API key is for Columbia
-    let neighborhoods = ["Full DC Area", "Adams Morgan", "Anacostia", "Brookland", "Capitol Hill", "Columbia Heights", "Deanwood", "Dupont Circle", "Eckington", "Friendship Heights", "Georgetown", "Logan Circle", "Petworth", "Southwest Waterfront", "Westend"];
+    let neighborhoods = ["Full DC Area", "Adams Morgan", "Anacostia", "Brookland", "Capitol Hill","Cleveland Park", "Columbia Heights", "Deanwood", "Dupont Circle", "Eckington","Foggy Bottom", "Friendship Heights", "Georgetown", "Logan Circle", "Petworth", "Southwest Waterfront", "Westend","Woodley Park"];
     let quadrants = ['NW','NE','SW','SE'];
     // axios.get(apiKey + '/info/neighborhoods').then(
     //   (neighborhoods)=>{
@@ -128,6 +128,15 @@ class Neighborhood extends Component{
         case 'Westend':
         id='westend';
         break;
+        case 'Woodley Park':
+        id='woodleypark';
+        break;
+        case 'Cleveland Park':
+        id='clevelandpark';
+        break;
+        case 'Foggy Bottom':
+        id='foggybottom';
+        break;
         default:
         id=''
       }
@@ -168,7 +177,7 @@ class Neighborhood extends Component{
         <div className="neighborhood-dropdown-container">
           <div className="neighborhood-dropdown-opacity"></div>
           <div className="neighborhood-text">
-            { quadrants } 
+            { quadrants }
             { neighborhoods }
           </div>
         </div>
