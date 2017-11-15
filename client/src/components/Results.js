@@ -752,32 +752,26 @@ class Results extends Component{
         </div>
         <div className="sort-text">
           <div id='time_dsc' {...drop} onClick={this.sortTimeDesc.bind(this)} className="sort-values subdivision">
-            Time: Earliest to Latest
+            Earliest to latest
           </div>
           <div id='time_asc' {...drop} onClick={this.sortTimeAsc.bind(this)} className="sort-values subdivision">
-            Time: Latest to Earliest
+            Latest to earliest
           </div>
           <div id='price_ase' {...drop} onClick={this.sortByPrice.bind(this)}  className="sort-values subdivision">
-            Price: Lowest to Highest
+            Price (low to high)
           </div>
           <div id='price_dsc' {...drop} onClick={this.sortByPriceDesc.bind(this)}  className="sort-values subdivision">
-            Price: Highest to Lowest
-          </div>
-          <div id='bed_asc' {...drop} onClick={this.sortByNewest.bind(this)}  className="sort-values subdivision">
-            Bedrooms: Lowest to Highest
-          </div>
-          <div id='bed_desc' {...drop} onClick={this.sortByNewest.bind(this)}  className="sort-values subdivision">
-            Bedrooms: Highest to Lowest
-          </div>
-          <div id='bath_asc' {...drop} onClick={this.sortByNewest.bind(this)}  className="sort-values subdivision">
-            Bathrooms: Lowest to Highest
-          </div>
-          <div id='bath_desc' {...drop} onClick={this.sortByNewest.bind(this)}  className="sort-values subdivision">
-            Bathrooms: Highest to Lowest
+            Price (high to low)
           </div>
           <div id='price' {...drop} onClick={this.sortByNewest.bind(this)}  className="sort-values subdivision">
             Newest
           </div>
+          {/* <div id='price' {...drop} onClick={this.sortByNewest.bind(this)}  className="sort-values subdivision">
+            Newest
+          </div>
+          <div id='price' {...drop} onClick={this.sortByNewest.bind(this)}  className="sort-values subdivision">
+            Newest
+          </div> */}
           {/* PRICE SORTING OPTIONS */}
           {/* <div className="sort-subvalues">
             <div onClick={this.sortPrice.bind(this)} className="subdivision" id='3' {...drop}>- $0-$500,000</div>
