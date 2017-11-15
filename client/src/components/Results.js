@@ -297,7 +297,16 @@ class Results extends Component{
 
     // Sort the times:
     unsorted_times.sort(compareMilli);
-    console.log('sorted times: ',unsorted_times);
+    let base_time = unsorted_times[0].milli;
+
+    // take out all dates happening in the future:
+    // base_time = parseInt(base_time/(1000*60*60));
+    // console.log('base time: ',base_time);
+    // unsorted_times = unsorted_times.filter((time)=>{
+    //   return (time.milli/(1000*60*60))-base_time<24;
+    // });
+    //**
+
     unsorted_times.forEach((time)=>{
       sortObjects.forEach((val)=>{
         if(val.id===time.id){
@@ -305,6 +314,7 @@ class Results extends Component{
         }
       });
     });
+    console.log('sorted times: ',unsorted_times);
     console.log('sorted objects: ',sortedObjects);
     sortedObjects.forEach((time)=>{
       listings.forEach((val)=>{
@@ -752,6 +762,12 @@ class Results extends Component{
           </div>
           <div id='price_dsc' {...drop} onClick={this.sortByPriceDesc.bind(this)}  className="sort-values subdivision">
             Price (high to low)
+          </div>
+          <div id='price' {...drop} onClick={this.sortByNewest.bind(this)}  className="sort-values subdivision">
+            Newest
+          </div>
+          <div id='price' {...drop} onClick={this.sortByNewest.bind(this)}  className="sort-values subdivision">
+            Newest
           </div>
           <div id='price' {...drop} onClick={this.sortByNewest.bind(this)}  className="sort-values subdivision">
             Newest
