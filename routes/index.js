@@ -195,7 +195,8 @@ router.post('/submitform',function(req,res,next){
   let phone = form_data.phone;
   let email = form_data.email;
   let agent_email = form_data.agent_email;
-  let to = agent_email;
+  // let to = agent_email;
+  let to = 'info@rlahre.com'
 
   var mailcomposer = require('mailcomposer');
 

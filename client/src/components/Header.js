@@ -10,6 +10,11 @@ class Header extends Component{
     e.preventDefault();
     this.props.reload();
   }
+  goHome(e){
+    e.preventDefault();
+    console.log('yick')
+    hashHistory.push('/');
+  }
   neighborhood(){
     // this.props.reload();
     // this.props.toNeigh();
@@ -43,10 +48,9 @@ class Header extends Component{
         </div>
         <div id="header-image">
           <div id="header-transition">
-
           </div>
           <div className="header-title-container">
-            <img className="img-responsive" src="./images/DC_open House_sm-10.svg" alt="title" />
+            <img onClick={this.goHome.bind(this)} className="img-responsive" src="./images/DC_open House_sm-10.svg" alt="title" />
           </div>
         </div>
         <div className="yellow-bar"></div>

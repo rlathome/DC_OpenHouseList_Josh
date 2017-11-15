@@ -752,22 +752,28 @@ class Results extends Component{
         </div>
         <div className="sort-text">
           <div id='time_dsc' {...drop} onClick={this.sortTimeDesc.bind(this)} className="sort-values subdivision">
-            Earliest to latest
+            Time: Earliest to Latest
           </div>
           <div id='time_asc' {...drop} onClick={this.sortTimeAsc.bind(this)} className="sort-values subdivision">
-            Latest to earliest
+            Time: Latest to Earliest
           </div>
           <div id='price_ase' {...drop} onClick={this.sortByPrice.bind(this)}  className="sort-values subdivision">
-            Price (low to high)
+            Price: Lowest to Highest
           </div>
           <div id='price_dsc' {...drop} onClick={this.sortByPriceDesc.bind(this)}  className="sort-values subdivision">
-            Price (high to low)
+            Price: Highest to Lowest
           </div>
-          <div id='price' {...drop} onClick={this.sortByNewest.bind(this)}  className="sort-values subdivision">
-            Newest
+          <div id='bed_asc' {...drop} onClick={this.sortByNewest.bind(this)}  className="sort-values subdivision">
+            Bedrooms: Lowest to Highest
           </div>
-          <div id='price' {...drop} onClick={this.sortByNewest.bind(this)}  className="sort-values subdivision">
-            Newest
+          <div id='bed_desc' {...drop} onClick={this.sortByNewest.bind(this)}  className="sort-values subdivision">
+            Bedrooms: Highest to Lowest
+          </div>
+          <div id='bath_asc' {...drop} onClick={this.sortByNewest.bind(this)}  className="sort-values subdivision">
+            Bathrooms: Lowest to Highest
+          </div>
+          <div id='bath_desc' {...drop} onClick={this.sortByNewest.bind(this)}  className="sort-values subdivision">
+            Bathrooms: Highest to Lowest
           </div>
           <div id='price' {...drop} onClick={this.sortByNewest.bind(this)}  className="sort-values subdivision">
             Newest

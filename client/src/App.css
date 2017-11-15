@@ -180,7 +180,10 @@ footer .logo-text {
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center bottom 0px;
-  z-index: -1;
+}
+
+#header-image img {
+  cursor: pointer;
 }
 
 #header-transition {
@@ -198,7 +201,6 @@ footer .logo-text {
   /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
   filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#333333', endColorstr='#007db9e8',GradientType=1 );
   /* IE6-9 */
-  z-index: -1;
 }
 
 .header-title-container {
@@ -796,13 +798,14 @@ footer .logo-text {
 }
 
 .sort-dropdown-list, .sort-text, .sort-dropdown-opacity {
-  min-height: 25vh;
+  min-height: 15vh;
   font-size: .85em;
+  height: 55vh;
 }
 
 @media (max-width: 950px) {
   .sort-dropdown-list, .sort-text, .sort-dropdown-opacity {
-    height: 15vh;
+    height: 30vh;
   }
 }
 

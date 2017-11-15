@@ -166,7 +166,10 @@ footer{
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center bottom 0px;
-  z-index: -1;
+  img{
+    cursor: pointer;
+  }
+  // z-index: -1;
   // @media(max-width: 768px){
   //   display: flex;
   //   flex-direction: column;
@@ -185,7 +188,7 @@ footer{
   background: -webkit-linear-gradient(left, rgba(51,51,51,1) 0%,rgba(86,114,136,0) 47%,rgba(125,185,232,0) 100%); /* Chrome10-25,Safari5.1-6 */
   background: linear-gradient(to right, rgba(51,51,51,1) 0%,rgba(86,114,136,0) 47%,rgba(125,185,232,0) 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
   filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#333333', endColorstr='#007db9e8',GradientType=1 ); /* IE6-9 */
-  z-index: -1;
+  // z-index: -1;
 }
 .header-title-container{
   position: relative;
@@ -697,10 +700,11 @@ footer{
   }
 }
 .sort-dropdown-list,.sort-text,.sort-dropdown-opacity{
-  min-height:25vh;
+  min-height:15vh;
   font-size: .85em;
+  height:55vh;
   @media(max-width:950px){
-    height:15vh;
+    height:30vh;
   }
   // iphone 6 landscape
   @media only screen
