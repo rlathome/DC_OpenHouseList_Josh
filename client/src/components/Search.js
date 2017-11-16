@@ -108,7 +108,6 @@ class Search extends Component{
     });
     hashHistory.push('/');
   }
-
   viewListing(listing){
     console.log('listing to view: ',listing);
     let day = (this.state.day !=='') ? this.state.day : 'none';
@@ -128,11 +127,12 @@ class Search extends Component{
       last_place:place
     });
   }
-  storeResults(results,raw_results){
-    this.setState({
-      stored_results:results,
-      raw_stored_results:raw_results
-    });
+  storeResults(results){
+    // this.setState({
+    //   stored_results:results,
+    //   raw_stored_results:raw_results
+    // });
+    this.props.updateListings(results);
   }
   skipAhead(){
     this.setState({
@@ -157,7 +157,7 @@ class Search extends Component{
       options = (<Neighborhood selectNeighborhood={this.selectNeighborhood.bind(this)} arrowToggle={this.arrowToggle.bind(this)}/>);
       break;
       case 'results':
-      options = (<Results storeResults={this.storeResults.bind(this)} goHome={this.goHome.bind(this)} raw_stored_results={this.state.raw_stored_results} stored_results={this.state.stored_results} viewListing={this.viewListing.bind(this)} params={params}/>);
+      options = (<Results global_listings={this.props.global_listings} storeResults={this.storeResults.bind(this)} goHome={this.goHome.bind(this)} raw_stored_results={this.state.raw_stored_results} stored_results={this.state.stored_results} viewListing={this.viewListing.bind(this)} params={params}/>);
       break;
       case 'listing':
       options = (<Listing goBack={this.goBack.bind(this)} listing={selected_listing}/>);

@@ -777,7 +777,7 @@ footer .logo-text {
 
 @media (max-width: 750px) {
   .sort-values {
-    font-size: 2em;
+    font-size: 1.45em;
   }
 }
 
@@ -800,11 +800,24 @@ footer .logo-text {
 .sort-dropdown-list, .sort-text, .sort-dropdown-opacity {
   min-height: 15vh;
   font-size: .85em;
+  height: 55vh;
 }
 
 @media (max-width: 950px) {
   .sort-dropdown-list, .sort-text, .sort-dropdown-opacity {
     height: 30vh;
+  }
+}
+
+@media (max-width: 321px) {
+  .sort-dropdown-list, .sort-text, .sort-dropdown-opacity {
+    height: 40vh !important;
+  }
+}
+
+@media (max-width: 365px) {
+  .sort-dropdown-list, .sort-text, .sort-dropdown-opacity {
+    height: 35vh;
   }
 }
 
@@ -829,7 +842,7 @@ footer .logo-text {
 
 @media only screen and (min-width: 768px) and (max-width: 1024px) and (orientation: portrait) {
   .sort-dropdown-list, .sort-text, .sort-dropdown-opacity {
-    height: 25vh;
+    height: 30vh;
     /* STYLES GO HERE */
   }
 }

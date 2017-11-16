@@ -34,7 +34,8 @@ class Listing extends Component{
       inapp:false,
       autoscroll:true,
       showingpic:false,
-      agents:''
+      agents:'',
+      stored:''
     }
   }
   componentWillMount(){

@@ -43,16 +43,14 @@ class Results extends Component{
     console.log('params: ',params);
     let neighborhood = (params) ? params.neighborhood : '';
     console.log('neighborhood in cwm: ',neighborhood);
-    let stored_results = this.props.stored_results;
+    let stored_results = this.props.global_listings;
     let i = (stored_results) ? true: false;
     console.log('app has stored results: ',i, ', ',stored_results, ', and raw results: ',this.state.results);
     let timestamp = moment();
     timestamp = timestamp.format('YYYY M MM d dd h hh');
     let storage_query = timestamp;
-    let stored = localStorage.getItem(storage_query);
-    let stored1 =localStorage.getItem(storage_query+'1');
-    console.log('timestamp: ',JSON.parse(stored));
-    if(!stored && stored_results==false){
+    console.log('timestamp: ',stored_results.timestamp);
+    if(i==false && stored_results.timestamp !== timestamp){
       axios.get(apiKey + '/info/open_houses').then(
       (response)=>{
         console.log('axios: ',response);
@@ -60,7 +58,6 @@ class Results extends Component{
           return val !==null && val.street_address;
         });
         console.log('axios streetnames: ',streetnames);
-        this.props.storeResults(markers,results);
         // localStorage.setItem(storage_query,JSON.stringify(response.data));
         // try {
         //   let items = response.data;
@@ -105,6 +102,13 @@ class Results extends Component{
         response = response.data.filter((val)=>{
           return val !==null;
         });
+        this.props.storeResults({
+          results,
+          markers:response,
+          neighborhood,
+          cache:response,
+          timestamp
+        });
         this.setState({
           results,
           markers:response,
@@ -122,14 +126,15 @@ class Results extends Component{
         }
       });
     }else{
-      console.log('setting previous markers');
+      console.log('setting previous markers: ',stored_results.markers);
       // let listings_remaining = stored_results.slice(10,markers.length);
       // let listings_shown = stored_results.slice(0,10);
       // if(!stored){
         this.setState({
-          results:this.props.raw_stored_results,
-          markers:stored_results,
-          cache:stored_results,
+          results:stored_results.results,
+          markers:stored_results.markers,
+          cache:stored_results.cache,
+          neighborhood:stored_results.neighborhood,
           display:'list'
         });
       // }
@@ -137,19 +142,19 @@ class Results extends Component{
       setTimeout(()=>{jquery('.list-view').addClass('list-btn-pressed');},50);
     }
 
-    if(stored){
-      stored = stored.concat(stored1);
-      // console.log('stored listings: ', JSON.parse(stored));
-      stored = JSON.parse(stored);
-      this.props.storeResults(markers,results);
-      this.setState({
-        results,
-        markers:stored,
-        neighborhood,
-        cache:stored,
-        display:'list'
-      });
-    }
+    // if(stored){
+    //   stored = stored.concat(stored1);
+    //   // console.log('stored listings: ', JSON.parse(stored));
+    //   stored = JSON.parse(stored);
+    //   this.props.storeResults(markers,results);
+    //   this.setState({
+    //     results,
+    //     markers:stored,
+    //     neighborhood,
+    //     cache:stored,
+    //     display:'list'
+    //   });
+    // }
 }
 
   componentDidUpdate(){
@@ -417,6 +422,70 @@ class Results extends Component{
     this.setState({
       markers:listings,
       sort_order:'ascending'
+    });
+  }
+  sortBedAsc(){
+    let listings = this.state.markers;
+    listings.sort((a,b)=>{
+      return a.num_bedrooms - b.num_bedrooms
+    })
+    listings.forEach((val)=>{
+      console.log('beds: ',val.num_bedrooms);
+    });
+    console.log('bed results: ',listings);
+      // listings.reverse();
+    this.setState({
+      markers:listings,
+      sort_order:'ascending',
+      sorting_spec:'beds'
+    });
+  }
+  sortBedDesc(){
+    let listings = this.state.markers;
+    listings.sort((a,b)=>{
+      return a.num_bedrooms - b.num_bedrooms
+    })
+    listings.forEach((val)=>{
+      console.log('beds: ',val.num_bedrooms);
+    });
+    console.log('bed results: ',listings);
+      listings.reverse();
+    this.setState({
+      markers:listings,
+      sort_order:'ascending',
+      sorting_spec:'beds'
+    });
+  }
+  sortBathAsc(){
+    let listings = this.state.markers;
+    listings.sort((a,b)=>{
+      return (a.full_baths+a.half_baths)-(b.full_baths+b.half_baths);
+    })
+    listings.forEach((val)=>{
+      console.log('baths: ',val.full_baths+val.half_baths);
+    });
+    console.log('bath results: ',listings);
+      // listings.reverse();
+    this.setState({
+      markers:listings,
+      sort_order:'ascending',
+      sorting_spec:'baths'
+    });
+  }
+  sortBathDesc(){
+    let listings = this.state.markers;
+    listings.sort((a,b)=>{
+      return (a.full_baths+a.half_baths)-(b.full_baths+b.half_baths);
+    })
+    listings.forEach((val)=>{
+      console.log('baths: ',val.full_baths+val.half_baths);
+    });
+    console.log('bath results: ',listings);
+      listings.reverse();
+    this.setState({
+      markers:listings,
+      sort_order:'ascending',
+      sorting_spec:'baths'
     });
   }
   sortAsc(){
@@ -752,26 +821,32 @@ class Results extends Component{
         </div>
         <div className="sort-text">
           <div id='time_dsc' {...drop} onClick={this.sortTimeDesc.bind(this)} className="sort-values subdivision">
-            Earliest to latest
+            Time: Earliest to Latest
           </div>
           <div id='time_asc' {...drop} onClick={this.sortTimeAsc.bind(this)} className="sort-values subdivision">
-            Latest to earliest
+            Time: Latest to Earliest
           </div>
           <div id='price_ase' {...drop} onClick={this.sortByPrice.bind(this)}  className="sort-values subdivision">
-            Price (low to high)
+            Price: Lowest to Highest
           </div>
           <div id='price_dsc' {...drop} onClick={this.sortByPriceDesc.bind(this)}  className="sort-values subdivision">
-            Price (high to low)
+            Price: Highest to Lowest
+          </div>
+          <div id='bed_asc' {...drop} onClick={this.sortBedAsc.bind(this)}  className="sort-values subdivision">
+            Bedrooms: Lowest to Highest
+          </div>
+          <div id='bed_desc' {...drop} onClick={this.sortBedDesc.bind(this)}  className="sort-values subdivision">
+            Bedrooms: Highest to Lowest
+          </div>
+          <div id='bath_asc' {...drop} onClick={this.sortBathAsc.bind(this)}  className="sort-values subdivision">
+            Bathrooms: Lowest to Highest
+          </div>
+          <div id='bath_desc' {...drop} onClick={this.sortBathDesc.bind(this)}  className="sort-values subdivision">
+            Bathrooms: Highest to Lowest
           </div>
           <div id='price' {...drop} onClick={this.sortByNewest.bind(this)}  className="sort-values subdivision">
             Newest
           </div>
-          {/* <div id='price' {...drop} onClick={this.sortByNewest.bind(this)}  className="sort-values subdivision">
-            Newest
-          </div>
-          <div id='price' {...drop} onClick={this.sortByNewest.bind(this)}  className="sort-values subdivision">
-            Newest
-          </div> */}
           {/* PRICE SORTING OPTIONS */}
           {/* <div className="sort-subvalues">
             <div onClick={this.sortPrice.bind(this)} className="subdivision" id='3' {...drop}>- $0-$500,000</div>
