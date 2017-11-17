@@ -14,7 +14,7 @@ let apiKey="http://www.dcopenhouselist.com";
 
 // let apiKey="https://dcopenhouselist.herokuapp.com";
 
-// console.log('listingjs env: ',process.env.REACT_APP_STATUS);
+console.log('listingjs env: ',process.env.REACT_APP_STATUS);
 
 class Listing extends Component{
   constructor(props){
@@ -48,12 +48,12 @@ class Listing extends Component{
       });
     }
     window.scrollTo(0,0);
-        // // console.log('axios: ',this.props.listing);
+        // console.log('axios: ',this.props.listing);
         // let listing = this.props.listing
     if(mls){
       axios.get(apiKey + '/info/listing/'+mls).then(
       (listing)=>{
-        // console.log('listing axios: ',listing);
+        console.log('listing axios: ',listing);
         listing = (listing.data.results) ? listing.data.results[0] : '';
         let showing = (listing) ? listing.image_urls.all_big[0] : '';
         let showing_index = 0;
@@ -69,7 +69,7 @@ class Listing extends Component{
         )
         let index=-1;
         let thumb_photos = (listing) ? listing.image_urls.all_thumb.map((pic)=>{
-          // // console.log('thumb pic: ',pic);
+          // console.log('thumb pic: ',pic);
           let style = {
             backgroundImage:'url('+pic+')',
             backgroundPosition:'center',
@@ -105,7 +105,7 @@ class Listing extends Component{
   getAllAgents(){
     let url=apiKey+"/info/getallagents";
     axios.get(url).then((response)=>{
-      // console.log('axios agents: ',response);
+      console.log('axios agents: ',response);
       let agents = response.data;
 
       let agentinfo = agents.map((agent)=>{
@@ -121,7 +121,7 @@ class Listing extends Component{
       agentindex = agentindex*agentinfo.length;
       agentindex = Math.floor(agentindex);
       let agent = agentinfo[agentindex];
-      // console.log('agent: ',agent);
+      console.log('agent: ',agent);
       let agent_email=agent.email;
 
       this.setState({
@@ -129,7 +129,7 @@ class Listing extends Component{
         agent_email
       });
     }).catch((err)=>{
-      // console.log('err - ',err);
+      console.log('err - ',err);
     });
 
 
@@ -137,7 +137,7 @@ class Listing extends Component{
   scrollPhotos(index){
       let photo=index || this.state.showing_index;
       let photos = this.state.big_photos;
-      // console.log('photo index: ',photo);
+      console.log('photo index: ',photo);
       photo=parseInt(photo);
       photo++;
       if(photo===photos.length){
@@ -145,10 +145,14 @@ class Listing extends Component{
       }
       setTimeout(()=>{
         if(this.state.autoscroll===true && this.state.showingpic==false){
-        // console.log('incrementing: ',photo);
-          this.setState({
-            showing_index:photo
-          });
+        console.log('incrementing: ',photo);
+          $('.photo-viewer').css('opacity',0);
+          $('.photo-container-day').css('opacity',1+' !important');
+          setTimeout(()=>{
+            this.setState({
+              showing_index:photo
+            });
+            $('.photo-viewer').css('opacity',1);
           let x = (photo !==0) ? this.scrollAlong(photo-1) : this.scrollAlong(photo);
           if(x ===false){return;}
           let newIndex = photo;
@@ -157,6 +161,8 @@ class Listing extends Component{
           $(id).addClass('thumb-viewing');
           $(id2).removeClass('thumb-viewing');
           this.scrollPhotos();
+
+        },500);
         }else{
           setTimeout(()=>{
               this.scrollPhotos();
@@ -183,7 +189,7 @@ class Listing extends Component{
   showPic(e){
     this.scrollChecker();
     // e.preventDefault();
-    // // console.log("showing: ",e.target.id);
+    // console.log("showing: ",e.target.id);
     let newIndex = e.target.id;
     let id='#'+newIndex;
     let id2='#'+this.state.showing_index;
@@ -193,13 +199,14 @@ class Listing extends Component{
     this.setState({
       showing_index:parseInt(e.target.id)
     });
-
+    $('.photo-container').css('opacity',1);
   }
   componentDidMount(){
     let id2='#'+this.state.showing_index;
     $(id2).addClass('thumb-viewing');
     setTimeout(()=>{
       $('.listing-specs').css('width','100%');
+      $('.listing-specs div').css('opacity','1');
     },10);
   }
   scrollAlong(index){
@@ -214,18 +221,18 @@ class Listing extends Component{
     }
     let scroller_right_offset = scroller_pos.left+scroller_width;
     let scroller_left_offset = scroller_pos.left;
-    let pic_offset_left = off.left;
+    let pic_offset_left = (off) ? off.left : 0;
     let pic_abs_left = pic.position().left;
     let num_pics = scroller_width/width;
 
     //SCROLL RIGHT:
     if(pic_offset_left+width>scroller_right_offset-width){
-      // console.log('passed! ',(pic_offset_left+width));
+      console.log('passed! ',(pic_offset_left+width));
       $('.scroller').scrollLeft(pic_abs_left-((num_pics-2)*width));
     }
     //SCROLL LEFT:
     if(pic_offset_left-width<scroller_left_offset){
-      // console.log('passed!');
+      console.log('passed!');
       $('.scroller').scrollLeft(pic_abs_left-width);
     }
   }
@@ -235,17 +242,17 @@ class Listing extends Component{
     let index = this.state.showing_index;
     let newIndex=index;
     this.scrollAlong();
-    // console.log('now on: ',newIndex);
+    console.log('now on: ',newIndex);
     if(index!==this.state.thumb_photos.length-1){
       newIndex = this.state.showing_index+1;
-      // console.log('navigating to: ',newIndex);
+      console.log('navigating to: ',newIndex);
       let id='#'+newIndex;
       let id2='#'+(newIndex-1);
       $(id).addClass('thumb-viewing');
       $(id2).removeClass('thumb-viewing');
     }else{
       newIndex = 0;
-      // console.log('navigating to: ',newIndex);
+      console.log('navigating to: ',newIndex);
       let id='#'+newIndex;
       let id2='#'+(newIndex.length-1);
       $(id).addClass('thumb-viewing');
@@ -260,11 +267,11 @@ class Listing extends Component{
     this.scrollChecker();
     let index = this.state.showing_index;
     let newIndex=index;
-    // console.log('now on: ',newIndex);
+    console.log('now on: ',newIndex);
     this.scrollAlong();
     if(index!==0){
       newIndex = this.state.showing_index-1;
-      // console.log('navigating to: ',newIndex);
+      console.log('navigating to: ',newIndex);
       let id='#'+newIndex;
       let id2='#'+(newIndex+1);
       $(id).addClass('thumb-viewing');
@@ -272,7 +279,7 @@ class Listing extends Component{
     }
     else{
       newIndex = this.state.thumb_photos.length-1;
-      // console.log('navigating to: ',newIndex);
+      console.log('navigating to: ',newIndex);
       let id='#'+newIndex;
       let id2='#0';
       $(id).addClass('thumb-viewing');
@@ -291,11 +298,11 @@ class Listing extends Component{
     let textarea = this.refs.textarea.value;
     let agent_email = this.state.agent_email;
     let mls = this.props.params.mls;
-    // console.log('submitting: ',first,last,email,textarea);
+    console.log('submitting: ',first,last,email,textarea);
     //FILTER FOR SCRIPTING ATTACKS:
     //CODE HERE
     if(this.refs.hidden.val !==undefined){
-      // console.log('bot');
+      console.log('bot');
       return;
     }
     if(first==='' || last==='' || email===''){
@@ -312,7 +319,7 @@ class Listing extends Component{
       textarea
     }
     axios.post(apiKey + '/info/submitform',data).then((response)=>{
-      // console.log('successfully submitted',response);
+      console.log('successfully submitted',response);
       if(response.data.message === "Queued. Thank you."){
 
         //show modal
@@ -335,7 +342,7 @@ class Listing extends Component{
         },2000);
       }
     }).catch((err)=>{
-      // console.log('err - ',err);
+      console.log('err - ',err);
     });
   }
   navigateBack(){
@@ -351,7 +358,7 @@ class Listing extends Component{
 
   //large view of listing photos:
   showing_modal(){
-    // console.log('showing');
+    console.log('showing');
     this.setState({showing_modal:true})
   }
   showing_modal_off(){
@@ -363,7 +370,7 @@ class Listing extends Component{
   render(){
     let showing=this.state.showing;
     let listing=this.state.listing;
-    // // console.log('listing to display: ',listing);
+    // console.log('listing to display: ',listing);
     let subdivision=(listing) ? listing.subdivision : '';
     let price = (listing) ? listing.list_price : '';
     subdivision=subdivision.toLowerCase();
@@ -375,9 +382,9 @@ class Listing extends Component{
     let is_vert = false;
     let pic_image = document.createElement('img');
     pic_image.src=big_photos[showing_index];
-    // console.log('pic height: ',pic_image.height);
+    console.log('pic height: ',pic_image.height);
     if(pic_image.height>pic_image.width){
-      // console.log('vertical!!!');
+      console.log('vertical!!!');
       is_vert = true;
     }
     let pic_size = (is_vert) ? 'contain' : 'cover';
@@ -398,7 +405,7 @@ class Listing extends Component{
     let days = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
     let dow = moment(event_start).day();
     dow = days[dow];
-    // console.log('open house is on: ',dow);
+    console.log('open house is on: ',dow);
     dow = (dow) ? 'Open '+dow : '';
     showing = (
       <div style={showing_image} className="photo-container">

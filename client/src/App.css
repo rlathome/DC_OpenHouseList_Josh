@@ -1965,6 +1965,9 @@ footer .logo-text {
 .listing-photos .photo-viewer {
   position: relative;
   height: 85%;
+  opacity: 1;
+  transition: opacity .5s;
+  transition-property: opacity;
 }
 
 .listing-photos .photo-viewer .photo-container {
@@ -2229,11 +2232,17 @@ footer .logo-text {
 
 .listing-specs {
   width: 0px;
-  transition: width .5s;
+  transition: width 0.35s;
   transition-property: width;
   height: auto;
   font-size: .75em;
   box-shadow: 5px 5px 5px grey;
+}
+
+.listing-specs .specs-1, .listing-specs .specs-2 {
+  opacity: 0;
+  transition-property: opacity;
+  transition: opacity 0.35s ease-in-out;
 }
 
 @media only screen and (min-width: 768px) and (max-width: 1024px) and (orientation: portrait) {
