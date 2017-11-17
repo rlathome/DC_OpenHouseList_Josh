@@ -36,38 +36,33 @@ class Results extends Component{
     }
   }
   componentWillMount(){
-    console.log('mounting results');
+    // console.log('mounting results');
     let results;
-    let markers=[];
     let params = this.props.params;
-    console.log('params: ',params);
+    // console.log('params: ',params);
     let neighborhood = (params) ? params.neighborhood : '';
-    console.log('neighborhood in cwm: ',neighborhood);
+    // console.log('neighborhood in cwm: ',neighborhood);
     let stored_results = this.props.global_listings;
     let i = (stored_results) ? true: false;
-    console.log('app has stored results: ',i, ', ',stored_results, ', and raw results: ',this.state.results);
+    // console.log('app has stored results: ',i, ', ',stored_results, ', and raw results: ',this.state.results);
     let timestamp = moment();
     timestamp = timestamp.format('YYYY M MM d dd h hh');
-    let storage_query = timestamp;
-    console.log('timestamp: ',stored_results.timestamp);
+    // console.log('timestamp: ',stored_results.timestamp);
     if(i==false && stored_results.timestamp !== timestamp){
       axios.get(apiKey + '/info/open_houses').then(
       (response)=>{
-        console.log('axios: ',response);
-        let streetnames = response.data.map((val)=>{
-          return val !==null && val.street_address;
-        });
-        console.log('axios streetnames: ',streetnames);
+        // console.log('axios: ',response);
+        // console.log('axios streetnames: ',streetnames);
         // localStorage.setItem(storage_query,JSON.stringify(response.data));
         // try {
         //   let items = response.data;
         //   // localStorage.setItem(storage_query,JSON.stringify(items.slice(0,items.length/2)));
         //   localStorage.setItem(storage_query+'1',JSON.stringify(items.slice(items.length/2,items.length)));
-        //   console.log('successfully stored');
+        //   // console.log('successfully stored');
         // } catch(e) {
         //   if (e.code == 22) {
         //     // Storage full, maybe notify user or do some clean-up
-        //     console.log('code22');
+        //     // console.log('code22');
         //     localStorage.clear();
         //     localStorage.setItem(storage_query,JSON.stringify(response.data));
         //     // localStorage.clear();
@@ -81,9 +76,9 @@ class Results extends Component{
         // while(to_paginate.length>0){
         //   for(let i=0; i<20; i++){
         //     if(to_paginate.length>0){
-        //       console.log('paginating');
+        //       // console.log('paginating');
         //       let piece = to_paginate.shift();
-        //       console.log('topag length: ',to_paginate.length);
+        //       // console.log('topag length: ',to_paginate.length);
         //       page.push(piece);
         //     }
         //   }
@@ -92,13 +87,13 @@ class Results extends Component{
         // }
 
         // while(to_paginate.length>0){
-        //   console.log('slicing');
+        //   // console.log('slicing');
         //   let lump = to_paginate.slice(0,20);
         //   to_paginate.slice(20,to_paginate.length);
         //   pages[page_ct] = lump;
         //   page_ct++;
         // }
-        // console.log('page list: ',pages);
+        // // console.log('page list: ',pages);
         response = response.data.filter((val)=>{
           return val !==null;
         });
@@ -117,16 +112,16 @@ class Results extends Component{
           display:'list'
         });
       }).catch((err)=>{
-        console.log('error -',err);
+        // console.log('error -',err);
         let exception = new RegExp('quota');
         if(exception.test(err)){
-          console.log('full storage!!');
+          // console.log('full storage!!');
           localStorage.clear();
           // this.componentWillMount();
         }
       });
     }else{
-      console.log('setting previous markers: ',stored_results.markers);
+      // console.log('setting previous markers: ',stored_results.markers);
       // let listings_remaining = stored_results.slice(10,markers.length);
       // let listings_shown = stored_results.slice(0,10);
       // if(!stored){
@@ -144,7 +139,7 @@ class Results extends Component{
 
     // if(stored){
     //   stored = stored.concat(stored1);
-    //   // console.log('stored listings: ', JSON.parse(stored));
+    //   // // console.log('stored listings: ', JSON.parse(stored));
     //   stored = JSON.parse(stored);
     //   this.props.storeResults(markers,results);
     //   this.setState({
@@ -202,11 +197,11 @@ class Results extends Component{
     e.preventDefault();
     let $item = jquery(e.target).closest('a');
     if($item.hasClass('map-btn-pressed')){
-      console.log('item has the class');
+      // console.log('item has the class');
       this.removePressedClass();
       $item.removeClass('map-btn-pressed');
     }else{
-      console.log('item doesnt have class');
+      // console.log('item doesnt have class');
       this.removePressedClass();
       $item.addClass('map-btn-pressed');
     }
@@ -229,42 +224,30 @@ class Results extends Component{
     });
   }
   highlight(e){
-    let item = e.target;
     let index = '#'+e.target.id;
     jquery(index).addClass('highlighted');
   }
   highlight_off(e){
-    let item = e.target;
     let index = '#'+e.target.id;
     jquery(index).removeClass('highlighted');
   }
   viewTabListing(e){
     e.preventDefault();
     let id = e.target.id;
-    console.log('tab listing: ',id);
-    if(id=='pause'){
-      let new_id=e.target.parentElement.id;
-      console.log('tab listing: ',new_id);
+    // console.log('tab listing: ',id);
+    if(id==='pause'){
       return;
     }
     this.viewListing(id);
   }
   viewListing(listing){
     let view = this.state.markers.filter((val)=>{
-      // console.log('marker: ',val.id, 'listing: ',listing);
+      // // console.log('marker: ',val.id, 'listing: ',listing);
       let list = parseInt(listing);
       return val.id == list;
     });
-    console.log('viewing the listing: ',view);
+    // console.log('viewing the listing: ',view);
     this.props.viewListing(view);
-  }
-  select(e){
-    e.preventDefault();
-    let item = e.target;
-    console.log('selecting');
-  }
-  selectAll(){
-    console.log('imported!');
   }
   sortTime(e){
     let $item = jquery('#down');
@@ -272,8 +255,6 @@ class Results extends Component{
     this.setState({
       dropdown: false
     });
-    let order = this.state.sort_order;
-    console.log('sorting by time: ',order,' ',this.state.markers);
     let listings = this.state.markers;
     let sortObjects = [];
     let sortedObjects = [];
@@ -285,15 +266,15 @@ class Results extends Component{
       }
       sortObjects.push(result);
     });
-    console.log('sort objects: ',sortObjects);
+    // console.log('sort objects: ',sortObjects);
     //////////////
     // var times = document.getElementsByClassName("test-moment");
 
-    var unsorted_times = new Array();
-    console.log("Converting");
+    var unsorted_times = [];
+    // console.log("Converting");
     for(var i = 0; i < sortObjects.length; i++) {
       var moment_date = moment(sortObjects[i].time);
-      var unsorted_time = new Object();
+      var unsorted_time = {};
       unsorted_time.time = sortObjects[i].time;
       unsorted_time.id = sortObjects[i].id;
       unsorted_time.milli = moment_date.valueOf();
@@ -306,7 +287,7 @@ class Results extends Component{
 
     // take out all dates happening in the future:
     // base_time = parseInt(base_time/(1000*60*60));
-    // console.log('base time: ',base_time);
+    // // console.log('base time: ',base_time);
     // unsorted_times = unsorted_times.filter((time)=>{
     //   return (time.milli/(1000*60*60))-base_time<24;
     // });
@@ -319,8 +300,8 @@ class Results extends Component{
         }
       });
     });
-    console.log('sorted times: ',unsorted_times);
-    console.log('sorted objects: ',sortedObjects);
+    // console.log('sorted times: ',unsorted_times);
+    // console.log('sorted objects: ',sortedObjects);
     sortedObjects.forEach((time)=>{
       listings.forEach((val)=>{
         if(val.id===time.id){
@@ -374,9 +355,12 @@ class Results extends Component{
       this.orderByPrice();
     }
   }
-  sortByPrice(){
+  unPress(){
     let $item = jquery('#down');
     $item.removeClass('down-btn-pressed');
+  }
+  sortByPrice(){
+    this.unPress();
     this.setState({
       dropdown: false,
       sorting_spec:'price'
@@ -384,8 +368,7 @@ class Results extends Component{
     this.orderByPrice();
   }
   sortByPriceDesc(){
-    let $item = jquery('#down');
-    $item.removeClass('down-btn-pressed');
+    this.unPress();
     this.setState({
       dropdown: false,
       sorting_spec:'price'
@@ -398,9 +381,9 @@ class Results extends Component{
       return a.list_price - b.list_price
     })
     listings.forEach((val)=>{
-      console.log(val.list_price);
+      // console.log(val.list_price);
     });
-    console.log('price results: ',listings);
+    // console.log('price results: ',listings);
     // if(this.state.sort_order=="ascending"){
     //   listings.reverse();
     // }
@@ -415,9 +398,9 @@ class Results extends Component{
       return a.list_price - b.list_price
     })
     listings.forEach((val)=>{
-      console.log(val.list_price);
+      // console.log(val.list_price);
     });
-    console.log('price results: ',listings);
+    // console.log('price results: ',listings);
       listings.reverse();
     this.setState({
       markers:listings,
@@ -425,71 +408,79 @@ class Results extends Component{
     });
   }
   sortBedAsc(){
+    this.unPress();
     let listings = this.state.markers;
     listings.sort((a,b)=>{
       return a.num_bedrooms - b.num_bedrooms
     })
     listings.forEach((val)=>{
-      console.log('beds: ',val.num_bedrooms);
+      // console.log('beds: ',val.num_bedrooms);
     });
-    console.log('bed results: ',listings);
+    // console.log('bed results: ',listings);
       // listings.reverse();
     this.setState({
       markers:listings,
       sort_order:'ascending',
-      sorting_spec:'beds'
+      sorting_spec:'beds',
+      dropdown:false
     });
   }
   sortBedDesc(){
+    this.unPress();
     let listings = this.state.markers;
     listings.sort((a,b)=>{
       return a.num_bedrooms - b.num_bedrooms
     })
     listings.forEach((val)=>{
-      console.log('beds: ',val.num_bedrooms);
+      // console.log('beds: ',val.num_bedrooms);
     });
-    console.log('bed results: ',listings);
+    // console.log('bed results: ',listings);
       listings.reverse();
     this.setState({
       markers:listings,
       sort_order:'ascending',
-      sorting_spec:'beds'
+      sorting_spec:'beds',
+      dropdown:false
     });
   }
   sortBathAsc(){
+    this.unPress();
     let listings = this.state.markers;
     listings.sort((a,b)=>{
       return (a.full_baths+a.half_baths)-(b.full_baths+b.half_baths);
     })
     listings.forEach((val)=>{
-      console.log('baths: ',val.full_baths+val.half_baths);
+      // console.log('baths: ',val.full_baths+val.half_baths);
     });
-    console.log('bath results: ',listings);
+    // console.log('bath results: ',listings);
       // listings.reverse();
     this.setState({
       markers:listings,
       sort_order:'ascending',
-      sorting_spec:'baths'
+      sorting_spec:'baths',
+      dropdown:false
     });
   }
   sortBathDesc(){
+    this.unPress();
     let listings = this.state.markers;
     listings.sort((a,b)=>{
       return (a.full_baths+a.half_baths)-(b.full_baths+b.half_baths);
     })
     listings.forEach((val)=>{
-      console.log('baths: ',val.full_baths+val.half_baths);
+      // console.log('baths: ',val.full_baths+val.half_baths);
     });
-    console.log('bath results: ',listings);
+    // console.log('bath results: ',listings);
       listings.reverse();
     this.setState({
       markers:listings,
       sort_order:'ascending',
-      sorting_spec:'baths'
+      sorting_spec:'baths',
+      dropdown:false
     });
   }
   sortAsc(){
-    console.log('asc');
+    // console.log('asc');
     if(this.state.sorting_spec === 'time' && this.state.sort_order==='descending'){
       // this.sortTime();
       let markers=this.state.markers.reverse();
@@ -513,7 +504,7 @@ class Results extends Component{
     //   }
   }
   sortDesc(){
-    console.log('desc');
+    // console.log('desc');
     if(this.state.sorting_spec === 'time' && this.state.sort_order==='ascending'){
       this.sortTime();
       // let markers=this.state.markers.reverse();
@@ -549,7 +540,7 @@ class Results extends Component{
   // let descending_arrow = (this.state.sort_order ==='ascending') ? ( <i onClick={this.sortDesc.bind(this)} className="glyphicon glyphicon-triangle-bottom"></i> ) : '';
 
   updateResults(results){
-    console.log('updating results');
+    // console.log('updating results');
     let updated = this.state.updated;
     if(this.state.display==='list' && updated==false && this.state.neighborhood !=='FullDCArea'){
       this.setState({
@@ -567,16 +558,11 @@ class Results extends Component{
   }
   render(){
     let results = this.state.markers;
-    console.log('results in results render: ',results);
+    // console.log('results in results render: ',results);
     let selected = this.state.selected;
-    let sort = this.state.sorting_spec;
-    console.log('sort order: ',this.state.sort_order);
+    // console.log('sort order: ',this.state.sort_order);
 
         let display;
-        let divstyle = {
-          left:this.state.x,
-          top:this.state.y
-        }
         // let map = (
         //   <ReactMap display={true} viewListing={this.viewListing.bind(this)} updateResults={this.updateResults.bind(this)} neighborhood={this.props.params.neighborhood} markers={results}/>
         //   // <Map markers={this.state.markers} />
@@ -671,22 +657,22 @@ class Results extends Component{
     let markers=[];
     let params = this.props.params;
     let neighborhood = (this.state.neighborhood) ? this.state.neighborhood : '';
-    console.log('params: ',params);
+    // console.log('params: ',params);
     // let stored_results = this.props.stored_results;
     // let i = (stored_results) ? true: false;
-    // console.log('app has stored results: ',i, ', ',stored_results, ', and raw results: ',this.state.results);
+    // // console.log('app has stored results: ',i, ', ',stored_results, ', and raw results: ',this.state.results);
     results = (results) ? results.filter((listing)=>{
       return listing !==null;
     }) : '';
     results = (results) ? results.map((listing)=>{
-      console.log('listing in render: ',listing);
+      // console.log('listing in render: ',listing);
       let price = currency.format(listing.list_price,{ code: 'USD', decimalDigits: 0 });
       price = price.slice(0,price.length-3);
       //get day of the week:
       let days = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
       let date = (listing.open_house_events[0]) ? moment(listing.open_house_events[0].event_start) : '';
       let dow = (date) ? date.day() : '';
-      console.log('todays open house is: ',days[dow]);
+      // console.log('todays open house is: ',days[dow]);
       let time = (date) ? date.format('h:mmA') : '';
       let dowUC = (date) ? days[dow] : '';
       dow = (date) ? days[dow] : '';
@@ -712,9 +698,9 @@ class Results extends Component{
       //FILTER BY MLS SUBDIVISION:
 
       // if(params.neighborhood && params.neighborhood !=='Full DC Area'){
-      //   console.log('filtering by day and neighborhood :',params.day,' vs ',dow,', ','and ',params.neighborhood,' vs ',listing.subdivision);
+      //   // console.log('filtering by day and neighborhood :',params.day,' vs ',dow,', ','and ',params.neighborhood,' vs ',listing.subdivision);
       //   if( dow !==params.day || listing.subdivision !==params.neighborhood){
-      //     console.log('no match');
+      //     // console.log('no match');
       //     return;
       //   }
       // }
@@ -722,18 +708,14 @@ class Results extends Component{
       //FILTER DAY:
 
       if(params.day !=='none'){
-        console.log('filtering by day');
-        console.log(params.day,' vs ',dow);
+        // console.log('filtering by day');
+        // console.log(params.day,' vs ',dow);
         if(dow !==params.day){
           return;
         }
       }
 
       //map coordinates
-      let style1 = {
-        backgroundImage:'url('+listing.image_urls.all_thumb[0]+')'
-      }
-
       markers.push(
         listing
       );
@@ -745,12 +727,12 @@ class Results extends Component{
         overlap:'hidden'
       };
       let indx = markers.indexOf(listing);
-      console.log('listing index: ',indx, ' neighborhood: ',neighborhood);
+      // console.log('listing index: ',indx, ' neighborhood: ',neighborhood);
       let reactMap = (neighborhood !== 'FullDCArea' && indx==0) ? ( <ReactMap display={false} viewListing={this.viewListing.bind(this)} updateResults={this.updateResults.bind(this)} neighborhood={this.props.params.neighborhood} markers={markers}/> ) : '';
       // if(neighborhood !=='FullDCArea'
       let result_subd = (<span className='result-subd'>{subd}</span>);
       return(
-        <div id={listing.id} onClick={this.viewTabListing.bind(this)} className="results-item row">
+        <div key={Math.random()} id={listing.id} onClick={this.viewTabListing.bind(this)} className="results-item row">
           <div id={listing.id} style={style} className="results-div col-xs-4 results-item-pic">
             {/* <div id='pause' className="results-item-selector">
             </div> */}
@@ -790,8 +772,9 @@ class Results extends Component{
       if(val){
         return val;
       }
+      return;
     }) : '';
-    console.log('the results in results render: ',results);
+    // console.log('the results in results render: ',results);
     switch(this.state.display){
       case 'list':
       display=(results.length) ? results : (<div className="no-results-msg">We're sorry - your search for {subd} listings {today} didn't return any results.</div>);
@@ -805,7 +788,6 @@ class Results extends Component{
       default:
       display=results;
     }
-    let btn_style = 'day-btn btn-3d btn-3d-blue';
     let drop = {
       onMouseEnter:this.highlight.bind(this),
       onMouseLeave:this.highlight_off.bind(this)

@@ -18,30 +18,30 @@ class AddAgents extends Component{
   getAllAgents(){
     let url=apiKey+"info/getallagents";
     axios.get(url).then((response)=>{
-      console.log('axios agents: ',response);
+      // console.log('axios agents: ',response);
       let agents = response.data;
       this.setState({
         agents
       });
     }).catch((err)=>{
-      console.log('err - ',err);
+      // console.log('err - ',err);
     });
   }
   getAllListings(){
     let url=apiKey+"info/getfeaturedlistings";
     axios.get(url).then((response)=>{
-      console.log('axios rec listings: ',response);
+      // console.log('axios rec listings: ',response);
       let listings = response.data.results;
       this.setState({
         listings
       });
     }).catch((err)=>{
-      console.log('err - ',err);
+      // console.log('err - ',err);
     });
   }
   submitForm(){
     let url=apiKey+"info/createagent";
-    console.log('submitting');
+    // console.log('submitting');
     let firstname = this.refs.firstname.value;
     let lastname = this.refs.lastname.value;
     let headshot_url = this.refs.headshot_url.value;
@@ -63,15 +63,15 @@ class AddAgents extends Component{
       password
     }
     axios.post(url,data).then((response)=>{
-      console.log('successfully submitted',response);
+      // console.log('successfully submitted',response);
       this.getAllAgents();
     }).catch((err)=>{
-      console.log('err - ',err);
+      // console.log('err - ',err);
     });
   }
   submitListing(){
     let url=apiKey+"info/addfeatured";
-    console.log('submitting');
+    // console.log('submitting');
     let mls = this.refs.mls.value;
     let password = this.refs.password2.value;
     let data = {
@@ -79,10 +79,10 @@ class AddAgents extends Component{
       password
     }
     axios.post(url,data).then((response)=>{
-      console.log('successfully submitted',response);
+      // console.log('successfully submitted',response);
       this.getAllListings();
     }).catch((err)=>{
-      console.log('err - ',err);
+      // console.log('err - ',err);
     });
   }
   deleteAgent(e){
@@ -91,23 +91,23 @@ class AddAgents extends Component{
     let id = target.id;
     let agentid = id;
     let password = this.refs[agentid].value;
-    console.log('password: ',password);
+    // console.log('password: ',password);
     let data = {
       agentID:id,
       password
     }
     let url=apiKey+"info/deleteagent";
-    console.log('clicked: ',id);
+    // console.log('clicked: ',id);
     let confirm = window.confirm('are you sure?');
     if(confirm){
       axios.post(url,data).then((response)=>{
-        console.log('successfully submitted',response);
+        // console.log('successfully submitted',response);
         if(response.data==='incorrect password'){
           alert('Incorrect Password');
         }
         this.getAllAgents();
       }).catch((err)=>{
-        console.log('err - ',err);
+        // console.log('err - ',err);
       });
     }
   }
@@ -117,24 +117,24 @@ class AddAgents extends Component{
     let id = target.id;
     let listingid = id;
     let password = this.refs[listingid].value;
-    console.log('password: ',password);
-    console.log('listing: ',listingid);
+    // console.log('password: ',password);
+    // console.log('listing: ',listingid);
     let data = {
       listingID:id,
       password
     }
     let url=apiKey+"info/deletefeatured";
-    console.log('clicked: ',id);
+    // console.log('clicked: ',id);
     let confirm = window.confirm('are you sure?');
     if(confirm){
       axios.post(url,data).then((response)=>{
-        console.log('successfully submitted',response);
+        // console.log('successfully submitted',response);
         if(response.data==='incorrect password'){
           alert('Incorrect Password');
         }
         this.getAllListings();
       }).catch((err)=>{
-        console.log('err - ',err);
+        // console.log('err - ',err);
       });
     }
   }
@@ -158,7 +158,7 @@ class AddAgents extends Component{
             <input ref={agent.id} placeholder="Password" />
             <div id={agent.id} onClick={this.deleteAgent.bind(this)} className='btn btn-default btn-danger'>Delete</div>
           </div>
-          <img className='agent-thumb-img pull-right' src={agent.headshot_url} alt="agent photo" />
+          <img className='agent-thumb-img pull-right' src={agent.headshot_url} alt="agent" />
         </div>
       );
     }) : '';
@@ -186,7 +186,7 @@ class AddAgents extends Component{
             <input ref={listing.mls_number} placeholder="Password" />
             <div id={listing.mls_number} onClick={this.deleteListing.bind(this)} className='btn btn-default btn-danger'>Delete</div>
           </div>
-          <img className='agent-thumb-img pull-right image-responsive' src={listing.image} alt="agent photo" />
+          <img className='agent-thumb-img pull-right image-responsive' src={listing.image} alt="agent" />
         </div>
       );
     }) : '';

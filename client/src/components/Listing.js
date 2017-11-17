@@ -3,12 +3,9 @@ import ListingMap from './ListingMap';
 import Header from './Header';
 import axios from 'axios';
 import { hashHistory } from 'react-router';
-import GoogleMap from "react-google-map";
-import GoogleMapLoader from "react-google-maps-loader";
 import currency from 'currency-formatter';
 import $ from 'jquery';
 import moment from 'moment';
-const google = window.google;
 // let apiKey = (process.env.REACT_APP_STATUS == 'development') ? "http://localhost:8080" : "http://vast-shore-14133.herokuapp.com";
 
 // let apiKey = "http://localhost:8080";
@@ -17,7 +14,7 @@ let apiKey="http://www.dcopenhouselist.com";
 
 // let apiKey="https://dcopenhouselist.herokuapp.com";
 
-console.log('listingjs env: ',process.env.REACT_APP_STATUS);
+// console.log('listingjs env: ',process.env.REACT_APP_STATUS);
 
 class Listing extends Component{
   constructor(props){
@@ -39,11 +36,9 @@ class Listing extends Component{
     }
   }
   componentWillMount(){
-    // axios.get(apiKey + '/info/open_houses').then(
-    //   (response)=>{
+
     this.getAllAgents();
     let mls=(this.props.params) ? this.props.params.mls : '';
-    let inapp=(this.props.params) ? this.props.params.inapp : '';
     let day=(this.props.params) ? this.props.params.day : '';
     let neighborhood=(this.props.params) ? this.props.params.neighborhood : '';
     if(day && neighborhood){
@@ -53,12 +48,12 @@ class Listing extends Component{
       });
     }
     window.scrollTo(0,0);
-        // console.log('axios: ',this.props.listing);
+        // // console.log('axios: ',this.props.listing);
         // let listing = this.props.listing
     if(mls){
       axios.get(apiKey + '/info/listing/'+mls).then(
       (listing)=>{
-        console.log('listing axios: ',listing);
+        // console.log('listing axios: ',listing);
         listing = (listing.data.results) ? listing.data.results[0] : '';
         let showing = (listing) ? listing.image_urls.all_big[0] : '';
         let showing_index = 0;
@@ -74,7 +69,7 @@ class Listing extends Component{
         )
         let index=-1;
         let thumb_photos = (listing) ? listing.image_urls.all_thumb.map((pic)=>{
-          // console.log('thumb pic: ',pic);
+          // // console.log('thumb pic: ',pic);
           let style = {
             backgroundImage:'url('+pic+')',
             backgroundPosition:'center',
@@ -83,10 +78,10 @@ class Listing extends Component{
             borderRight:'4px solid #000'
           }
           index++;
-          let showing = (index==0) ? 'thumb-viewing' : '';
+          let showing = (index===0) ? 'thumb-viewing' : '';
           let thumb_class = 'thumb-photo-container '+showing;
           return(
-            <div onClick={this.showPic.bind(this)} id={index} style={style} className={thumb_class}>
+            <div key={index} onClick={this.showPic.bind(this)} id={index} style={style} className={thumb_class}>
 
             </div>
           );
@@ -100,17 +95,17 @@ class Listing extends Component{
           big_photos,
           listing
         });
-        let i=0;
 
         this.scrollPhotos();
 
       });
     }
   }
+
   getAllAgents(){
     let url=apiKey+"/info/getallagents";
     axios.get(url).then((response)=>{
-      console.log('axios agents: ',response);
+      // console.log('axios agents: ',response);
       let agents = response.data;
 
       let agentinfo = agents.map((agent)=>{
@@ -126,7 +121,7 @@ class Listing extends Component{
       agentindex = agentindex*agentinfo.length;
       agentindex = Math.floor(agentindex);
       let agent = agentinfo[agentindex];
-      console.log('agent: ',agent);
+      // console.log('agent: ',agent);
       let agent_email=agent.email;
 
       this.setState({
@@ -134,7 +129,7 @@ class Listing extends Component{
         agent_email
       });
     }).catch((err)=>{
-      console.log('err - ',err);
+      // console.log('err - ',err);
     });
 
 
@@ -142,20 +137,20 @@ class Listing extends Component{
   scrollPhotos(index){
       let photo=index || this.state.showing_index;
       let photos = this.state.big_photos;
-      console.log('photo index: ',photo);
+      // console.log('photo index: ',photo);
       photo=parseInt(photo);
       photo++;
-      if(photo==photos.length){
+      if(photo===photos.length){
         photo=0;
       }
       setTimeout(()=>{
-        if(this.state.autoscroll==true && this.state.showingpic==false){
-        console.log('incrementing: ',photo);
+        if(this.state.autoscroll===true && this.state.showingpic==false){
+        // console.log('incrementing: ',photo);
           this.setState({
             showing_index:photo
           });
           let x = (photo !==0) ? this.scrollAlong(photo-1) : this.scrollAlong(photo);
-          if(x ==false){return;}
+          if(x ===false){return;}
           let newIndex = photo;
           let id='#'+newIndex;
           let id2= (photo !==0) ? '#'+(this.state.showing_index-1) : '#'+(this.state.thumb_photos.length-1);
@@ -178,7 +173,7 @@ class Listing extends Component{
       this.setState({
         showingpic:false
       });
-      if(this.state.autoscroll==false){
+      if(this.state.autoscroll===false){
         this.setState({
           autoscroll:true
         });
@@ -188,7 +183,7 @@ class Listing extends Component{
   showPic(e){
     this.scrollChecker();
     // e.preventDefault();
-    // console.log("showing: ",e.target.id);
+    // // console.log("showing: ",e.target.id);
     let newIndex = e.target.id;
     let id='#'+newIndex;
     let id2='#'+this.state.showing_index;
@@ -222,12 +217,12 @@ class Listing extends Component{
 
     //SCROLL RIGHT:
     if(pic_offset_left+width>scroller_right_offset-width){
-      console.log('passed! ',(pic_offset_left+width));
+      // console.log('passed! ',(pic_offset_left+width));
       $('.scroller').scrollLeft(pic_abs_left-((num_pics-2)*width));
     }
     //SCROLL LEFT:
     if(pic_offset_left-width<scroller_left_offset){
-      console.log('passed!');
+      // console.log('passed!');
       $('.scroller').scrollLeft(pic_abs_left-width);
     }
   }
@@ -237,17 +232,17 @@ class Listing extends Component{
     let index = this.state.showing_index;
     let newIndex=index;
     this.scrollAlong();
-    console.log('now on: ',newIndex);
+    // console.log('now on: ',newIndex);
     if(index!==this.state.thumb_photos.length-1){
       newIndex = this.state.showing_index+1;
-      console.log('navigating to: ',newIndex);
+      // console.log('navigating to: ',newIndex);
       let id='#'+newIndex;
       let id2='#'+(newIndex-1);
       $(id).addClass('thumb-viewing');
       $(id2).removeClass('thumb-viewing');
     }else{
       newIndex = 0;
-      console.log('navigating to: ',newIndex);
+      // console.log('navigating to: ',newIndex);
       let id='#'+newIndex;
       let id2='#'+(newIndex.length-1);
       $(id).addClass('thumb-viewing');
@@ -262,11 +257,11 @@ class Listing extends Component{
     this.scrollChecker();
     let index = this.state.showing_index;
     let newIndex=index;
-    console.log('now on: ',newIndex);
+    // console.log('now on: ',newIndex);
     this.scrollAlong();
     if(index!==0){
       newIndex = this.state.showing_index-1;
-      console.log('navigating to: ',newIndex);
+      // console.log('navigating to: ',newIndex);
       let id='#'+newIndex;
       let id2='#'+(newIndex+1);
       $(id).addClass('thumb-viewing');
@@ -274,7 +269,7 @@ class Listing extends Component{
     }
     else{
       newIndex = this.state.thumb_photos.length-1;
-      console.log('navigating to: ',newIndex);
+      // console.log('navigating to: ',newIndex);
       let id='#'+newIndex;
       let id2='#0';
       $(id).addClass('thumb-viewing');
@@ -293,11 +288,11 @@ class Listing extends Component{
     let textarea = this.refs.textarea.value;
     let agent_email = this.state.agent_email;
     let mls = this.props.params.mls;
-    console.log('submitting: ',first,last,email,textarea);
+    // console.log('submitting: ',first,last,email,textarea);
     //FILTER FOR SCRIPTING ATTACKS:
     //CODE HERE
     if(this.refs.hidden.val !==undefined){
-      console.log('bot');
+      // console.log('bot');
       return;
     }
     if(first==='' || last==='' || email===''){
@@ -314,7 +309,7 @@ class Listing extends Component{
       textarea
     }
     axios.post(apiKey + '/info/submitform',data).then((response)=>{
-      console.log('successfully submitted',response);
+      // console.log('successfully submitted',response);
       if(response.data.message === "Queued. Thank you."){
 
         //show modal
@@ -337,14 +332,14 @@ class Listing extends Component{
         },2000);
       }
     }).catch((err)=>{
-      console.log('err - ',err);
+      // console.log('err - ',err);
     });
   }
   navigateBack(){
     // this.props.goBack();
     if(this.state.day !=='none' && this.state.neighborhood !=='none'){
       hashHistory.push('/search/'+this.state.day+'/'+this.state.neighborhood);
-    }else if(this.state.day !=='none' && this.state.neighborhood=='none'){
+    }else if(this.state.day !=='none' && this.state.neighborhood === 'none'){
       hashHistory.push('/search/'+this.state.day+'/none');
     }else{
       hashHistory.push('/');
@@ -353,7 +348,7 @@ class Listing extends Component{
 
   //large view of listing photos:
   showing_modal(){
-    console.log('showing');
+    // console.log('showing');
     this.setState({showing_modal:true})
   }
   showing_modal_off(){
@@ -365,7 +360,7 @@ class Listing extends Component{
   render(){
     let showing=this.state.showing;
     let listing=this.state.listing;
-    // console.log('listing to display: ',listing);
+    // // console.log('listing to display: ',listing);
     let subdivision=(listing) ? listing.subdivision : '';
     let price = (listing) ? listing.list_price : '';
     subdivision=subdivision.toLowerCase();
@@ -377,9 +372,9 @@ class Listing extends Component{
     let is_vert = false;
     let pic_image = document.createElement('img');
     pic_image.src=big_photos[showing_index];
-    console.log('pic height: ',pic_image.height);
+    // console.log('pic height: ',pic_image.height);
     if(pic_image.height>pic_image.width){
-      console.log('vertical!!!');
+      // console.log('vertical!!!');
       is_vert = true;
     }
     let pic_size = (is_vert) ? 'contain' : 'cover';
@@ -391,9 +386,6 @@ class Listing extends Component{
       backgroundSize:pic_size,
       overlap:'hidden'
     }
-    let d = this.state.day.slice(0,1).toUpperCase();
-    let ay = this.state.day.slice(1,(this.state.day.length));
-    let tday = d+ay;
     let date = (listing.open_house_events && listing.open_house_events.length > 0) ? moment(listing.open_house_events[0].event_start) : '';
     let date2 = (listing.open_house_events && listing.open_house_events.length > 0) ? moment(listing.open_house_events[0].event_end) : '';
     let time = (date) ? date.format('h') : '';
@@ -401,11 +393,9 @@ class Listing extends Component{
 
     let event_start = (listing.open_house_events && listing.open_house_events.length > 0) ? listing.open_house_events[0].event_start : '';
     let days = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
-    let new_date = moment(event_start).calendar();
-    new_date = (new_date !== "Invalid date") ? ' - '+ new_date : '';
     let dow = moment(event_start).day();
     dow = days[dow];
-    console.log('open house is on: ',dow);
+    // console.log('open house is on: ',dow);
     dow = (dow) ? 'Open '+dow : '';
     showing = (
       <div style={showing_image} className="photo-container">
@@ -418,7 +408,7 @@ class Listing extends Component{
           <div className="sm_opacity"></div>
           <div onClick={this.goLeft.bind(this)} className="arrow arrow-left fa fa-arrow-left"></div>
           <div onClick={this.goRight.bind(this)} className="arrow arrow-right fa fa-arrow-right"></div>
-          <img className="showing-modal-image image-responsive" src={big_photos[showing_index]} alt="listing photo"/>
+          <img className="showing-modal-image image-responsive" src={big_photos[showing_index]} alt="listing"/>
           <i className="glyphicon glyphicon-resize-small" onClick={this.showing_modal_off.bind(this)}></i>
       </div>
     ) : '';
@@ -467,7 +457,6 @@ class Listing extends Component{
       dir = '';
     };
     let st_address = (listing) ? (<div>{listing.street_number}&nbsp;{listing.street_name}&nbsp;{listing.street_post_dir} {dir}</div>) : '';
-    let st_address_string = (listing) ? listing.street_number+listing.street_name : '';
     let lng = (listing) ? parseFloat(listing.longitude) : '';
     let lat = (listing) ? parseFloat(listing.latitude) : '';
     let floor_type = (listing) ? listing.floor : '';
@@ -494,21 +483,20 @@ class Listing extends Component{
         </div>
       </div>
     ) : '';
-    let first_name=(<div>First Name <sup>*</sup></div>);
 
     let agent = (this.state.agent) ? this.state.agent : '';
 
     let listing_agent_column = (agent) ? (
       <div className="row listing-agent-column">
         <div className="agent-photo-holder col-lg-12 col-md-6 col-sm-6 pull-right">
-          <img src={agent.headshot_url} className="image-responsive" alt="Agent Image" />
+          <img src={agent.headshot_url} className="image-responsive" alt="Agent" />
         </div>
         <div className="col-lg-12 col-md-6 col-sm-6">
           <div><h3>{agent.name}</h3></div>
           <div>11 Dupont Circle NW, Ste 650</div>
           <div>Washington, DC 20036</div>
           <div>Phone: {agent.phone}</div>
-          <div>Email: <a ref="agent_email" href={agent.email} alt='email'>{agent.email}</a></div>
+          <div>Email: <a ref="agent_email" href={agent.email} alt='agent email'>{agent.email}</a></div>
         </div>
       </div>
     ) : '';

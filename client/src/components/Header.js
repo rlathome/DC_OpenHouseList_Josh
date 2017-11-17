@@ -2,17 +2,13 @@ import React, { Component } from 'react';
 import { hashHistory } from 'react-router';
 
 class Header extends Component{
-  pickDay(e){
-    let day = e.target.id;
-    console.log('picking ',day);
-  }
   reload(e){
     e.preventDefault();
     this.props.reload();
   }
   goHome(e){
     e.preventDefault();
-    console.log('yick')
+    // console.log('yick')
     hashHistory.push('/');
   }
   neighborhood(){
@@ -21,8 +17,8 @@ class Header extends Component{
     // let day = this.props.day.toLowerCase();
   }
   render(){
-    let day = (this.props.day && this.props.day !=='NONE') ? (<li onClick={()=>this.props.reload()}><i className="glyphicon glyphicon-play"></i><a href="#" alt="day">{this.props.day}</a></li>) : '';
-    let neighborhood = (this.props.neighborhood) ? (<li onClick={this.neighborhood.bind(this)}><i className="glyphicon glyphicon-play"></i><a href="#" alt="neighborhood">{this.props.neighborhood}</a></li>) : '';
+    let day = (this.props.day && this.props.day !=='NONE') ? (<li onClick={()=>this.props.reload()}><i className="glyphicon glyphicon-play"></i>{this.props.day}</li>) : '';
+    let neighborhood = (this.props.neighborhood) ? (<li onClick={this.neighborhood.bind(this)}><i className="glyphicon glyphicon-play"></i>{this.props.neighborhood}</li>) : '';
     return(
       <header>
         <div className="grey-bar">

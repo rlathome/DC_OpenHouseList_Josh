@@ -1,12 +1,4 @@
 import React, { Component } from 'react';
-import axios from 'axios'
-// let apiKey = (process.env.REACT_APP_STATUS == 'development') ? "http://localhost:8080" : "http://vast-shore-14133.herokuapp.com";
-
-// let apiKey="https://dcopenhouselist.herokuapp.com";
-
-// let apiKey = "http://localhost:8080";
-
-let apiKey="http://www.dcopenhouselist.com";
 
 
 class Neighborhood extends Component{
@@ -22,18 +14,6 @@ class Neighborhood extends Component{
     //temporary - loading neighborhoods from DB while API key is for Columbia
     let neighborhoods = ["Full DC Area", "Adams Morgan", "Anacostia", "Brookland", "Capitol Hill","Cleveland Park", "Columbia Heights", "Deanwood", "Dupont Circle", "Eckington","Foggy Bottom", "Friendship Heights", "Georgetown", "Logan Circle", "Petworth", "Southwest Waterfront", "Westend","Woodley Park"];
     let quadrants = ['NW','NE','SW','SE'];
-    // axios.get(apiKey + '/info/neighborhoods').then(
-    //   (neighborhoods)=>{
-    //     console.log('neighborhoods: ',neighborhoods.data);
-    //     neighborhoods = neighborhoods.data;
-    //     // this.setState({
-    //     //   neighborhoods,
-    //     //   selected:neighborhoods[0]
-    //     // });
-    //   }
-    // ).catch((err)=>{
-    //   console.log('error -',err);
-    // });
     this.setState({
       neighborhoods,
       quadrants,
@@ -73,8 +53,8 @@ class Neighborhood extends Component{
     all.forEach((val)=>{
       let val2=val.toLowerCase();
       val2=val2.replace(/ /g,'');
-      console.log('minified: ',val2,' vs: ',picked);
-      if(val2==picked){
+      // console.log('minified: ',val2,' vs: ',picked);
+      if(val2===picked){
         picked = val;
       }
     });
@@ -167,7 +147,7 @@ class Neighborhood extends Component{
           id='';
         };
         return(
-          <div id={id} onMouseEnter={this.highlight.bind(this)} onMouseLeave={this.highlight_off.bind(this)} onClick={this.select.bind(this)} className="subdivision">
+          <div id={id} key={quad} onMouseEnter={this.highlight.bind(this)} onMouseLeave={this.highlight_off.bind(this)} onClick={this.select.bind(this)} className="subdivision">
             {quad}
           </div>
         );

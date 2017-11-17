@@ -6,9 +6,7 @@ import Results from './Results';
 import Featured from './Featured';
 import Listing from './Listing';
 import Header from './Header';
-import axios from 'axios';
 import jquery from 'jquery';
-import Map from './ReactMap';
 
 class Search extends Component{
   constructor(props){
@@ -27,9 +25,9 @@ class Search extends Component{
   }
   componentWillMount(){
     let day = (this.props.params.day !=='none') ? this.props.params.day : '';
-    console.log('chosen day: ',day);
+    // // console.log('chosen day: ',day);
     let neighborhood = (this.props.params.neighborhood !=='none') ? this.props.params.neighborhood : '';
-    console.log('chosen neighborhood: ',neighborhood);
+    // // console.log('chosen neighborhood: ',neighborhood);
     if(day && neighborhood){
       this.setState({
         step:'results',
@@ -70,7 +68,6 @@ class Search extends Component{
         step:'neighborhoods'
       });
     },250);
-    let $item = jquery(e.target).closest('.day-btn');
     this.pressed_toggle(e);
   }
   sunday(e){
@@ -82,13 +79,11 @@ class Search extends Component{
         step:'neighborhoods'
       });
     },250);
-    let $item = jquery(e.target).closest('span');
     this.pressed_toggle(e);
   }
   selectNeighborhood(e,subd){
-    let $item = jquery(e.target).closest('span');
     this.pressed_toggle(e);
-    console.log('setting neighborhood: ',subd);
+    // // console.log('setting neighborhood: ',subd);
     hashHistory.push('/search/'+this.state.day+'/'+subd);
     this.setState({
       neighborhood:subd,
@@ -97,7 +92,6 @@ class Search extends Component{
     });
   }
   arrowToggle(e){
-    let $item = jquery(e.target).closest('span');
     this.pressed_toggle(e);
   }
   reload(){
@@ -109,14 +103,14 @@ class Search extends Component{
     hashHistory.push('/');
   }
   viewListing(listing){
-    console.log('listing to view: ',listing);
+    // // console.log('listing to view: ',listing);
     let day = (this.state.day !=='') ? this.state.day : 'none';
     let neighborhood = (this.state.neighborhood) ? this.state.neighborhood : 'none';
     listing = listing[0].mls_number;
     hashHistory.push('/listing/'+listing+'/'+day+'/'+neighborhood);
   }
   goBack(place){
-    console.log('going back');
+    // // console.log('going back');
     let last_place = this.state.last_place;
     this.setState({
       step:last_place
@@ -141,7 +135,6 @@ class Search extends Component{
     });
   }
   render(){
-    let btn_style = 'day-btn btn-3d btn-3d-blue';
     let options;
     let params = {
       day:this.state.day,
@@ -162,6 +155,8 @@ class Search extends Component{
       case 'listing':
       options = (<Listing goBack={this.goBack.bind(this)} listing={selected_listing}/>);
       break;
+      default:
+      options=(<Days skipAhead={this.skipAhead.bind(this)} saturday={this.saturday.bind(this)} sunday={this.sunday.bind(this)} pressed_toggle={this.pressed_toggle.bind(this)} />);
     }
     let neighborhood = this.state.neighborhood;
     let day = this.state.day.toUpperCase();
