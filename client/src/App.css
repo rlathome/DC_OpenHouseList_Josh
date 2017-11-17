@@ -1899,6 +1899,10 @@ footer .logo-text {
   }
 }
 
+.form .btn {
+  margin-top: 15px;
+}
+
 .listing-form-header {
   font-size: 1.75em;
 }
@@ -2224,8 +2228,12 @@ footer .logo-text {
 }
 
 .listing-specs {
+  width: 0px;
+  transition: width .5s;
+  transition-property: width;
   height: auto;
   font-size: .75em;
+  box-shadow: 5px 5px 5px grey;
 }
 
 @media only screen and (min-width: 768px) and (max-width: 1024px) and (orientation: portrait) {

@@ -198,6 +198,9 @@ class Listing extends Component{
   componentDidMount(){
     let id2='#'+this.state.showing_index;
     $(id2).addClass('thumb-viewing');
+    setTimeout(()=>{
+      $('.listing-specs').css('width','100%');
+    },10);
   }
   scrollAlong(index){
     let idx = index || this.state.showing_index;
@@ -573,18 +576,18 @@ class Listing extends Component{
                       Ask a Question
                       <div className="listing-form-header-quote">"We'll respond quickly!"</div>
                     </div>
-                    <form onSubmit={this.submitForm.bind(this)}>
+                    <form className="form form-default" onSubmit={this.submitForm.bind(this)}>
                       <div className="form-column">
-                        <input className="required" ref="first_name" placeholder="First Name"/>
-                        <input className="required" ref="last_name" placeholder="Last Name"/>
+                        <input className="form-control required" ref="first_name" placeholder="First Name"/>
+                        <input className="form-control required" ref="last_name" placeholder="Last Name"/>
                       </div>
                       <div className="form-column">
-                        <input className="required" ref="email" placeholder="E-mail"/>
-                        <input ref="phone" placeholder="Phone"/>
+                        <input className="form-control required" ref="email" placeholder="E-mail"/>
+                        <input className="form-control" ref="phone" placeholder="Phone"/>
                       </div>
-                      <textarea ref="textarea" placeholder = "What can we do for you?"/>
+                      <textarea className="form-control" ref="textarea" placeholder = "What can we do for you?"/>
                       <input ref="hidden" className="hidden" />
-                      <input type="submit" value="Submit"/>
+                      <input className="btn btn-primary" type="submit" value="Submit"/>
                     </form>
                   </div>
                   <div className="listing-agent-photo col-lg-4">
