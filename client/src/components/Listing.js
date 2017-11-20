@@ -146,13 +146,13 @@ class Listing extends Component{
       setTimeout(()=>{
         if(this.state.autoscroll===true && this.state.showingpic==false){
         console.log('incrementing: ',photo);
-          $('.photo-viewer').css('opacity',0);
-          $('.photo-container-day').css('opacity',1+' !important');
+          // $('.photo-container').css('opacity',0);
+          // $('.photo-container-day').css('opacity',1+' !important');
           setTimeout(()=>{
             this.setState({
               showing_index:photo
             });
-            $('.photo-viewer').css('opacity',1);
+            // $('.photo-container').css('opacity',1);
           let x = (photo !==0) ? this.scrollAlong(photo-1) : this.scrollAlong(photo);
           if(x ===false){return;}
           let newIndex = photo;
