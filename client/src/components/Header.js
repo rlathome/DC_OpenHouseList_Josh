@@ -1,20 +1,36 @@
 import React, { Component } from 'react';
 import { hashHistory } from 'react-router';
+import $ from 'jquery';
 
 class Header extends Component{
+  constructor(props){
+    super(props);
+    this.state={
+      open:false
+    }
+  }
   reload(e){
     e.preventDefault();
     this.props.reload();
   }
   goHome(e){
     e.preventDefault();
-    // console.log('yick')
-    hashHistory.push('/');
+    console.log('going home');
+    this.props.reload();
   }
   neighborhood(){
     // this.props.reload();
     // this.props.toNeigh();
     // let day = this.props.day.toLowerCase();
+  }
+  toggleNav(){
+    // this.setState({
+    //   open: !this.state.open
+    // })
+    // const toggle = (!this.state.open) ? 'block' : 'none';
+    // console.log('toggling');
+    // $('.collapse').css('display',toggle);
+    // $('.collapse').removeClass('flat')
   }
   render(){
     let day = (this.props.day && this.props.day !=='NONE') ? (<li onClick={()=>this.props.reload()}><i className="glyphicon glyphicon-play"></i>{this.props.day}</li>) : '';
@@ -27,14 +43,14 @@ class Header extends Component{
         </div>
 
         <div id="header-nav">
-          <button type="button" className="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse" name="button">
+          <button onClick={this.toggleNav.bind(this)} type="button" className="navbar-toggle" data-toggle="collapse" data-target=".collapse" name="button">
             <span className="icon-bar"></span>
             <span className="icon-bar"></span>
             <span className="icon-bar"></span>
           </button>
           <div className="collapse navbar-collapse">
             <ul className="nav navbar-nav navbar-right">
-              <li onClick={this.reload.bind(this)}><i className="glyphicon glyphicon-play"></i><a href="/index.html">HOME</a></li>
+              <li onClick={this.reload.bind(this)}><i className="glyphicon glyphicon-play"></i>HOME</li>
               { day }
               { neighborhood }
               {/* <li id="saturday" onClick={this.pickDay.bind(this)}><i className="glyphicon glyphicon-play"></i>SATURDAY</li>

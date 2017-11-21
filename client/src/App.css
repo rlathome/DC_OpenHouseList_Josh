@@ -19,9 +19,23 @@ header {
   width: 100%;
 }
 
+.navbar-right {
+  z-index: 300;
+  background-color: black;
+}
+
+.navbar-right * {
+  z-index: 100;
+}
+
 .navbar-right li {
   margin-top: 3px;
   cursor: pointer;
+  margin-right: 15px;
+}
+
+.navbar-right li i {
+  margin-right: 15px;
 }
 
 .navbar-right li a:focus {
@@ -32,7 +46,6 @@ header {
 @media (max-width: 765px) {
   .navbar-right {
     width: 55vw !important;
-    background-color: black;
     padding: 10px;
     margin-top: 12px;
   }
@@ -71,6 +84,7 @@ footer div {
 
 footer .navbar-collapse {
   position: relative;
+  float: right;
 }
 
 footer .footer-info {
@@ -187,7 +201,7 @@ footer .logo-text {
 }
 
 #header-image {
-  z-index: -1;
+  z-index: 0;
   width: 100%;
   height: 20vh;
   padding: 0px 25px;
@@ -230,6 +244,7 @@ footer .logo-text {
 .header-title-container img {
   width: 50%;
   margin: 10px 0px;
+  cursor: pointer;
 }
 
 @media only screen and (min-width: 375px) and (max-width: 667px) and (orientation: portrait) {
@@ -281,6 +296,19 @@ footer .logo-text {
   height: 25px;
 }
 
+.flat * {
+  height: 0px !important;
+}
+
+.collapse {
+  transition-property: height;
+  -webkit-transition-property: height;
+  -moz-transition-property: height;
+  transition: all .55s;
+  -webkit-transition: all .55s;
+  -moz-transition: all .55s;
+}
+
 #header-nav {
   background-color: #1A1A1A;
   min-height: 25px;
@@ -304,14 +332,10 @@ footer .logo-text {
 
 #header-nav ul {
   list-style-type: none;
-}
-
-#header-nav ul li {
-  margin-right: 30px;
+  z-index: 10 !important;
 }
 
 #header-nav ul li a {
-  display: inline;
   height: 100% !important;
 }
 
@@ -321,12 +345,15 @@ footer .logo-text {
   background: none;
 }
 
+#header-nav ul * {
+  z-index: 10 !important;
+}
+
 @media (max-width: 765px) {
   #header-nav ul {
-    width: 55vw;
-    float: right;
-    z-index: 10 !important;
-    background-color: black;
+    width: 100vw;
+    margin-left: 22vw;
+    position: absolute;
   }
 }
 
