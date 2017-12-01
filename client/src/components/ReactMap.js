@@ -211,7 +211,7 @@ class FullMap extends Component{
             }
           });
 
-        // console.log('filtered_results: ',filtered_results);
+        console.log('filtered_results in Map: ',filtered_results);
         this.props.updateResults(filtered_results);
           }}
 

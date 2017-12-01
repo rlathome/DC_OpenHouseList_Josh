@@ -131,7 +131,7 @@ class Results extends Component{
           results:stored_results.results,
           markers:stored_results.markers,
           cache:stored_results.cache,
-          neighborhood:stored_results.neighborhood,
+          neighborhood:neighborhood,
           display:'list'
         });
       // }
@@ -542,8 +542,8 @@ class Results extends Component{
   // let descending_arrow = (this.state.sort_order ==='ascending') ? ( <i onClick={this.sortDesc.bind(this)} className="glyphicon glyphicon-triangle-bottom"></i> ) : '';
 
   updateResults(results){
-    console.log('updating results');
     let updated = this.state.updated;
+      console.log('updating results - ',results,' - updated: ',updated,' neighborhood: ',this.state.neighborhood, 'display: ',this.state.display);
     if(this.state.display==='list' && updated==false && this.state.neighborhood !=='FullDCArea'){
       this.setState({
         markers:results,
@@ -730,7 +730,7 @@ class Results extends Component{
       };
       let indx = markers.indexOf(listing);
       console.log('listing index: ',indx, ' neighborhood: ',neighborhood);
-      let reactMap = (neighborhood !== 'FullDCArea' && indx==0) ? ( <ReactMap display={false} viewListing={this.viewListing.bind(this)} updateResults={this.updateResults.bind(this)} neighborhood={this.props.params.neighborhood} markers={markers}/> ) : '';
+      // let reactMap = (neighborhood !== 'FullDCArea' && indx==0) ? ( <ReactMap display={false} viewListing={this.viewListing.bind(this)} updateResults={this.updateResults.bind(this)} neighborhood={this.props.params.neighborhood} markers={markers}/> ) : '';
       // if(neighborhood !=='FullDCArea'
       let result_subd = (<span className='result-subd'>{subd}</span>);
       return(
@@ -752,7 +752,7 @@ class Results extends Component{
               <div id={listing.id}>{ time }</div>
             </div>
           </div>
-          {reactMap}
+          {/* {reactMap} */}
         </div>
       );
     }) : '';
@@ -779,7 +779,12 @@ class Results extends Component{
     console.log('the results in results render: ',results);
     switch(this.state.display){
       case 'list':
-      display=(results.length) ? results : (<div className="no-results-msg">We're sorry - your search for {subd} listings {today} didn't return any results.</div>);
+      display=(results.length) ? (
+        <div>
+          {results}
+          <ReactMap display={false} viewListing={this.viewListing.bind(this)} updateResults={this.updateResults.bind(this)} neighborhood={this.props.params.neighborhood} markers={markers}/>
+        </div>
+    ) : (<div className="no-results-msg">We're sorry - your search for {subd} listings {today} didn't return any results.</div>);
       break;
       case 'map':
       display=map;
@@ -788,7 +793,10 @@ class Results extends Component{
       display=spinner;
       break;
       default:
-      display=results;
+      display=(<div>
+        {results}
+        <ReactMap display={true} viewListing={this.viewListing.bind(this)} updateResults={this.updateResults.bind(this)} neighborhood={this.props.params.neighborhood} markers={markers}/>
+      </div>)
     }
     let drop = {
       onMouseEnter:this.highlight.bind(this),
@@ -848,6 +856,7 @@ class Results extends Component{
         { descending_arrow } */}
       </div>
   ) : ( <div className="up-down-placeholder"></div> );
+
 
 
     return(
