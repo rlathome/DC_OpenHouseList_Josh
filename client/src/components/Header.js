@@ -19,9 +19,8 @@ class Header extends Component{
     this.props.reload();
   }
   neighborhood(){
-    // this.props.reload();
-    // this.props.toNeigh();
-    // let day = this.props.day.toLowerCase();
+    // const day = this.props.day.toLowerCase();
+    // hashHistory.push('/search/'+day+'/none');
   }
   toggleNav(){
     // this.setState({

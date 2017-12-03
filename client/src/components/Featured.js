@@ -110,7 +110,7 @@ class Featured extends Component{
     let day = (this.props.day) ? this.props.day : 'none';
     let neighborhood = (this.props.neighborhood) ? this.props.neighborhood : 'none';
     neighborhood = neighborhood.toLowerCase();
-    hashHistory.push('/listing/'+listing+'/'+day+'/'+neighborhood);
+    hashHistory.push('/listing/'+listing+'/'+day+'/'+neighborhood+'/list');
 
   }
   featuredReturn(){
