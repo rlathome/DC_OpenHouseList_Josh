@@ -28,16 +28,19 @@ class Search extends Component{
     // // console.log('chosen day: ',day);
     let neighborhood = (this.props.params.neighborhood !=='none') ? this.props.params.neighborhood : '';
     // // console.log('chosen neighborhood: ',neighborhood);
+    let display = (this.props.params.view) ? this.props.params.view : '';
     if(day && neighborhood){
       this.setState({
         step:'results',
         day,
-        neighborhood
+        neighborhood,
+        display
       })
     }else if(day && !neighborhood){
       this.setState({
         step:'neighborhoods',
-        day
+        day,
+        display
       })
     }
 
@@ -84,7 +87,7 @@ class Search extends Component{
   selectNeighborhood(e,subd){
     this.pressed_toggle(e);
     // // console.log('setting neighborhood: ',subd);
-    hashHistory.push('/search/'+this.state.day+'/'+subd);
+    hashHistory.push('/search/'+this.state.day+'/'+subd+'/list');
     this.setState({
       neighborhood:subd,
       step:'results',
@@ -102,12 +105,12 @@ class Search extends Component{
     });
     hashHistory.push('/');
   }
-  viewListing(listing){
+  viewListing(listing,view){
     // // console.log('listing to view: ',listing);
     let day = (this.state.day !=='') ? this.state.day : 'none';
     let neighborhood = (this.state.neighborhood) ? this.state.neighborhood : 'none';
     listing = listing[0].mls_number;
-    hashHistory.push('/listing/'+listing+'/'+day+'/'+neighborhood);
+    hashHistory.push('/listing/'+listing+'/'+day+'/'+neighborhood+'/'+view);
   }
   goBack(place){
     // // console.log('going back');
@@ -139,7 +142,8 @@ class Search extends Component{
     let params = {
       day:this.state.day,
       neighborhood:this.state.neighborhood,
-      listings:this.state.listings
+      listings:this.state.listings,
+      view:this.props.params.view
     }
     let selected_listing = this.state.selected_listing;
     switch(this.state.step){

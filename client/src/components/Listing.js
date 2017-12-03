@@ -41,10 +41,12 @@ class Listing extends Component{
     let mls=(this.props.params) ? this.props.params.mls : '';
     let day=(this.props.params) ? this.props.params.day : '';
     let neighborhood=(this.props.params) ? this.props.params.neighborhood : '';
+    let display=(this.props.params) ? this.props.params.view : '';
     if(day && neighborhood){
       this.setState({
         day,
-        neighborhood
+        neighborhood,
+        display
       });
     }
     window.scrollTo(0,0);
@@ -348,9 +350,9 @@ class Listing extends Component{
   navigateBack(){
     // this.props.goBack();
     if(this.state.day !=='none' && this.state.neighborhood !=='none'){
-      hashHistory.push('/search/'+this.state.day+'/'+this.state.neighborhood);
+      hashHistory.push('/search/'+this.state.day+'/'+this.state.neighborhood+'/'+this.state.display);
     }else if(this.state.day !=='none' && this.state.neighborhood === 'none'){
-      hashHistory.push('/search/'+this.state.day+'/none');
+      hashHistory.push('/search/'+this.state.day+'/none'+'/'+this.state.display);
     }else{
       hashHistory.push('/');
     }

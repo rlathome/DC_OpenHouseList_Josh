@@ -110,7 +110,7 @@ class Results extends Component{
           markers:response,
           neighborhood,
           cache:response,
-          display:'list'
+          display:this.props.params.view
         });
       }).catch((err)=>{
         console.log('error -',err);
@@ -123,7 +123,7 @@ class Results extends Component{
         hashHistory.push('/');
       });
     }else{
-      console.log('setting previous markers: ',stored_results.markers);
+      console.log('setting previous markers: ',this.props.params.view,' and ',stored_results.markers);
       // let listings_remaining = stored_results.slice(10,markers.length);
       // let listings_shown = stored_results.slice(0,10);
       // if(!stored){
@@ -132,11 +132,14 @@ class Results extends Component{
           markers:stored_results.markers,
           cache:stored_results.cache,
           neighborhood:neighborhood,
-          display:'list'
+          display:this.props.params.view
         });
       // }
-
-      setTimeout(()=>{jquery('.list-view').addClass('list-btn-pressed');},50);
+      if(this.props.params.view==='list'){
+        setTimeout(()=>{jquery('.list-view').addClass('list-btn-pressed');},50);
+      }else{
+        setTimeout(()=>{jquery('.map-view').addClass('list-btn-pressed');},50);
+      }
     }
 
     // if(stored){
@@ -194,6 +197,7 @@ class Results extends Component{
     this.setState({
       display:'list'
     });
+    hashHistory.push('/search/'+this.props.params.day+'/'+this.props.params.neighborhood+'/list');
   }
   mapBtnToggle(e){
     e.preventDefault();
@@ -211,6 +215,7 @@ class Results extends Component{
     this.setState({
       display:'map'
     });
+    hashHistory.push('/search/'+this.props.params.day+'/'+this.props.params.neighborhood+'/map');
   }
   downBtnToggle(e){
     e.preventDefault();
@@ -249,7 +254,7 @@ class Results extends Component{
       return val.id == list;
     });
     console.log('viewing the listing: ',view);
-    this.props.viewListing(view);
+    this.props.viewListing(view,this.state.display);
   }
   sortTime(e){
     let $item = jquery('#down');

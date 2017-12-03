@@ -12,8 +12,8 @@ ReactDOM.render(
   <Router history= { hashHistory }>
     <Route path = "/" component = { App }>
       <IndexRoute component = { Search } />
-      <Route path="listing/:mls/:day/:neighborhood" component = { Listing } />
-      <Route path="search/:day/:neighborhood" component = { Search } />
+      <Route path="listing/:mls/:day/:neighborhood/:view" component = { Listing } />
+      <Route path="search/:day/:neighborhood/:view" component = { Search } />
       <Route path="admin" component = { AddAgents } />
     </Route>
   </Router>,
