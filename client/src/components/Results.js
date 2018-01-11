@@ -790,28 +790,28 @@ class Results extends Component{
     let no_listings_msg;
     switch(wkday){
       case 'Monday':
-      no_listings_msg = (<div className="no-results-msg">We're sorry. Your search for {subd} open houses {today} didn't return any results - but it's still early! Try searching again at the end of the week.</div>);
+      no_listings_msg = (<div className="no-results-msg">We're sorry. Your search for {subd} open houses {today} didn't return any results - but it's only Monday. Try searching again at the end of the week when more have been scheduled.</div>);
       break;
       case 'Tuesday':
-      no_listings_msg = (<div className="no-results-msg">We're sorry. Your search for {subd} open houses {today} didn't return any results - but it's still early! Try searching again at the end of the week.</div>);
+      no_listings_msg = (<div className="no-results-msg">We're sorry. Your search for {subd} open houses {today} didn't return any results - but it's only Tuesday. Try searching again at the end of the week when more have been scheduled.</div>);
       break;
       case 'Wednesday':
-      no_listings_msg = (<div className="no-results-msg">We're sorry. Your search for {subd} open houses {today} didn't return any results - but it's still early! Try searching again at the end of the week.</div>);
+      no_listings_msg = (<div className="no-results-msg">We're sorry. Your search for {subd} open houses {today} didn't return any results - but it's only Wednesday. Try searching again at the end of the week when more have been scheduled.</div>);
       break;
       case 'Thursday':
-      no_listings_msg = (<div className="no-results-msg">We're sorry. Your search for {subd} open houses {today} didn't return any results - but one may appear in the next couple of days. Meanwhile try a new search.</div>);
+      no_listings_msg = (<div className="no-results-msg">We're sorry. Your search for {subd} open houses {today} didn't return any results - but something may appear in the next couple of days. Meanwhile try a new search.</div>);
       break;
       case 'Friday':
-      no_listings_msg = (<div className="no-results-msg">We're sorry. Your search for {subd} open houses {today} didn't return any results - but one may appear in the next couple of days. Meanwhile try a new search.</div>);
+      no_listings_msg = (<div className="no-results-msg">We're sorry. Your search for {subd} open houses {today} didn't return any results - but something could still appear Saturday or Sunday. Meanwhile try a new search.</div>);
       break;
       case 'Saturday':
-      no_listings_msg = (<div className="no-results-msg">We're sorry. It looks like there aren't any open houses in {subd} {today}. Try a new search, or check again in a few days.</div>);
+      no_listings_msg = (<div className="no-results-msg">We're sorry. It looks like there probably won't be any open houses in {subd} {today}. Most agents would have announced their events by now. Try a new search, or check again in a few days.</div>);
       break;
       case 'Sunday':
-      no_listings_msg = (<div className="no-results-msg">We're sorry. It looks like there aren't any open houses in {subd} {today}. Try a new search, or check again in a few days.</div>);
+      no_listings_msg = (<div className="no-results-msg">We're sorry. It looks like there probably won't be any open houses in {subd} {today}. Most agents would have announced their events by now. Try a new search, or check again in a few days.</div>);
       break;
       default:
-      no_listings_msg = (<div className="no-results-msg">We're sorry. It looks like there aren't any open houses in {subd} {today}. Try a new search, or check again in a few days.</div>);
+      no_listings_msg = (<div className="no-results-msg">We're sorry. It looks like there probably won't be any open houses in {subd} {today}. Try a new search, or check again in a few days.</div>);
       break;
     }
 
