@@ -32,6 +32,7 @@ class Header extends Component{
     // $('.collapse').removeClass('flat')
   }
   render(){
+    console.log('params in header: ',this.props.params);
     let day = (this.props.day && this.props.day !=='NONE') ? (<li onClick={()=>this.props.reload()}><i className="glyphicon glyphicon-play"></i>{this.props.day}</li>) : '';
     let neighborhood = (this.props.neighborhood) ? (<li onClick={this.neighborhood.bind(this)}><i className="glyphicon glyphicon-play"></i>{this.props.neighborhood}</li>) : '';
     return(

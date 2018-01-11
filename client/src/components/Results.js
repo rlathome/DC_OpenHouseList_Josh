@@ -671,12 +671,12 @@ class Results extends Component{
     results = (results) ? results.filter((listing)=>{
       return listing !==null;
     }) : '';
+    let days = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
     results = (results) ? results.map((listing)=>{
       console.log('listing in render: ',listing);
       let price = currency.format(listing.list_price,{ code: 'USD', decimalDigits: 0 });
       price = price.slice(0,price.length-3);
       //get day of the week:
-      let days = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
       let date = (listing.open_house_events[0]) ? moment(listing.open_house_events[0].event_start) : '';
       let dow = (date) ? date.day() : '';
       console.log('todays open house is: ',days[dow]);
@@ -774,7 +774,8 @@ class Results extends Component{
 
 
 
-    let spinner = (<div className="no-results-msg">Searching for {subd} open houses{today}. Thanks for your patience.<br/><img className="spinner" src={require("../images/loadcontent.gif")} alt="please wait"/></div>);
+    // let spinner = (<div className="no-results-msg">Searching for {subd} open houses{today}. Thanks for your patience.<br/><img className="spinner" src={require("../images/loadcontent.gif")} alt="please wait"/></div>);
+    let spinner = (<div className="no-results-msg">({subd} open houses{today})<br/>Thanks for your patience while we load the latest DC open houses - all future searches will happen instantly.<br/><img className="spinner" src={require("../images/loadcontent.gif")} alt="please wait"/></div>);
     results = (results) ? results.filter((val)=>{
       if(val){
         return val;
@@ -782,6 +783,38 @@ class Results extends Component{
       return;
     }) : '';
     console.log('the results in results render: ',results);
+
+    let wkday = moment().day();
+    wkday = days[wkday];
+    console.log('search is on: ',wkday);
+    let no_listings_msg;
+    switch(wkday){
+      case 'Monday':
+      no_listings_msg = (<div className="no-results-msg">We're sorry. Your search for {subd} open houses {today} didn't return any results - but it's still early! Try searching again at the end of the week.</div>);
+      break;
+      case 'Tuesday':
+      no_listings_msg = (<div className="no-results-msg">We're sorry. Your search for {subd} open houses {today} didn't return any results - but it's still early! Try searching again at the end of the week.</div>);
+      break;
+      case 'Wednesday':
+      no_listings_msg = (<div className="no-results-msg">We're sorry. Your search for {subd} open houses {today} didn't return any results - but it's still early! Try searching again at the end of the week.</div>);
+      break;
+      case 'Thursday':
+      no_listings_msg = (<div className="no-results-msg">We're sorry. Your search for {subd} open houses {today} didn't return any results - but one may appear in the next couple of days. Meanwhile try a new search.</div>);
+      break;
+      case 'Friday':
+      no_listings_msg = (<div className="no-results-msg">We're sorry. Your search for {subd} open houses {today} didn't return any results - but one may appear in the next couple of days. Meanwhile try a new search.</div>);
+      break;
+      case 'Saturday':
+      no_listings_msg = (<div className="no-results-msg">We're sorry. It looks like there aren't any open houses in {subd} {today}. Try a new search, or check again in a few days.</div>);
+      break;
+      case 'Sunday':
+      no_listings_msg = (<div className="no-results-msg">We're sorry. It looks like there aren't any open houses in {subd} {today}. Try a new search, or check again in a few days.</div>);
+      break;
+      default:
+      no_listings_msg = (<div className="no-results-msg">We're sorry. It looks like there aren't any open houses in {subd} {today}. Try a new search, or check again in a few days.</div>);
+      break;
+    }
+
     switch(this.state.display){
       case 'list':
       display=(results.length) ? (
@@ -789,7 +822,7 @@ class Results extends Component{
           {results}
           <ReactMap display={false} viewListing={this.viewListing.bind(this)} updateResults={this.updateResults.bind(this)} neighborhood={this.props.params.neighborhood} markers={markers}/>
         </div>
-    ) : (<div className="no-results-msg">We're sorry - your search for {subd} listings {today} didn't return any results.</div>);
+    ) : no_listings_msg;
       break;
       case 'map':
       display=map;
