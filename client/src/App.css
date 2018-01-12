@@ -1278,6 +1278,21 @@ footer .logo-text {
   }
 }
 
+.reason {
+  margin: auto;
+  margin-top: 5vw;
+  width: 75vw;
+  padding: .5vw;
+  border: 1px solid #000;
+}
+
+.find-out {
+  color: blue;
+  cursor: pointer;
+  display: inline-block;
+  border-bottom: 1px solid blue;
+}
+
 .no-results-msg {
   padding: 50px 0px;
   font-size: 2em;

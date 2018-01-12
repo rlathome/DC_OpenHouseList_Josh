@@ -19,6 +19,7 @@ class Results extends Component{
   constructor(props){
     super(props);
     this.state={
+      find_out:false,
       results:'',
       display:'loading',
       selected_listings:'',
@@ -563,6 +564,11 @@ class Results extends Component{
       });
     }
   }
+  findOut(){
+    this.setState({
+      find_out:!this.state.find_out
+    });
+  }
   render(){
     let results = this.state.markers;
     console.log('results in results render: ',results);
@@ -787,33 +793,49 @@ class Results extends Component{
     let wkday = moment().day();
     wkday = days[wkday];
     console.log('search is on: ',wkday);
-    let no_listings_msg;
-    switch(wkday){
-      case 'Monday':
-      no_listings_msg = (<div className="no-results-msg">We're sorry. Your search for {subd} open houses {today} didn't return any results - but it's only Monday. Try searching again at the end of the week when more have been scheduled.</div>);
-      break;
-      case 'Tuesday':
-      no_listings_msg = (<div className="no-results-msg">We're sorry. Your search for {subd} open houses {today} didn't return any results - but it's only Tuesday. Try searching again at the end of the week when more have been scheduled.</div>);
-      break;
-      case 'Wednesday':
-      no_listings_msg = (<div className="no-results-msg">We're sorry. Your search for {subd} open houses {today} didn't return any results - but it's only Wednesday. Try searching again at the end of the week when more have been scheduled.</div>);
-      break;
-      case 'Thursday':
-      no_listings_msg = (<div className="no-results-msg">We're sorry. Your search for {subd} open houses {today} didn't return any results - but something may appear in the next couple of days. Meanwhile try a new search.</div>);
-      break;
-      case 'Friday':
-      no_listings_msg = (<div className="no-results-msg">We're sorry. Your search for {subd} open houses {today} didn't return any results - but something could still appear Saturday or Sunday. Meanwhile try a new search.</div>);
-      break;
-      case 'Saturday':
-      no_listings_msg = (<div className="no-results-msg">We're sorry. It looks like there probably won't be any open houses in {subd} {today}. Most agents would have announced their events by now. Try a new search, or check again in a few days.</div>);
-      break;
-      case 'Sunday':
-      no_listings_msg = (<div className="no-results-msg">We're sorry. It looks like there probably won't be any open houses in {subd} {today}. Most agents would have announced their events by now. Try a new search, or check again in a few days.</div>);
-      break;
-      default:
-      no_listings_msg = (<div className="no-results-msg">We're sorry. It looks like there probably won't be any open houses in {subd} {today}. Try a new search, or check again in a few days.</div>);
-      break;
-    }
+
+    const reason = (this.state.find_out) ? (
+      <div className="reason">Properties for the upcoming weekend for this neighborhood haven't been advertised yet. The search
+results typically reset to zero on Sunday evening and increase as the weekend approaches.</div>
+    ) : '';
+
+    const no_listings_msg = (
+      <div>
+        <div className="no-results-msg">We're sorry, your search for {subd} open houses {today} didn't return any results.</div>
+        <div onClick={this.findOut.bind(this)} className="find-out">Find Out Why</div>
+        { reason }
+      </div>
+    );
+
+
+
+    // let no_listings_msg;
+    // switch(wkday){
+    //   case 'Monday':
+    //   no_listings_msg = (<div className="no-results-msg">We're sorry, your search for {subd} open houses {today} didn't return any results - but it's only Monday. Try searching again at the end of the week when more have been scheduled.</div>);
+    //   break;
+    //   case 'Tuesday':
+    //   no_listings_msg = (<div className="no-results-msg">We're sorry. Your search for {subd} open houses {today} didn't return any results - but it's only Tuesday. Try searching again at the end of the week when more have been scheduled.</div>);
+    //   break;
+    //   case 'Wednesday':
+    //   no_listings_msg = (<div className="no-results-msg">We're sorry. Your search for {subd} open houses {today} didn't return any results - but it's only Wednesday. Try searching again at the end of the week when more have been scheduled.</div>);
+    //   break;
+    //   case 'Thursday':
+    //   no_listings_msg = (<div className="no-results-msg">We're sorry. Your search for {subd} open houses {today} didn't return any results - but something may appear in the next couple of days. Meanwhile try a new search.</div>);
+    //   break;
+    //   case 'Friday':
+    //   no_listings_msg = (<div className="no-results-msg">We're sorry. Your search for {subd} open houses {today} didn't return any results - but something could still appear Saturday or Sunday. Meanwhile try a new search.</div>);
+    //   break;
+    //   case 'Saturday':
+    //   no_listings_msg = (<div className="no-results-msg">We're sorry. It looks like there probably won't be any open houses in {subd} {today}. Most agents would have announced their events by now. Try a new search, or check again in a few days.</div>);
+    //   break;
+    //   case 'Sunday':
+    //   no_listings_msg = (<div className="no-results-msg">We're sorry. It looks like there probably won't be any open houses in {subd} {today}. Most agents would have announced their events by now. Try a new search, or check again in a few days.</div>);
+    //   break;
+    //   default:
+    //   no_listings_msg = (<div className="no-results-msg">We're sorry. It looks like there probably won't be any open houses in {subd} {today}. Try a new search, or check again in a few days.</div>);
+    //   break;
+    // }
 
     switch(this.state.display){
       case 'list':
