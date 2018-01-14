@@ -800,7 +800,7 @@ results typically reset to zero on Sunday evening and increase as the weekend ap
     ) : '';
 
     const no_listings_msg = (
-      <div>
+      <div className="no-results-msg-wrapper">
         <div className="no-results-msg">We're sorry, your search for {subd} open houses {today} didn't return any results.</div>
         <div onClick={this.findOut.bind(this)} className="find-out">Find Out Why</div>
         { reason }

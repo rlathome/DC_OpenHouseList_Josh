@@ -1280,7 +1280,7 @@ footer .logo-text {
 
 .reason {
   margin: auto;
-  margin-top: 5vw;
+  margin-bottom: 10vw;
   width: 75vw;
   padding: .5vw;
   border: 1px solid #000;
@@ -1291,11 +1291,35 @@ footer .logo-text {
   cursor: pointer;
   display: inline-block;
   border-bottom: 1px solid blue;
+  margin-bottom: 2.5vw;
 }
 
 .no-results-msg {
-  padding: 50px 0px;
+  padding: 2.5vw 0px 1vw 0px;
   font-size: 2em;
+}
+
+.no-results-msg-wrapper {
+  height: 15vw;
+}
+
+@media (max-width: 1165px) {
+  .no-results-msg-wrapper {
+    height: 25vw;
+  }
+}
+
+@media only screen and (min-width: 355px) and (max-width: 667px) and (orientation: portrait) {
+  .no-results-msg-wrapper {
+    height: 55vh;
+  }
+}
+
+@media only screen and (min-device-width: 375px) and (max-device-width: 1024px) and (orientation: landscape) {
+  .no-results-msg-wrapper {
+    height: 65vh;
+    /* STYLES GO HERE */
+  }
 }
 
 .list-view {
