@@ -8,12 +8,14 @@ class AddAgents extends Component{
   constructor(props){
     super(props);
     this.state={
-      agents:''
+      agents:'',
+      pics:[]
     }
   }
   componentWillMount(){
     this.getAllAgents();
     this.getAllListings();
+    this.getHeaderPhotos();
   }
   getAllAgents(){
     let url=apiKey+"info/getallagents";
@@ -26,6 +28,40 @@ class AddAgents extends Component{
     }).catch((err)=>{
       // console.log('err - ',err);
     });
+  }
+  getHeaderPhotos(){
+    let url = apiKey+"info/getheaders";
+    axios.get(url).then((response)=>{
+      let pics = response.data;
+      console.log('pics: ',pics);
+      this.setState({
+        pics
+      });
+    }).catch((err)=>{
+      console.log('err - ',err);
+    })
+  }
+  addHeaderPhoto(e){
+    e.preventDefault();
+    let url = this.refs.headerpic.value;
+    let password = this.refs.password3.value;
+    let body = {
+      url,
+      password
+    }
+    console.log('adding photo: ',url);
+    const sendurl = apiKey+"info/addheader";
+    axios.post(sendurl,body).then((response)=>{
+      console.log('axios photo: ',response);
+      if(response.data === 'incorrect password'){
+        alert('incorrect password');
+      }else if(response.statusText==='OK'){
+        alert('header photo entered');
+      }
+    }).catch((err)=>{
+      console.log('err -',err);
+    });
+    this.getHeaderPhotos();
   }
   getAllListings(){
     let url=apiKey+"info/getfeaturedlistings";
@@ -138,6 +174,7 @@ class AddAgents extends Component{
       });
     }
   }
+
   render(){
     let agentinfo = (this.state.agents) ? this.state.agents.map((agent)=>{
       return {
@@ -190,6 +227,11 @@ class AddAgents extends Component{
         </div>
       );
     }) : '';
+    const headerpics = this.state.pics.map((pic)=>{
+      return(
+        <img className="img-responsive" src={pic.url} alt='header photo' />
+      );
+    });
     return(
       <div className="wrapper agent-form-container">
         <div className="row">
@@ -215,6 +257,15 @@ class AddAgents extends Component{
             <input className="form-control" ref="mls" placeholder="MLS number (of an open house)"/>
             <input onClick={this.submitListing.bind(this)} className="btn btn-default btn-success" value="Add"/>
           </form>
+          <h1>Header Photo</h1>
+          <form className="new-agent-form form form-default">
+            <input className="form-control" ref="password3" placeholder="Password"/>
+            <input className="form-control" ref="headerpic" placeholder="Header photo URL"/>
+            <input onClick={this.addHeaderPhoto.bind(this)} className="btn btn-default btn-success" value="Change"/>
+          </form>
+          <div className="col-sm-12 headerpics">
+            { headerpics }
+          </div>
         </div>
         </div>
         <div className="admin-saved">
@@ -226,6 +277,7 @@ class AddAgents extends Component{
           <div className="agent-list">
             <h1>Featured Open Houses</h1>
             <p>If no listings saved, site goes to default settings</p>
+
             { listings }
           </div>
         </div>

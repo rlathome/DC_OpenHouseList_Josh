@@ -12,7 +12,14 @@ class Neighborhood extends Component{
   }
   componentWillMount(){
     //temporary - loading neighborhoods from DB while API key is for Columbia
-    let neighborhoods = ["Full DC Area", "Adams Morgan", "Anacostia", "Brookland", "Capitol Hill","Cleveland Park", "Columbia Heights", "Deanwood", "Dupont Circle", "Eckington","Foggy Bottom", "Friendship Heights", "Georgetown", "Logan Circle", "Petworth", "Southwest Waterfront", "Westend","Woodley Park"];
+    let neighborhoods = ["Anacostia", "Brookland", "Capitol Hill","Cleveland Park", "Columbia Heights", "Deanwood", "Dupont Circle", "Eckington","Foggy Bottom", "Friendship Heights", "Georgetown", "Logan Circle", "Petworth", "Southwest Waterfront", "Westend","Woodley Park","Adams Morgan","American University Park",
+    "Brightwood",
+    "Cathedral Heights",
+    "Fort Totten",
+    "Kalorama",
+    "Tenleytown"
+].sort();
+    neighborhoods.unshift("Full DC Area");
     let quadrants = ['NW','NE','SW','SE'];
     this.setState({
       neighborhoods,
@@ -116,6 +123,24 @@ class Neighborhood extends Component{
         break;
         case 'Foggy Bottom':
         id='foggybottom';
+        break;
+        case "American University Park":
+        id='americanuniversitypark';
+        break;
+        case "Brightwood":
+        id='brightwood';
+        break;
+        case "Cathedral Heights":
+        id='cathedralheights';
+        break;
+        case "Fort Totten":
+        id='forttotten';
+        break;
+        case "Kalorama":
+        id='kalorama';
+        break;
+        case "Tenleytown":
+        id='tenleytown';
         break;
         default:
         id=''

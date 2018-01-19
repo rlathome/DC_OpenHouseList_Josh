@@ -649,6 +649,42 @@ class Results extends Component{
           case 'westend':
           subd='Westend';
           break;
+          case 'americanuniversitypark':
+          subd = "American University Park";
+          break;
+          case 'brightwood':
+          subd = "Brightwood";
+          break;
+          case 'cathedralheights':
+          subd = "Cathedral Heights";
+          break;
+          case 'forttotten':
+          subd = "Fort Totten";
+          break;
+          case 'kalorama':
+          subd = "Kalorama";
+          break;
+          case 'tenleytown':
+          subd = "Tenleytown";
+          break;
+          case 'americanuniversitypark':
+          subd = "American University Park";
+          break;
+          case 'brightwood':
+          subd = "Brightwood";
+          break;
+          case 'cathedralheights':
+          subd = "Cathedral Heights";
+          break;
+          case 'forttotten':
+          subd = "Fort Totten";
+          break;
+          case 'kalorama':
+          subd = "Kalorama";
+          break;
+          case 'tenleytown':
+          subd = "Tenleytown";
+          break;
           default:
           subd=''
         }
@@ -691,6 +727,7 @@ class Results extends Component{
       dow = (date) ? days[dow] : '';
       dow = (date) ? dow.toLowerCase() : '';
 
+    
       let dir;
       switch(listing.street_pre_direction){
         case 'Northwest':

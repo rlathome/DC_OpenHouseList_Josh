@@ -234,6 +234,24 @@ class Search extends Component{
       case 'westend':
       subd='Westend';
       break;
+      case 'americanuniversitypark':
+      subd = "American University Park";
+      break;
+      case 'brightwood':
+      subd = "Brightwood";
+      break;
+      case 'cathedralheights':
+      subd = "Cathedral Heights";
+      break;
+      case 'forttotten':
+      subd = "Fort Totten";
+      break;
+      case 'kalorama':
+      subd = "Kalorama";
+      break;
+      case 'tenleytown':
+      subd = "Tenleytown";
+      break;
       default:
       subd=''
     }

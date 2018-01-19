@@ -4,6 +4,7 @@ var request = require('request');
 var https = require('https');
 var FormData = require('form-data');
 var Featured = require('../models/featured.js');
+var HeaderPic = require('../models/headerPic.js');
 var formData = new FormData();
 var curl = require('curlrequest');
 var dcdata = require('./dcjson.json');
@@ -278,6 +279,35 @@ router.post('/createagent',function(req,res,next){
   });
 
 });
+
+router.post('/addheader',function(req,res,next){
+  const body = req.body;
+  console.log('pic body: ',body);
+  const url = body.url;
+  let password = (body.password) ? body.password : 'na';
+  if(password !=="!E28_Ey9scbCgC_)"){
+    console.log('incorrect');
+    res.send('incorrect password');
+    return;
+  }
+  let newHeader = new HeaderPic({url});
+  HeaderPic.remove({},function(err,response){
+    if(err) console.log('err deleting - ',err);
+  });
+  newHeader.save(function(err,picurl){
+    if(err) console.log('err: ',err);
+    res.json(picurl);
+  });
+});
+
+router.get('/getheaders',function(req,res,next){
+  HeaderPic.find({},'',function(err,response){
+    if(err) console.log('err: ',err);
+    res.json(response);
+  })
+})
+
+
 
 router.post('/addfeatured',function(req,res,next){
   let body = req.body;

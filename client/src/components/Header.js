@@ -1,13 +1,19 @@
 import React, { Component } from 'react';
 import { hashHistory } from 'react-router';
 import $ from 'jquery';
+import axios from 'axios';
+let apiKey="http://www.dcopenhouselist.com/";
 
 class Header extends Component{
   constructor(props){
     super(props);
     this.state={
-      open:false
+      open:false,
+      pics: ''
     }
+  }
+  componentWillMount(){
+    this.getHeaderPhoto();
   }
   reload(e){
     e.preventDefault();
@@ -31,10 +37,25 @@ class Header extends Component{
     // $('.collapse').css('display',toggle);
     // $('.collapse').removeClass('flat')
   }
+  getHeaderPhoto(){
+    let url = apiKey+"info/getheaders";
+    axios.get(url).then((response)=>{
+      let pics = response.data;
+      console.log('pics: ',pics);
+      this.setState({
+        pics
+      });
+    }).catch((err)=>{
+      console.log('err - ',err);
+    })
+  }
   render(){
     console.log('params in header: ',this.props.params);
     let day = (this.props.day && this.props.day !=='NONE') ? (<li onClick={()=>this.props.reload()}><i className="glyphicon glyphicon-play"></i>{this.props.day}</li>) : '';
     let neighborhood = (this.props.neighborhood) ? (<li onClick={this.neighborhood.bind(this)}><i className="glyphicon glyphicon-play"></i>{this.props.neighborhood}</li>) : '';
+    let photoURL = (this.state.pics[0]) ? this.state.pics[0].url : '';
+    console.log('photourl: ',photoURL)
+    const headerStyle={backgroundImage:'url('+ photoURL+')'};
     return(
       <header>
         <div className="grey-bar">
@@ -58,7 +79,7 @@ class Header extends Component{
             </ul>
           </div>
         </div>
-        <div id="header-image">
+        <div id="header-image" style={headerStyle}>
           <div id="header-transition">
           </div>
           <div className="header-title-container">
