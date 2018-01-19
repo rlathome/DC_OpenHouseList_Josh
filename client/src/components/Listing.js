@@ -581,9 +581,14 @@ class Listing extends Component{
                 </div>
                 <div className="listing-form-column row">
                   <div className="listing-form col-lg-8">
-                    <div className="listing-form-header">
-                      Ask a Question
-                      <div className="listing-form-header-quote">"We'll respond quickly!"</div>
+                    <div className="listing-form-header row">
+                      <div className="col-xs-8">
+                        Ask a Question
+                        <div className="listing-form-header-quote">"We'll respond quickly!"</div>
+                      </div>
+                      <div className="col-xs-4">
+                        <button className="gotourbtn btn btn-lg">Go Tour</button>
+                      </div>
                     </div>
                     <form className="form form-default" onSubmit={this.submitForm.bind(this)}>
                       <div className="form-column">

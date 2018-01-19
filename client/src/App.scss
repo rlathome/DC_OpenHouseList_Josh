@@ -1030,6 +1030,15 @@ footer{
     border-radius: 4px;
   }
 }
+.gotourbtn{
+  background-color:rgb(88,88,88);
+  // background-color: rgb(233,103,39);
+  color:rgb(204,204,204);
+  &:hover{
+    background-color: lightgrey;
+    border:1px solid #000;
+  }
+}
 .results-option-neigh{
   height:75px;
   font-size: 1.75em;

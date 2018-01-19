@@ -1178,6 +1178,16 @@ footer .logo-text {
   border-radius: 4px;
 }
 
+.gotourbtn {
+  background-color: #585858;
+  color: #cccccc;
+}
+
+.gotourbtn:hover {
+  background-color: lightgrey;
+  border: 1px solid #000;
+}
+
 .results-option-neigh {
   height: 75px;
   font-size: 1.75em;
