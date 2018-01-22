@@ -176,6 +176,11 @@ class AddAgents extends Component{
   }
 
   render(){
+    // let password_error = (this.state.password_error) ? (
+    //   <div className="bad-password">
+    //     The password you entered appears to be incorrect.
+    //   </div>
+    // ) : '';
     let agentinfo = (this.state.agents) ? this.state.agents.map((agent)=>{
       return {
         email:agent.email,

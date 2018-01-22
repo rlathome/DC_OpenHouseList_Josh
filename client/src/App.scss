@@ -1388,6 +1388,7 @@ footer{
     font-size:1.5em;
   }
 }
+// Listing page styles
 .listing-page{
   padding:0px 10px;
   text-align:left;
@@ -1435,6 +1436,11 @@ footer{
 
 }
 .listing-section-wrapper{
+  margin-right:0px !important;
+  // .row{
+  //   margin:0px !important;
+  // }
+  // .col-md-4,.col-lg-6,
   // ipad portrait
   @media only screen
   and (min-width : 768px)
@@ -1621,7 +1627,7 @@ footer{
   margin-bottom:20px;
 }
 .specs-1,.specs-2{
-  padding:5px;
+  padding:5px 5px 5px 15px;
   width:50%;
   height:100%;
   float:right;
@@ -1679,6 +1685,7 @@ footer{
   and (max-width : 667px)
   and (orientation : portrait) {
     width:100%;
+    padding:0px;
   }
 }
 .listing-form,.listing-agent-photo{
@@ -1766,6 +1773,9 @@ footer{
   and (orientation : portrait) {
     margin-left:0px;
     width:100%;
+    >div{
+      padding:0px;
+    }
   }
 
 
@@ -1779,6 +1789,10 @@ footer{
     width:48%;
     // margin:0px 5px;
   }
+}
+.go-tour{
+  height:25vh;
+  background-color:#fff;
 }
 .listing-photos{
   height:55vh;
@@ -1822,7 +1836,7 @@ footer{
       transition: opacity .5s;
       transition-property: opacity;
       .photo-container-day{
-        padding-left:10px;
+        padding-left:15px;
         background: -moz-linear-gradient(left, rgba(51,51,51,1) 0%, rgba(86,114,136,0) 47%, rgba(125,185,232,0) 100%); /* FF3.6-15 */
         background: -webkit-linear-gradient(left, rgba(51,51,51,1) 0%,rgba(86,114,136,0) 47%,rgba(125,185,232,0) 100%); /* Chrome10-25,Safari5.1-6 */
         background: linear-gradient(to right, rgba(51,51,51,1) 0%,rgba(86,114,136,0) 47%,rgba(125,185,232,0) 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
@@ -1864,6 +1878,12 @@ footer{
   .office{
     font-size: .7em;
     font-style: italic;
+  }
+  @media only screen
+  and (min-width : 355px)
+  and (max-width : 667px)
+  and (orientation : portrait) {
+    // padding:10px 0px;
   }
 }
 .listing-comments{

@@ -1678,6 +1678,10 @@ footer .logo-text {
   }
 }
 
+.listing-section-wrapper {
+  margin-right: 0px !important;
+}
+
 @media only screen and (min-width: 768px) and (max-width: 1024px) and (orientation: portrait) {
   .listing-section-wrapper {
     /* STYLES GO HERE */
@@ -1872,7 +1876,7 @@ footer .logo-text {
 }
 
 .specs-1, .specs-2 {
-  padding: 5px;
+  padding: 5px 5px 5px 15px;
   width: 50%;
   height: 100%;
   float: right;
@@ -1926,6 +1930,7 @@ footer .logo-text {
 @media only screen and (min-width: 375px) and (max-width: 667px) and (orientation: portrait) {
   .specs-form-column {
     width: 100%;
+    padding: 0px;
   }
 }
 
@@ -2007,6 +2012,9 @@ footer .logo-text {
     margin-left: 0px;
     width: 100%;
   }
+  .listing-form-column > div {
+    padding: 0px;
+  }
 }
 
 .form-column {
@@ -2018,6 +2026,11 @@ footer .logo-text {
 
 .form-column input {
   width: 48%;
+}
+
+.go-tour {
+  height: 25vh;
+  background-color: #fff;
 }
 
 .listing-photos {
@@ -2066,7 +2079,7 @@ footer .logo-text {
 }
 
 .listing-photos .photo-viewer .photo-container .photo-container-day {
-  padding-left: 10px;
+  padding-left: 15px;
   background: -moz-linear-gradient(left, #333333 0%, rgba(86, 114, 136, 0) 47%, rgba(125, 185, 232, 0) 100%);
   /* FF3.6-15 */
   background: -webkit-linear-gradient(left, #333333 0%, rgba(86, 114, 136, 0) 47%, rgba(125, 185, 232, 0) 100%);

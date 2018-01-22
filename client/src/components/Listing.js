@@ -604,6 +604,9 @@ class Listing extends Component{
                       <input className="btn btn-primary" type="submit" value="Submit"/>
                     </form>
                   </div>
+                  {/* <div className="go-tour col-lg-12">
+                    Go tour
+                  </div> */}
                   <div className="listing-agent-photo col-lg-4">
                     { listing_agent_column }
                   </div>
