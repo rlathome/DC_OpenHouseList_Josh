@@ -586,9 +586,6 @@ class Listing extends Component{
                         Ask a Question
                         <div className="listing-form-header-quote">"We'll respond quickly!"</div>
                       </div>
-                      <div className="col-xs-4">
-                        <button className="gotourbtn btn btn-lg">Go Tour</button>
-                      </div>
                     </div>
                     <form className="form form-default" onSubmit={this.submitForm.bind(this)}>
                       <div className="form-column">
@@ -602,14 +599,13 @@ class Listing extends Component{
                       <textarea className="form-control" ref="textarea" placeholder = "What can we do for you?"/>
                       <input ref="hidden" className="hidden" />
                       <input className="btn btn-primary" type="submit" value="Submit"/>
+                      <input className="btn btn-secondary" type="submit" value="Go Tour"/>
                     </form>
                   </div>
-                  {/* <div className="go-tour col-lg-12">
-                    Go tour
-                  </div> */}
                   <div className="listing-agent-photo col-lg-4">
                     { listing_agent_column }
                   </div>
+
                 </div>
               </div>
             </div>

@@ -1178,6 +1178,14 @@ footer .logo-text {
   border-radius: 4px;
 }
 
+.listing-form .btn {
+  width: 48%;
+}
+
+.listing-form .btn-secondary {
+  float: right;
+}
+
 .gotourbtn {
   background-color: #585858;
   color: #cccccc;
