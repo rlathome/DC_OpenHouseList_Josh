@@ -1186,14 +1186,231 @@ footer .logo-text {
   float: right;
 }
 
-.gotourbtn {
-  background-color: #585858;
-  color: #cccccc;
+.listing-form-wrapper {
+  position: relative;
 }
 
-.gotourbtn:hover {
+.go-tour {
+  height: 20vh;
+  margin: 5px 5px 50px 5px;
+  text-align: center;
+}
+
+.go-tour-wrapper {
+  display: inline-block;
+  height: inherit;
+  width: 80%;
+  position: relative;
+}
+
+.picked {
+  background-color: #eeeeee !important;
+}
+
+.go-tour .fa {
+  font-size: 2.5em;
+  position: absolute;
+  z-index: 10;
+  color: #fff;
+  color: gray;
+  top: 45%;
+  cursor: pointer;
+}
+
+.go-tour .fa:hover {
+  color: gray;
+  color: #e0e0e0;
+}
+
+.go-tour .fa-angle-left {
+  left: -10%;
+}
+
+.go-tour .fa-angle-right {
+  right: -10%;
+}
+
+.go-tour .btn-primary {
+  width: 100%;
+  position: absolute;
+  left: 0px;
+  bottom: -3em;
+}
+
+.go-tour-title {
+  font-size: 1.5em;
+}
+
+.slider {
+  position: relative;
+  overflow-x: scroll;
+  /* optional: show position indicator in red */
+  height: inherit;
+}
+
+.slider::-webkit-scrollbar {
+  width: 0px;
+  /* remove scrollbar space */
+  background: transparent;
+  /* optional: just make scrollbar invisible */
+}
+
+.slider::-webkit-scrollbar-thumb {
+  background: transparent;
+}
+
+.slider .slider-contents, .slider .modal-slider-contents {
+  list-style-type: none;
+  overflow-x: scroll;
+  padding-left: 0px;
+  padding-bottom: 10px;
+}
+
+.slider .slider-contents li, .slider .modal-slider-contents li {
+  height: 80%;
+  float: left;
+}
+
+.slider .slider-contents li .slider-item, .slider .slider-contents li .modal-slider-item, .slider .modal-slider-contents li .slider-item, .slider .modal-slider-contents li .modal-slider-item {
+  display: flex;
+  padding: 1.25em 0em;
+  flex-direction: column;
+  justify-content: space-around;
+  height: 95%;
+  margin: 5px 10px 5px 5px;
   background-color: lightgrey;
+  border-radius: 5px;
   border: 1px solid #000;
+  cursor: pointer;
+  box-shadow: 5px 5px 5px grey;
+}
+
+.slider .slider-contents li .slider-item:hover, .slider .slider-contents li .modal-slider-item:hover, .slider .modal-slider-contents li .slider-item:hover, .slider .modal-slider-contents li .modal-slider-item:hover {
+  background-color: #e0e0e0;
+}
+
+.slider .slider-contents li .slider-item div, .slider .slider-contents li .modal-slider-item div, .slider .modal-slider-contents li .slider-item div, .slider .modal-slider-contents li .modal-slider-item div {
+  font-family: 'apercu-regular',sans-serif;
+}
+
+.slider .slider-contents li .slider-item div:nth-child(1), .slider .slider-contents li .modal-slider-item div:nth-child(1), .slider .modal-slider-contents li .slider-item div:nth-child(1), .slider .modal-slider-contents li .modal-slider-item div:nth-child(1) {
+  font-size: .75em;
+}
+
+.slider .slider-contents li .slider-item div:nth-child(2), .slider .slider-contents li .modal-slider-item div:nth-child(2), .slider .modal-slider-contents li .slider-item div:nth-child(2), .slider .modal-slider-contents li .modal-slider-item div:nth-child(2) {
+  font-size: 2em;
+  font-weight: 400;
+}
+
+.slider .slider-contents li .slider-item div:nth-child(3), .slider .slider-contents li .modal-slider-item div:nth-child(3), .slider .modal-slider-contents li .slider-item div:nth-child(3), .slider .modal-slider-contents li .modal-slider-item div:nth-child(3) {
+  font-size: .75em;
+}
+
+.booking-modal {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+}
+
+.go_tour_panel {
+  display: inline-block;
+  align-self: center;
+  width: 80vw;
+  height: 80vh;
+  background-color: #fff;
+  position: relative;
+}
+
+.go_tour_panel .booking_days {
+  list-style-type: none;
+  text-align: center;
+}
+
+.go_tour_panel .booking_days li {
+  width: 8vw;
+  float: left;
+  padding: 10px;
+  color: #999999;
+  border: 1px solid #999999;
+  margin-right: 1em;
+  box-shadow: 5px 5px 5px grey;
+  border-radius: 5px;
+}
+
+.go_tour_panel .booking_days li div {
+  font-family: 'apercu-regular',sans-serif;
+}
+
+.go_tour_panel .next_btn {
+  height: 50%;
+  position: absolute;
+  width: 85%;
+  background-color: #c82021;
+  color: white;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  text-align: center;
+  margin: auto;
+}
+
+.go_tour_panel .time_panel {
+  position: absolute;
+  width: 100%;
+  top: 0px;
+  height: 80%;
+}
+
+.go_tour_panel .go_tour_infobar {
+  position: absolute;
+  bottom: 0px;
+  width: 100%;
+  height: 20%;
+  background-color: #e2e2e2;
+}
+
+.go_tour_panel .go_tour_infobar .infobar_row {
+  height: 100%;
+  margin: 0px;
+}
+
+.go_tour_panel .go_tour_infobar .infobar_row .go_tour_infotext .date, .go_tour_panel .go_tour_infobar .infobar_row .go_tour_infotext .start, .go_tour_panel .go_tour_infobar .infobar_row .go_tour_infotext .end {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+}
+
+.go_tour_panel .go_tour_infobar .infobar_row .go_tour_infotext .date {
+  width: 50%;
+}
+
+.go_tour_panel .go_tour_infobar .infobar_row .go_tour_infotext .start, .go_tour_panel .go_tour_infobar .infobar_row .go_tour_infotext .end {
+  width: 25%;
+}
+
+.go_tour_panel .go_tour_infobar .infobar_row .infobar_column {
+  height: inherit;
+  display: flex;
+}
+
+.go_tour_panel .go_tour_infobar .infobar_row .infobar_btn {
+  flex-direction: column;
+  justify-content: space-around;
+  cursor: pointer;
+}
+
+@media (max-width: 768px) {
+  .go_tour_panel {
+    width: 100vw;
+    height: 100vh;
+  }
+  .go_tour_panel .booking_days li {
+    font-size: 2vw;
+    width: 15vw;
+    float: none;
+    margin-bottom: 10px;
+  }
 }
 
 .results-option-neigh {
@@ -1957,7 +2174,7 @@ footer .logo-text {
 
 .listing-form form textarea {
   width: 100%;
-  height: 25vh;
+  height: 10vh;
 }
 
 .listing-form form textarea::-webkit-input-placeholder {
@@ -2034,11 +2251,6 @@ footer .logo-text {
 
 .form-column input {
   width: 48%;
-}
-
-.go-tour {
-  height: 25vh;
-  background-color: #fff;
 }
 
 .listing-photos {
@@ -2136,7 +2348,7 @@ footer .logo-text {
   font-size: .85em;
 }
 
-.arrow {
+.angle {
   color: #fff;
   font-size: 2.5em;
   position: absolute;
@@ -2144,16 +2356,16 @@ footer .logo-text {
   cursor: pointer;
 }
 
-.arrow:hover {
+.angle:hover {
   color: #e1e4d1;
 }
 
-.arrow-right {
+.angle-right {
   top: 50%;
   right: 10px;
 }
 
-.arrow-left {
+.angle-left {
   top: 50%;
   left: 10px;
 }
@@ -2353,6 +2565,7 @@ footer .logo-text {
 .listing-specs .specs-1, .listing-specs .specs-2 {
   opacity: 0;
   transition-property: opacity;
+  margin-bottom: 0px;
   transition: opacity 0.35s ease-in-out;
 }
 

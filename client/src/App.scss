@@ -1036,15 +1036,117 @@ footer{
     float:right;
   }
 }
-.gotourbtn{
-  background-color:rgb(88,88,88);
-  // background-color: rgb(233,103,39);
-  color:rgb(204,204,204);
-  &:hover{
-    background-color: lightgrey;
-    border:1px solid #000;
+.listing-form-wrapper{
+  position: relative;
+}
+
+
+@import '3box_slider';
+
+.listing-form-inputs{
+  // position: absolute;
+}
+.booking-modal{
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+}
+.go_tour_panel{
+  display:inline-block;
+  align-self: center;
+  // margin-right:0px !important;
+  width:80vw;
+  height:80vh;
+  background-color:#fff;
+  position:relative;
+  // right:-100vw;
+  .booking_days{
+    list-style-type:none;
+    text-align: center;
+    li{
+      width:8vw;
+      float:left;
+      padding:10px;
+      color:rgb(153,153,153);
+      border:1px solid rgb(153,153,153);
+      margin-right:1em;
+      box-shadow: 5px 5px 5px grey;
+      border-radius: 5px;
+
+      div{
+        font-family: 'apercu-regular',sans-serif;
+      }
+    }
+  }
+  .next_btn{
+    height:50%;
+    position: absolute;
+    width:85%;
+    background-color:rgb(200,32,33);
+    color:white;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    text-align:center;
+    margin:auto;
+  }
+  .time_panel{
+    position: absolute;
+    width:100%;
+    top:0px;
+    height:80%;
+  }
+  .go_tour_infobar{
+    position: absolute;
+    bottom:0px;
+    width:100%;
+    height:20%;
+    background-color:rgb(226,226,226);
+    .infobar_row{
+      height:100%;
+      margin:0px;
+      .go_tour_infotext{
+        .date,.start,.end{
+          text-align: center;
+          display: flex;
+          flex-direction: column;
+          justify-content: space-around;
+        }
+        .date{
+          width:50%;
+        }
+        .start,.end{
+          width:25%;
+        }
+      }
+      .infobar_column{
+        height:inherit;
+        display:flex;
+      }
+      .infobar_btn{
+        flex-direction: column;
+        justify-content: space-around;
+        cursor:pointer;
+      }
+    }
+  }
+  @media(max-width:768px){
+    width:100vw;
+    height:100vh;
+    .booking_days{
+      li{
+        font-size:2vw;
+        width:15vw;
+        float:none;
+        margin-bottom:10px;
+      }
+    }
+
   }
 }
+
+
+
 .results-option-neigh{
   height:75px;
   font-size: 1.75em;
@@ -1714,7 +1816,7 @@ footer{
     margin:10px 0px;
     textarea{
       width:100%;
-      height:25vh;
+      height:10vh;
       &::-webkit-input-placeholder{
         color:lightgrey;
       }
@@ -1795,10 +1897,6 @@ footer{
     width:48%;
     // margin:0px 5px;
   }
-}
-.go-tour{
-  height:25vh;
-  background-color:#fff;
 }
 .listing-photos{
   height:55vh;
@@ -1895,7 +1993,7 @@ footer{
 .listing-comments{
   font-size:.85em;
 }
-.arrow{
+.angle{
   color:#fff;
   font-size: 2.5em;
   position: absolute;
@@ -1905,11 +2003,11 @@ footer{
     color:#e1e4d1;
   }
 }
-.arrow-right{
+.angle-right{
   top:50%;
   right:10px;
 }
-.arrow-left{
+.angle-left{
   top:50%;
   left:10px;
 }
@@ -2093,6 +2191,7 @@ $specs-time:.35s;
   .specs-1,.specs-2{
     opacity:0;
     transition-property: opacity;
+    margin-bottom:0px;
     transition:opacity $specs-time ease-in-out;
   }
   // ipad portrait
