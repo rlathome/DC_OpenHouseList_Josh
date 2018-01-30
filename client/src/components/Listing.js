@@ -218,7 +218,7 @@ class Listing extends Component{
     let off = pic.offset();
     let scroller_width = $('.scroller').width();
     let scroller_pos = $('.scroller').position();
-    if(!scroller_pos){
+    if(!scroller_pos || !pic.position()){
       return false;
     }
     let scroller_right_offset = scroller_pos.left+scroller_width;
