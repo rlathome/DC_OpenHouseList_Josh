@@ -1054,7 +1054,8 @@ footer{
 .go_tour_panel{
   display:inline-block;
   align-self: center;
-  // margin-right:0px !important;
+  border-radius: 5px;
+  overflow: hidden;
   width:80vw;
   height:80vh;
   background-color:#fff;
@@ -1078,11 +1079,11 @@ footer{
       }
     }
   }
-  .next_btn{
+  .next_btn,.next_btn_pastel,.back_btn{
     height:50%;
-    position: absolute;
+    // position: absolute;
+    float:right;
     width:85%;
-    background-color:rgb(200,32,33);
     color:white;
     display: flex;
     flex-direction: column;
@@ -1090,11 +1091,31 @@ footer{
     text-align:center;
     margin:auto;
   }
-  .time_panel{
+  .next_btn{
+    // background-color:rgb(200,32,33);
+    background-color: #35CAFC;
+    cursor:pointer;
+  }
+  .next_btn_pastel{
+    // background-color:rgb(200,138,139);
+    background-color: #35CAFC;
+  }
+  .time_panel,.form_panel,.options_panel{
     position: absolute;
     width:100%;
-    top:0px;
+    top:3em;
     height:80%;
+  }
+  .options_panel{
+    right:100%;
+    // opacity:0;
+  }
+  .form_panel{
+    right:200%;
+    // opacity:0;
+  }
+  .time_panel,.infobar_row{
+    padding:0px 2.5em;
   }
   .go_tour_infobar{
     position: absolute;
@@ -1111,22 +1132,25 @@ footer{
           display: flex;
           flex-direction: column;
           justify-content: space-around;
+          padding-right:2em;
         }
         .date{
           width:50%;
+          text-align: left;
         }
         .start,.end{
           width:25%;
+          text-align: left;
         }
       }
       .infobar_column{
         height:inherit;
         display:flex;
+        padding:0px;
       }
       .infobar_btn{
         flex-direction: column;
         justify-content: space-around;
-        cursor:pointer;
       }
     }
   }
@@ -1690,10 +1714,11 @@ footer{
   height:10vh;
   width:15vw;
   text-align:center;
-  // height:100%;
+  box-shadow: 5px 5px 5px grey;
   padding:2vh;
   font-size:1.75em;
-  background-color: lightgrey;
+  // background-color: lightgrey;
+  background-color: #35CAFC;
   border:1px solid #000;
   cursor:pointer;
   display:inline-block;

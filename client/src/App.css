@@ -1205,6 +1205,7 @@ footer .logo-text {
 
 .picked {
   background-color: #eeeeee !important;
+  border: 2px solid #000 !important;
 }
 
 .go-tour .fa {
@@ -1315,6 +1316,8 @@ footer .logo-text {
 .go_tour_panel {
   display: inline-block;
   align-self: center;
+  border-radius: 5px;
+  overflow: hidden;
   width: 80vw;
   height: 80vh;
   background-color: #fff;
@@ -1341,11 +1344,10 @@ footer .logo-text {
   font-family: 'apercu-regular',sans-serif;
 }
 
-.go_tour_panel .next_btn {
+.go_tour_panel .next_btn, .go_tour_panel .next_btn_pastel, .go_tour_panel .back_btn {
   height: 50%;
-  position: absolute;
+  float: right;
   width: 85%;
-  background-color: #c82021;
   color: white;
   display: flex;
   flex-direction: column;
@@ -1354,11 +1356,32 @@ footer .logo-text {
   margin: auto;
 }
 
-.go_tour_panel .time_panel {
+.go_tour_panel .next_btn {
+  background-color: #35CAFC;
+  cursor: pointer;
+}
+
+.go_tour_panel .next_btn_pastel {
+  background-color: #35CAFC;
+}
+
+.go_tour_panel .time_panel, .go_tour_panel .form_panel, .go_tour_panel .options_panel {
   position: absolute;
   width: 100%;
-  top: 0px;
+  top: 3em;
   height: 80%;
+}
+
+.go_tour_panel .options_panel {
+  right: 100%;
+}
+
+.go_tour_panel .form_panel {
+  right: 200%;
+}
+
+.go_tour_panel .time_panel, .go_tour_panel .infobar_row {
+  padding: 0px 2.5em;
 }
 
 .go_tour_panel .go_tour_infobar {
@@ -1379,25 +1402,28 @@ footer .logo-text {
   display: flex;
   flex-direction: column;
   justify-content: space-around;
+  padding-right: 2em;
 }
 
 .go_tour_panel .go_tour_infobar .infobar_row .go_tour_infotext .date {
   width: 50%;
+  text-align: left;
 }
 
 .go_tour_panel .go_tour_infobar .infobar_row .go_tour_infotext .start, .go_tour_panel .go_tour_infobar .infobar_row .go_tour_infotext .end {
   width: 25%;
+  text-align: left;
 }
 
 .go_tour_panel .go_tour_infobar .infobar_row .infobar_column {
   height: inherit;
   display: flex;
+  padding: 0px;
 }
 
 .go_tour_panel .go_tour_infobar .infobar_row .infobar_btn {
   flex-direction: column;
   justify-content: space-around;
-  cursor: pointer;
 }
 
 @media (max-width: 768px) {
@@ -2051,9 +2077,10 @@ footer .logo-text {
   height: 10vh;
   width: 15vw;
   text-align: center;
+  box-shadow: 5px 5px 5px grey;
   padding: 2vh;
   font-size: 1.75em;
-  background-color: lightgrey;
+  background-color: #35CAFC;
   border: 1px solid #000;
   cursor: pointer;
   display: inline-block;

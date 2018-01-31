@@ -21,6 +21,7 @@ let apiKey = "http://localhost:8080";
 // let apiKey="https://dcopenhouselist.herokuapp.com";
 
 // console.log('listingjs env: ',process.env.REACT_APP_STATUS);
+form_page: 'start','options','about','finished'
 
 class Listing extends Component{
   constructor(props){
@@ -28,12 +29,19 @@ class Listing extends Component{
     this.state={
       listing:'',
       showing:'',
-      booking_tour:true,
+      form_page:'start',
+      form_moved:false,
+      booking_tour:false,
       thumb_photos:[],
       big_photos:[],
       showing_index:0,
       showing_modal:false,
       day:'',
+      day_picked:'-',
+      booking_day:'',
+      day_short:'',
+      time:'-',
+      end:'-',
       submitted_email:false,
       inapp:false,
       autoscroll:true,
@@ -118,6 +126,10 @@ componentDidMount(){
     $('.listing-specs div').css('opacity','1');
   },10);
 }
+//
+// componentDidUpdate(){
+//
+// }
 
   getAllAgents(){
     let url=apiKey+"/info/getallagents";
@@ -408,35 +420,80 @@ componentDidMount(){
       $('.slider').animate({ scrollLeft: remaining},200);
     }
   }
-  pickDay(ep){
-    console.log('touring: ',ep);
-    ep = '.'+ep.toLowerCase();
+  pickDay(data){
+    // const data = {
+    //   day_abbr,
+    //   date,
+    //   mo
+    // }
+    let date = [];
+    date.push(data.day_short);
+    date.push(data.mo_short);
+    date.push(data.date);
+    console.log('touring: ',date.join(','));
+    this.setState({
+      day_picked:date.join(', '),
+      booking_day:data.booking_day,
+      day_short:data.day_short
+    });
+    let ep = '.'+data.day_abbr.toLowerCase();
     $('.slider-item').removeClass('picked');
     $(ep).addClass('picked');
   }
-  pickTime(ep){
-    console.log('time: ',ep);
-    const epCl = '.' + ep.toString();
-    console.log('ep: ',ep)
+  pickTime(data){
+    // let ep = e.target.id;
+    let id = data.id;
+    let time = data.time;
+    this.setState({
+      time:time,
+      end:data.end
+    });
+    console.log('the time: ',time);
+    console.log('ending: ',data)
+    id="#"+id;
+    console.log('ep: ',id)
     $('.slider-time').removeClass('picked');
-    $(epCl).addClass('picked');
+    $(id).addClass('picked');
   }
   openScheduler(){
     this.setState({
       booking_tour:true
     });
-    // Functions.disableScroll();
+    Functions.disableScroll();
   }
   closeScheduler(){
     this.setState({
-      booking_tour:false
+      booking_tour:false,
+      day_picked:'-',
+      time:'-'
     });
     Functions.enableScroll();
   }
   animateLeft(e){
     e.preventDefault();
-    let gobox = findDOMNode(this.refs.time_panel);
-    $(gobox).animate({left:'-100%','opacity':'0'},200);
+      let gobox = findDOMNode(this.refs.time_panel);
+      let optionsbox = findDOMNode(this.refs.options_panel);
+      let formbox = findDOMNode(this.refs.form_panel);
+    if(this.state.form_page==='start'){
+      $(gobox).animate({left:'-100%','opacity':'0'},200);
+      $(optionsbox).animate({left:'0%','opacity':'1'},200);
+      // $(formbox).animate({left:'100%'},200);
+      this.setState({
+        form_page:'options'
+      });
+    }else if(this.state.form_page==='options'){
+      $(optionsbox).animate({left:'-100%','opacity':'0'},200);
+      $(formbox).animate({left:'0%','opacity':'1'},200);
+      this.setState({
+        form_page:'form'
+      });
+    }
+
+    console.log('day: ',this.state.day_picked);
+    console.log('time: ',this.state.time);
+    this.setState({
+      form_moved:true
+    });
   }
   render(){
 
@@ -516,13 +573,23 @@ componentDidMount(){
     for(let i=0; i<7; i++){
       let day = moment().add(24*i,'hour');
       let day_abbr = day.format('dddd').toUpperCase();
+      let day_short = day.format('ddd');
       let date = day.format('DD');
       let mo = day.format('MMM').toUpperCase();
+      let mo_short = day.format('MMM');
       const className = 'slider-item '+ day_abbr.toLowerCase();
+      const data = {
+        day_abbr,
+        date,
+        mo,
+        day_short,
+        mo_short,
+        booking_day:day.format('dddd').toLowerCase()
+      }
       slider_week.push(
           (
             <li>
-              <div onClick={()=>this.pickDay(day_abbr)} className={className}>
+              <div onClick={()=>this.pickDay(data)} className={className}>
                 <div>{day_abbr}</div>
                 <div>{date}</div>
                 <div>{mo}</div>
@@ -534,36 +601,114 @@ componentDidMount(){
 
 
     const show_times = [
-      '9:00 AM',
-      '9:30 AM',
-      '10:00 AM',
-      '10:30 AM',
-      '11:00 AM',
-      '11:30 AM',
-      '12:00 PM',
-      '12:30 PM',
-      '1:00 PM',
-      '1:30 PM',
-      '2:00 PM',
-      '2:30 PM',
-      '3:00 PM',
-      '3:30 PM',
-      '4:00 PM',
-      '4:30 PM',
-      '5:00 PM',
-      '5:30 PM',
-      '6:00 PM',
-      '6:30 PM',
-      '7:00 PM'
+      {
+        'start':'9:00 AM',
+        'end':'9:45 AM'
+      },
+      {
+        'start':'9:30 AM',
+        'end':'10:15 AM'
+      },
+      {
+        'start':'10:00 AM',
+        'end':'10:45 AM'
+      },
+      {
+        'start':'10:30 AM',
+        'end':'11:15 AM'
+      },
+      {
+        'start':'11:00 AM',
+        'end':'11:45 AM'
+      },
+      {
+        'start':'11:30 AM',
+        'end':'12:15 PM'
+      },
+      {
+        'start':'12:00 PM',
+        'end':'12:45 PM'
+      },
+      {
+        'start':'12:30 PM',
+        'end':'1:15 PM'
+      },
+      {
+        'start':'1:00 PM',
+        'end':'1:45 PM'
+      },
+      {
+        'start':'1:30 PM',
+        'end':'2:15 PM'
+      },
+      {
+        'start':'2:00 PM',
+        'end':'2:45 PM'
+      },
+      {
+        'start':'2:30 PM',
+        'end':'3:15 PM'
+      },
+      {
+        'start':'3:00 PM',
+        'end':'3:45 PM'
+      },
+      {
+        'start':'3:30 PM',
+        'end':'4:15 PM'
+      },
+      {
+        'start':'4:00 PM',
+        'end':'4:45 PM'
+      },
+      {
+        'start':'4:30 PM',
+        'end':'5:15 PM'
+      },
+      {
+        'start':'5:00 PM',
+        'end':'5:45 PM'
+      },
+      {
+        'start':'5:30 PM',
+        'end':'6:15 PM'
+      },
+      {
+        'start':'6:00 PM',
+        'end':'6:45 PM'
+      },
+      {
+        'start':'6:30 PM',
+        'end':'7:15 PM'
+      },
+      {
+        'start':'7:00 PM',
+        'end':'7:45 PM'
+      }
     ];
+
+
 
     let slide_time = 200;
     const slider_times = show_times.map((time)=>{
-      const className='slider-item slider-time'+slide_time.toString();
+      // console.log('mapping time: ',time);
+      let end = time['end'];
+      time = time['start'];
+      const timeClass = time.split('').filter((obj)=>{
+        return (obj !== ' ' && obj !==':' && obj !=='A' && obj !=='P' && obj !=='M');
+      }).join('')+'hours';
+      // console.log('timeclass: ',timeClass);
+      const className='slider-item slider-time '+timeClass;
+      const id='slide_time'+slide_time.toString();
       slide_time++;
+      let data = {
+        'id':id,
+        'time':time,
+        'end':end
+      }
       return (
         <li>
-          <div onClick={()=>this.pickTime(slide_time)} className = {className}>
+          <div ref={timeClass} onClick={()=>this.pickTime(data)} id={id} className = {className}>
             <div>{time}</div>
           </div>
         </li>
@@ -589,15 +734,29 @@ componentDidMount(){
       'slider_contents':slider_week,
       'call_to_action':false,
       'slider_kind':'modal-days',
-      'number_boxes':3
+      'number_boxes':3,
+      'booking_day':this.state.booking_day
     }
     const go_tour_modal_time_props = {
       ...go_tour_basic_props,
       'slider_contents':slider_times,
       'call_to_action':false,
       'slider_kind':'times',
-      'number_boxes':7
+      'number_boxes':7,
+      'day_short':this.state.day_short,
+      'booking_day':this.state.booking_day
     }
+    const next_button = (this.state.day_picked !=='-' && this.state.time !=='-') ? (
+      <div onClick={this.animateLeft.bind(this)} className="next_btn">Next</div>
+    ) : (
+      <div className="next_btn_pastel">Next</div>
+    )
+    const nav_buttons = (this.state.form_moved) ? (
+      <div className="infobar_nav_btns">
+        <div className="next_btn">Back</div>
+        {next_button}
+      </div>
+    ) : '';
     const go_tour_modal = (this.state.booking_tour) ? (
       <div className="showing-modal booking-modal">
         <div className="sm_opacity">
@@ -608,15 +767,36 @@ componentDidMount(){
             <Slider title={''} {...go_tour_modal_props}  />
             <Slider title={''} {...go_tour_modal_time_props} />
           </div>
+          <div ref="options_panel" className="options_panel">
+            options
+          </div>
+          <div ref="form_panel" className="form_panel">
+            form
+          </div>
           <div className="go_tour_infobar">
             <div className="infobar_row row">
               <div className="go_tour_infotext col-xs-8 infobar_column">
-                <div className="date">date</div>
-                <div className="start">start</div>
-                <div className="end">end</div>
+                <div className="date">
+                  <div>
+                    <div>DATE</div>
+                    <div>{this.state.day_picked}</div>
+                  </div>
+                </div>
+                <div className="start">
+                  <div>
+                    <div>START</div>
+                    <div>{this.state.time}</div>
+                  </div>
+                </div>
+                <div className="end">
+                  <div>
+                    <div>END</div>
+                    <div>{this.state.end}</div>
+                  </div>
+                </div>
               </div>
               <div className="col-xs-4 infobar_column infobar_btn">
-                <div onClick={this.animateLeft.bind(this)} className="next_btn">Next</div>
+                {next_button}
               </div>
             </div>
           </div>

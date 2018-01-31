@@ -18,7 +18,7 @@ let apiKey = '82b44a7662b0abb55eebf365a61c50399b512935';
 // let domain = 'http://vast-shore-14133.herokuapp.com';
 let domain = 'http://dcopenhouselist.com';
 
-// let domain = 'http://localhost:3000";
+// let domain = 'http://localhost:3000';
 
 
 
@@ -315,7 +315,6 @@ router.post('/addfeatured',function(req,res,next){
   let mls = body.mls;
 
   let password =  (body.password) ? body.password : 'na';
-
   if(password !=="!E28_Ey9scbCgC_)"){
     console.log('incorrect');
     res.send('incorrect password');
