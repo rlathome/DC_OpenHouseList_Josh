@@ -12,7 +12,7 @@
   position: relative;
 }
 .picked{
-  background-color:rgb(238,238,238) !important;
+  background-color:rgb(245,245,245) !important;
   border:2px solid #000 !important;
 }
 .go-tour{
@@ -61,28 +61,48 @@
       background: transparent;
   }
   height:inherit;
+    .slider-contents{
+      padding-bottom:10px;
+    }
+    .modal-slider-contents{
+      padding-bottom:20px;
+      margin-top:1em;
+    }
     .slider-contents,.modal-slider-contents{
       list-style-type: none;
       overflow-x: scroll;
       padding-left: 0px;
-      padding-bottom:10px;
       li{
         height:80%;
         float:left;
+        .slider-time{
+          font-size:2vw;
+          height:8vw !important;
+          // margin:0px !important;
+          border-radius: 0px !important;
+        }
+        .slider-item{
+          border-radius:5px;
+          margin:5px 10px 5px 5px;
+          border:1px solid #000;
+          background-color:lightgrey;
+        }
+        .modal-slider-item{
+          margin:5px 10px 5px 5px;
+          border-radius:0px !important;
+          color:rgb(114,114,114);
+          border:1px solid rgb(153,153,153);
+        }
         .slider-item, .modal-slider-item{
           display: flex;
           padding:1.25em 0em;
           flex-direction: column;
           justify-content: space-around;
           height:95%;
-          margin:5px 10px 5px 5px;
-          background-color:lightgrey;
-          border-radius:5px;
-          border:1px solid #000;
           cursor: pointer;
-          box-shadow: 5px 5px 5px grey;
+
           &:hover{
-            background-color:rgb(224,224,224);
+            background-color:rgb(245,245,245);
             // color:#fff;
           }
           div{

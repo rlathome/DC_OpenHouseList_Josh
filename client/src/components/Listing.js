@@ -14,9 +14,9 @@ let Functions = new myFunctions();
 // import { Swipe } from '../Swipe/swipe.js';
 // let apiKey = (process.env.REACT_APP_STATUS == 'development') ? "http://localhost:8080" : "http://vast-shore-14133.herokuapp.com";
 
-let apiKey = "http://localhost:8080";
+// let apiKey = "http://localhost:8080";
 
-// let apiKey="http://www.dcopenhouselist.com";
+let apiKey="http://www.dcopenhouselist.com";
 
 // let apiKey="https://dcopenhouselist.herokuapp.com";
 
@@ -27,6 +27,7 @@ class Listing extends Component{
   constructor(props){
     super(props);
     this.state={
+      selected_option:'',
       listing:'',
       showing:'',
       form_page:'start',
@@ -42,6 +43,7 @@ class Listing extends Component{
       day_short:'',
       time:'-',
       end:'-',
+      user_choice:'',
       submitted_email:false,
       inapp:false,
       autoscroll:true,
@@ -421,11 +423,6 @@ componentDidMount(){
     }
   }
   pickDay(data){
-    // const data = {
-    //   day_abbr,
-    //   date,
-    //   mo
-    // }
     let date = [];
     date.push(data.day_short);
     date.push(data.mo_short);
@@ -438,6 +435,21 @@ componentDidMount(){
     });
     let ep = '.'+data.day_abbr.toLowerCase();
     $('.slider-item').removeClass('picked');
+    $(ep).addClass('picked');
+  }
+  pickModalDay(data){
+    let date = [];
+    date.push(data.day_short);
+    date.push(data.mo_short);
+    date.push(data.date);
+    console.log('touring: ',date.join(','));
+    this.setState({
+      day_picked:date.join(', '),
+      booking_day:data.booking_day,
+      day_short:data.day_short
+    });
+    let ep = '.modal-slider-item.'+data.day_abbr.toLowerCase();
+    $('.modal-slider-item').removeClass('picked');
     $(ep).addClass('picked');
   }
   pickTime(data){
@@ -465,8 +477,13 @@ componentDidMount(){
     this.setState({
       booking_tour:false,
       day_picked:'-',
-      time:'-'
+      time:'-',
+      form_page:'start'
     });
+    let optionsbox = findDOMNode(this.refs.options_panel);
+    let formbox = findDOMNode(this.refs.form_panel);
+    $(optionsbox).animate({right:'-100%'},10);
+    $(formbox).animate({right:'-200%'},10);
     Functions.enableScroll();
   }
   animateLeft(e){
@@ -477,7 +494,7 @@ componentDidMount(){
     if(this.state.form_page==='start'){
       $(gobox).animate({left:'-100%','opacity':'0'},200);
       $(optionsbox).animate({left:'0%','opacity':'1'},200);
-      // $(formbox).animate({left:'100%'},200);
+      $(formbox).animate({left:'100%'},200);
       this.setState({
         form_page:'options'
       });
@@ -487,12 +504,80 @@ componentDidMount(){
       this.setState({
         form_page:'form'
       });
+    }else if(this.state.form_page==='form'){
+      let prev_data = {
+        day_picked:this.state.day_picked,
+        time:this.state.time,
+        user_choice:this.state.user_choice
+      }
+      console.log('previous data: ',prev_data);
+      let form_results = {
+        first : this.refs.form_first_name.value,
+        last : this.refs.form_last_name.value,
+        mobile : this.refs.form_phone.value,
+        email : this.refs.form_email.value,
+        comments : this.refs.form_comments.value,
+        with_agent_already : this.state.selected_option,
+        mls:this.props.params.mls
+      }
+      form_results = {
+        ...form_results,
+        ...prev_data
+      }
+      console.log('form data: ',form_results);
+      axios.post(apiKey + '/info/submitshowingform',form_results).then((response)=>{
+        // console.log('successfully submitted',response);
+        if(response.data.message === "Queued. Thank you."){
+
+          //show modal
+          this.setState({
+            submitted_email:true
+          });
+
+          //clear form
+          // this.refs.first_name.value = '';
+          // this.refs.last_name.value = '';
+          // this.refs.email.value = '';
+          // this.refs.phone.value = '';
+          // this.refs.textarea.value = '';
+
+          //hide modal
+          setTimeout(()=>{
+            this.setState({
+              submitted_email:false
+            });
+          },2000);
+        }
+      }).catch((err)=>{
+        // console.log('err - ',err);
+      });
     }
 
     console.log('day: ',this.state.day_picked);
     console.log('time: ',this.state.time);
     this.setState({
       form_moved:true
+    });
+  }
+  wantAgent(){
+    const agent_box = findDOMNode(this.refs.want_agent);
+    $('.optionsboxes').removeClass('picked');
+    $(agent_box).addClass('picked');
+    this.setState({
+      user_choice:'want_agent_help'
+    });
+  }
+  letMeIn(){
+    const let_me_in_box = findDOMNode(this.refs.just_let_me_in);
+    $('.optionsboxes').removeClass('picked');
+    $(let_me_in_box).addClass('picked');
+    this.setState({
+      user_choice:'let_me_in'
+    });
+  }
+  handleOptionChange(e){
+    this.setState({
+      selected_option:e.target.value
     });
   }
   render(){
@@ -566,9 +651,10 @@ componentDidMount(){
         <div className="photo-container-day">{dow} {time} {time2}</div>
       </div>
     )
-    //MODAL SLIDER
+    // //MODAL SLIDER
 
     let slider_week = [];
+    let modal_slider_week = [];
     let booking_week = []
     for(let i=0; i<7; i++){
       let day = moment().add(24*i,'hour');
@@ -578,6 +664,7 @@ componentDidMount(){
       let mo = day.format('MMM').toUpperCase();
       let mo_short = day.format('MMM');
       const className = 'slider-item '+ day_abbr.toLowerCase();
+      const modalClassName = 'modal-slider-item '+day_abbr.toLowerCase();
       const data = {
         day_abbr,
         date,
@@ -590,6 +677,18 @@ componentDidMount(){
           (
             <li>
               <div onClick={()=>this.pickDay(data)} className={className}>
+                <div>{day_abbr}</div>
+                <div>{date}</div>
+                <div>{mo}</div>
+              </div>
+            </li>
+        )
+      );
+
+      modal_slider_week.push(
+          (
+            <li>
+              <div onClick={()=>this.pickModalDay(data)} className={modalClassName}>
                 <div>{day_abbr}</div>
                 <div>{date}</div>
                 <div>{mo}</div>
@@ -698,7 +797,7 @@ componentDidMount(){
         return (obj !== ' ' && obj !==':' && obj !=='A' && obj !=='P' && obj !=='M');
       }).join('')+'hours';
       // console.log('timeclass: ',timeClass);
-      const className='slider-item slider-time '+timeClass;
+      const className='modal-slider-item slider-time '+timeClass;
       const id='slide_time'+slide_time.toString();
       slide_time++;
       let data = {
@@ -717,37 +816,39 @@ componentDidMount(){
 
 
 
-    const go_tour_basic_props={
+    const slider_basic_props={
       'slideRight':this.slideRight,
       'slideLeft':this.slideLeft,
       'openScheduler':this.openScheduler.bind(this)
     }
-    const go_tour_props = {
-      ...go_tour_basic_props,
+    const day_slider_props = {
+      ...slider_basic_props,
       'slider_contents':slider_week,
       'call_to_action':true,
       'slider_kind':'days',
       'number_boxes':3
     }
-    const go_tour_modal_props = {
-      ...go_tour_basic_props,
-      'slider_contents':slider_week,
+    const day_modal_props = {
+      ...slider_basic_props,
+      'slider_contents':modal_slider_week,
       'call_to_action':false,
       'slider_kind':'modal-days',
       'number_boxes':3,
+      'rounded':false,
       'booking_day':this.state.booking_day
     }
-    const go_tour_modal_time_props = {
-      ...go_tour_basic_props,
+    const time_modal_props = {
+      ...slider_basic_props,
       'slider_contents':slider_times,
       'call_to_action':false,
+      'rounded':false,
       'slider_kind':'times',
       'number_boxes':7,
       'day_short':this.state.day_short,
       'booking_day':this.state.booking_day
     }
     const next_button = (this.state.day_picked !=='-' && this.state.time !=='-') ? (
-      <div onClick={this.animateLeft.bind(this)} className="next_btn">Next</div>
+      <div onClick={this.animateLeft.bind(this)} className="btn-3d next_btn">Next</div>
     ) : (
       <div className="next_btn_pastel">Next</div>
     )
@@ -764,14 +865,60 @@ componentDidMount(){
         <span ref="go_tour_panel" className="go_tour_panel">
           <button onClick = {this.closeScheduler.bind(this)}>Close</button>
           <div ref="time_panel" className="time_panel">
-            <Slider title={''} {...go_tour_modal_props}  />
-            <Slider title={''} {...go_tour_modal_time_props} />
+            <Slider title={listing.street_number+' '+listing.street_name+ ' '+listing.street_post_dir} {...day_modal_props}  />
+            <Slider title={''} {...time_modal_props} />
           </div>
           <div ref="options_panel" className="options_panel">
-            options
+            <div className="options_main">
+              <div className="row">
+                <div className="col-xs-12">How can we help you on your tour?</div>
+                <div className="col-xs-6">
+                  <div ref="want_agent" onClick={this.wantAgent.bind(this)} className="optionsboxes">
+                    <div><div className="fa fa-user"></div></div>
+                    I'd like guidance from an RLAH agent.
+                  </div>
+                </div>
+                <div className="col-xs-6">
+                  <div ref="just_let_me_in" onClick={this.letMeIn.bind(this)} className="optionsboxes">
+                    <div><div className="fa fa-clock-o"></div></div>
+                    Just get me into the home.
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
           <div ref="form_panel" className="form_panel">
-            form
+            <div className="form_main">
+              <div className="form_intro">Tell us a little bit about yourself.</div>
+              <div className="form_sub_intro">We will never share your information or spam you.</div>
+              <form className="showing_form row">
+                {/* <div className="showing_form_inputs col-xs-6">
+                  <div>First Name<input ref="form_first_name" placeholder="John"/></div>
+                  <div>Email<input ref="form_email" placeholder="example@example.com"/></div>
+                </div>
+                <div className="showing_form_inputs col-xs-6">
+                  <div>Last Name<input ref="form_last_name" placeholder="Doe"/></div>
+                  <div>Mobile Number<input ref="form_phone" placeholder="( ) -"/></div>
+                </div> */}
+                <div className="showing_form_inputs col-xs-12">
+                  <div className='col-xs-6 first'>First Name<input ref="form_first_name" placeholder="John"/></div>
+                  <div className="col-xs-6 second">Last Name<input ref="form_last_name" placeholder="Doe"/></div>
+                </div>
+                <div className="showing_form_inputs col-xs-12">
+                  <div className='col-xs-6 first'>Email<input ref="form_email" placeholder="example@example.com"/></div>
+                  <div className='col-xs-6 second'>Mobile Number<input ref="form_phone" placeholder="( ) -"/></div>
+                </div>
+                <div className="yes_no col-xs-12">
+                  <div>Are you currently working with a real estate agent to help you buy your home?</div>
+                  <div>
+                    <input onChange={this.handleOptionChange.bind(this)} type="radio" value='no' checked = {this.state.selected_option==='no'} id="radio_no" name="yes_no"/><label for="radio_no">No</label>
+                    <input onChange={this.handleOptionChange.bind(this)} type="radio" value='yes' checked = {this.state.selected_option==='yes'} id="radio_yes" name="yes_no"/><label for="radio_yes">Yes</label>
+                  </div>
+                  <div>Notes (optional)</div>
+                  <textarea ref="form_comments" placeholder="Anything else you'd like to know about this tour or your home search?"></textarea>
+                </div>
+              </form>
+            </div>
           </div>
           <div className="go_tour_infobar">
             <div className="infobar_row row">
@@ -977,7 +1124,7 @@ componentDidMount(){
 
 
                     </div> */}
-                    <Slider title={'Go Tour This Property'} {...go_tour_props}  />
+                    <Slider title={'Go Tour This Property'} {...day_slider_props}  />
                     <div className="listing-form-header row">
                       <div className="col-xs-8">
                         Ask a Question

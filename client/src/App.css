@@ -1204,7 +1204,7 @@ footer .logo-text {
 }
 
 .picked {
-  background-color: #eeeeee !important;
+  background-color: whitesmoke !important;
   border: 2px solid #000 !important;
 }
 
@@ -1260,16 +1260,44 @@ footer .logo-text {
   background: transparent;
 }
 
+.slider .slider-contents {
+  padding-bottom: 10px;
+}
+
+.slider .modal-slider-contents {
+  padding-bottom: 20px;
+  margin-top: 1em;
+}
+
 .slider .slider-contents, .slider .modal-slider-contents {
   list-style-type: none;
   overflow-x: scroll;
   padding-left: 0px;
-  padding-bottom: 10px;
 }
 
 .slider .slider-contents li, .slider .modal-slider-contents li {
   height: 80%;
   float: left;
+}
+
+.slider .slider-contents li .slider-time, .slider .modal-slider-contents li .slider-time {
+  font-size: 2vw;
+  height: 8vw !important;
+  border-radius: 0px !important;
+}
+
+.slider .slider-contents li .slider-item, .slider .modal-slider-contents li .slider-item {
+  border-radius: 5px;
+  margin: 5px 10px 5px 5px;
+  border: 1px solid #000;
+  background-color: lightgrey;
+}
+
+.slider .slider-contents li .modal-slider-item, .slider .modal-slider-contents li .modal-slider-item {
+  margin: 5px 10px 5px 5px;
+  border-radius: 0px !important;
+  color: #727272;
+  border: 1px solid #999999;
 }
 
 .slider .slider-contents li .slider-item, .slider .slider-contents li .modal-slider-item, .slider .modal-slider-contents li .slider-item, .slider .modal-slider-contents li .modal-slider-item {
@@ -1278,16 +1306,11 @@ footer .logo-text {
   flex-direction: column;
   justify-content: space-around;
   height: 95%;
-  margin: 5px 10px 5px 5px;
-  background-color: lightgrey;
-  border-radius: 5px;
-  border: 1px solid #000;
   cursor: pointer;
-  box-shadow: 5px 5px 5px grey;
 }
 
 .slider .slider-contents li .slider-item:hover, .slider .slider-contents li .modal-slider-item:hover, .slider .modal-slider-contents li .slider-item:hover, .slider .modal-slider-contents li .modal-slider-item:hover {
-  background-color: #e0e0e0;
+  background-color: whitesmoke;
 }
 
 .slider .slider-contents li .slider-item div, .slider .slider-contents li .modal-slider-item div, .slider .modal-slider-contents li .slider-item div, .slider .modal-slider-contents li .modal-slider-item div {
@@ -1362,7 +1385,7 @@ footer .logo-text {
 }
 
 .go_tour_panel .next_btn_pastel {
-  background-color: #35CAFC;
+  background-color: #96ddf5;
 }
 
 .go_tour_panel .time_panel, .go_tour_panel .form_panel, .go_tour_panel .options_panel {
@@ -1374,10 +1397,111 @@ footer .logo-text {
 
 .go_tour_panel .options_panel {
   right: 100%;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.go_tour_panel .options_panel .options_main {
+  width: 60%;
+  height: 60%;
+  margin: auto;
+}
+
+.go_tour_panel .options_panel .options_main .col-xs-12 {
+  text-align: center;
+  font-size: 2.5vw;
+  margin-bottom: 1.25vw;
+}
+
+.go_tour_panel .options_panel .options_main .optionsboxes {
+  border-radius: 5px;
+  text-align: center;
+  height: 100%;
+  width: 100%;
+  height: 15vw;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  border: 1px solid #000;
+  cursor: pointer;
+}
+
+.go_tour_panel .options_panel .options_main .optionsboxes:hover {
+  background-color: whitesmoke;
+}
+
+.go_tour_panel .options_panel .options_main .optionsboxes .fa {
+  font-size: 6.5vw;
+  color: #35CAFC;
 }
 
 .go_tour_panel .form_panel {
   right: 200%;
+}
+
+.go_tour_panel .form_panel .form_main {
+  width: 65%;
+  height: 60%;
+  margin: auto;
+  text-align: center;
+}
+
+.go_tour_panel .form_panel .form_main .form_intro {
+  font-size: 3vw;
+}
+
+.go_tour_panel .form_panel .form_main .form_sub_intro {
+  font-size: 1.5vw;
+  color: gray;
+  margin-bottom: 1.5vw;
+}
+
+.go_tour_panel .form_panel .form_main .showing_form {
+  background-color: lightgrey;
+  padding: 2.5vh 0vh;
+}
+
+.go_tour_panel .form_panel .form_main .showing_form .showing_form_inputs {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  text-align: left;
+}
+
+.go_tour_panel .form_panel .form_main .showing_form .showing_form_inputs .first {
+  padding-right: 1vw !important;
+}
+
+.go_tour_panel .form_panel .form_main .showing_form .showing_form_inputs .second {
+  padding-left: 1vw !important;
+}
+
+.go_tour_panel .form_panel .form_main .showing_form .showing_form_inputs .col-xs-6 {
+  padding: 0px;
+}
+
+.go_tour_panel .form_panel .form_main .showing_form .showing_form_inputs input {
+  width: 100%;
+  margin-bottom: 1vw;
+}
+
+.go_tour_panel .form_panel .form_main .showing_form .yes_no {
+  text-align: left;
+}
+
+.go_tour_panel .form_panel .form_main .showing_form .yes_no label {
+  margin-right: 2vw;
+  font-weight: normal !important;
+}
+
+.go_tour_panel .form_panel .form_main .showing_form .yes_no input {
+  margin-right: 1vw;
+}
+
+.go_tour_panel .form_panel .form_main .showing_form .yes_no textarea {
+  width: 100%;
+  height: 15vh;
 }
 
 .go_tour_panel .time_panel, .go_tour_panel .infobar_row {
@@ -2158,7 +2282,7 @@ footer .logo-text {
 
 @media (max-width: 765px) {
   .listing-column2 {
-    height: 90vh;
+    height: inherit;
   }
 }
 

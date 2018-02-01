@@ -9,14 +9,24 @@ export default class Slider extends Component{
   constructor(props){
     super(props);
     this.state={
-      slider_contents:[]
+      slider_contents:[],
+      booking_day:'',
+      curr_hour:moment()
     }
   }
+  componentWillMount(){
+    // let booking_day = (this.props.booking_day) ? this.props.booking_day : '';
+    // this.setState({
+    //   booking_day
+    // });
+  }
+
   componentDidMount(){
     const slider = findDOMNode(this.refs.slider);
     const slider_contents = findDOMNode(this.refs.slider_contents);
     const num_boxes = this.props.number_boxes;
     function resizeSlider(){
+      console.log('resize slider mounting')
         let $slider = $(slider);
         let $slider_contents = $(slider_contents);
         let width = $slider.width();
@@ -36,14 +46,55 @@ export default class Slider extends Component{
         $slider.scrollLeft(0);
 
     }
+
+    //INITIAL SLIDER RESIZE AND SETTING UP SLIDER RESIZING LISTENERS:
     resizeSlider();
 
     $(window).resize(function(){
       resizeSlider();
     });
 
-    //SLIDE TO CORRECT DAY/TIME:
+    // listen for if user changes day in modal, and if user switches to same day:
+
+    if(this.props.slider_kind == 'times' && this.props.day_short !== this.state.curr_hour.format('ddd')){
+      // commands for different day:
+      console.log('day changed: ',this.props.day_short, this.state.curr_hour.format('ddd'))
+      this.setState({
+        slider_contents:this.props.slider_contents
+      });
+      setTimeout(()=>{
+        resizeSlider();
+      },100);
+      // commands for same day:
+    }else if (this.props.slider_kind == 'times'){
+      console.log('day changed to same day!')
+      setTimeout(()=>{
+        this.resetHours();
+      },50);
+      resizeSlider();
+    }
+
+    //SET SLIDER TO CORRECT DAY/TIME:
     let booking_day = this.props.booking_day;
+    let curr_hour = this.state.curr_hour.format('HH')+'00';
+    console.log('curr_hour: ',curr_hour);
+    let withinRange = curr_hour >9 && curr_hour<15;
+    if(!withinRange){
+      console.log('not within range today, ',curr_hour)
+      //Either set to following day or display all available times later in that day
+      if(curr_hour>1500){
+        //set the day to tomorrow:
+        booking_day = this.state.curr_hour.add(24,'hour').format('dddd').toLowerCase();
+        console.log('greater than 1500',booking_day)
+      }else if(curr_hour<900){
+        // display available times for today
+        console.log('less than 900')
+        return;
+      }
+    }else{
+      this.resetHours();
+    }
+    // scroll to chosen day:
     if(booking_day){
       const _booking_day = '.'+booking_day;
       let $booking_day = $(_booking_day);
@@ -55,38 +106,32 @@ export default class Slider extends Component{
       $(slider).scrollLeft(scrollPos);
     }
 
-    /*== IF DAY CHOSEN IS TODAY:==*/
-    // this.resetHours();
-    let day_chosen = this.props.day_short;
-    let today = moment().format('ddd');
-    console.log('user picks day: ',day_chosen,' & today is ',today);
-    if(day_chosen === today){
-      const now = moment().add(4,'hour');
-      let scrollClass = now.format('HH');
-      scrollClass = '.'+(moment(scrollClass,'hh').format('h')+'00').toString()+'hours';
-      console.log('four hours from ',scrollClass);
-      // let scrollElem = this.refs.scrollClass;
-      let $scrollElem = $(scrollClass);
-      const scrollPos = $scrollElem.position().left;
-      const scrollIndex = $scrollElem.closest('li').index();
-      console.log('our desired time is at ',this.props.slider_contents, ' ',scrollIndex);
-      const contents = this.props.slider_contents.slice(scrollIndex,this.props.slider_contents.length);
-      this.setState({
-        slider_contents: contents
-      });
-      let slider = findDOMNode(this.refs.slider);
-      $(slider).scrollLeft(scrollPos);
-    }
-    /*====                     ===*/
   }
+
+  //This function is only called if user picks today, so as to create a 4 hour time window:
+
   resetHours(){
     let day_chosen = this.props.day_short;
-    let today = moment().format('ddd');
+    let now = this.state.curr_hour;
+    let today = now.format('ddd');
+    // let curr_hour = moment().add(12,'hour').format('HH');
+    let curr_hour = now.format('HH');
+    console.log('curr_hour reset: ',curr_hour);
+    let withinDayRange = curr_hour >9 && curr_hour<15;
+    if(!withinDayRange){
+      console.log('not within range today')
+      //Either set to following day or display all available times later in that day
+      return;
+    }
+    console.log('is within range');
     console.log('user picks day: ',day_chosen,' & today is ',today);
+    let scrollClass;
     if(day_chosen === today){
-      const now = moment().add(4,'hour');
-      let scrollClass = now.format('HH');
-      scrollClass = '.'+(moment(scrollClass,'hh').format('h')+'00').toString()+'hours';
+      // create time window:
+      let time_window = now;
+      time_window.add(4,'hour');
+      console.log('time_window: ',time_window.format('HH'));
+      scrollClass = '.'+(moment(time_window,'hh').format('h')+'00').toString()+'hours';
       console.log('four hours from ',scrollClass);
       // let scrollElem = this.refs.scrollClass;
       let $scrollElem = $(scrollClass);
@@ -100,9 +145,7 @@ export default class Slider extends Component{
           slider_contents: contents
         });
       }
-
-      // let slider = findDOMNode(this.refs.slider);
-      // $(slider).scrollLeft(scrollPos);
+      time_window.subtract(4,'hour');
     }
   }
   componentWillReceiveProps(nextProps){
@@ -110,6 +153,7 @@ export default class Slider extends Component{
     const slider_contents = findDOMNode(this.refs.slider_contents);
     const num_boxes = this.props.number_boxes;
     function resizeSlider(){
+        console.log('resize slider props')
         let $slider = $(slider);
         let $slider_contents = $(slider_contents);
         let width = $slider.width();
@@ -126,25 +170,33 @@ export default class Slider extends Component{
         let new_width = width*ratio+'px';
         console.log('new width: ',new_width);
         $slider_contents.css('width',new_width);
-        $slider.scrollLeft(0);
 
+        // this scroll is causing unnecessary repositioning of time bar:
+        // $slider.scrollLeft(0);
     }
-    if(this.props.slider_kind == 'times' && nextProps.day_short !== moment().format('ddd')){
-      console.log('day changed: ',nextProps.day_short, moment().format('ddd'))
+
+    // listen for if user changes day in modal, and if user switches to same day:
+
+    if(this.props.slider_kind == 'times' && nextProps.day_short !== this.state.curr_hour.format('ddd')){
+      // commands for different day:
+      console.log('day changed: ',nextProps.day_short, this.state.curr_hour.format('ddd'))
       this.setState({
         slider_contents:nextProps.slider_contents
       });
       setTimeout(()=>{
         resizeSlider();
       },100);
+      // commands for same day:
     }else if (this.props.slider_kind == 'times'){
       console.log('day changed to same day!')
-      setTimeout(()=>{this.resetHours();},200);
-      // this.setState({
-      //   slider_contents
-      // })
-      resizeSlider();
+      setTimeout(()=>{
+        this.resetHours();
+        resizeSlider();
+      },100);
     }
+  }
+  componentDidUpdate(){
+    console.log('new now: ',this.state.curr_hour.format('HH'))
   }
 
   slideLeft(){
@@ -186,9 +238,10 @@ export default class Slider extends Component{
   }
 
   render(){
+
     const button = (this.props.call_to_action) ? (
       <div onClick={()=>this.props.openScheduler()} className="btn btn-primary">Schedule Showing</div>
-    ) : '';;
+    ) : '';
     const sliderClass = (this.props.call_to_action) ? 'slider-contents' : 'modal-slider-contents';
     const onPageClass = (this.props.call_to_action) ? 'slider onPage' : 'slider modal-onPage';
     const contents = (this.state.slider_contents.length > 0) ? this.state.slider_contents : this.props.slider_contents;

@@ -1098,7 +1098,7 @@ footer{
   }
   .next_btn_pastel{
     // background-color:rgb(200,138,139);
-    background-color: #35CAFC;
+    background-color: #96ddf5;
   }
   .time_panel,.form_panel,.options_panel{
     position: absolute;
@@ -1109,9 +1109,94 @@ footer{
   .options_panel{
     right:100%;
     // opacity:0;
+    display:flex;
+    justify-content: center;
+    flex-direction: column;
+    .options_main{
+      width:60%;
+      height:60%;
+      margin:auto;
+      // background-color:red;
+      .col-xs-12{
+        text-align: center;
+        font-size: 2.5vw;
+        margin-bottom:1.25vw;
+      }
+      .optionsboxes{
+        border-radius: 5px;
+        text-align: center;
+        height:100%;
+        width:100%;
+        height:15vw;
+        display:flex;
+        flex-direction: column;
+        justify-content: center;
+        border:1px solid #000;
+        cursor:pointer;
+        &:hover{
+          background-color:rgb(245,245,245);
+        }
+        .fa{
+          font-size:6.5vw;
+          color: #35CAFC;
+        }
+      }
+    }
   }
   .form_panel{
     right:200%;
+    .form_main{
+      width:65%;
+      height:60%;
+      margin:auto;
+      text-align: center;
+      .form_intro{
+        font-size:3vw;
+      }
+      .form_sub_intro{
+        font-size:1.5vw;
+        color:gray;
+        margin-bottom:1.5vw;
+      }
+      .showing_form{
+        background-color:lightgrey;
+        // height:100%;
+        padding:2.5vh 0vh;
+        .showing_form_inputs{
+          display: flex;
+          flex-direction: row;
+          justify-content: space-between;
+          text-align: left;
+          .first{
+            padding-right:1vw !important;
+          }
+          .second{
+            padding-left:1vw !important;
+          }
+          .col-xs-6{
+            padding:0px;
+          }
+          input{
+            width:100%;
+            margin-bottom:1vw;
+          }
+        }
+        .yes_no{
+          text-align: left;
+          label{
+            margin-right:2vw;
+            font-weight: normal !important;
+          }
+          input{
+            margin-right:1vw;
+          }
+          textarea{
+            width:100%;
+            height:15vh;
+          }
+        }
+      }
+    }
     // opacity:0;
   }
   .time_panel,.infobar_row{
@@ -1782,7 +1867,7 @@ footer{
 .listing-column2{
   padding:0px;
   @media(max-width: 765px){
-    height:90vh;
+    height:inherit;
   }
   // @media only screen
   // and (min-width : 375px)
