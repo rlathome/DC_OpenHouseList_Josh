@@ -1191,8 +1191,7 @@ footer .logo-text {
 }
 
 .go-tour {
-  height: 20vh;
-  margin: 5px 5px 50px 5px;
+  margin: 5px 5px 5px 5px;
   text-align: center;
 }
 
@@ -1212,7 +1211,6 @@ footer .logo-text {
   font-size: 2.5em;
   position: absolute;
   z-index: 10;
-  color: #fff;
   color: gray;
   top: 45%;
   cursor: pointer;
@@ -1231,11 +1229,30 @@ footer .logo-text {
   right: -10%;
 }
 
+.go-tour .arrow_left_modal_times, .go-tour .arrow_right_modal_times {
+  top: 28%;
+  font-size: 4em;
+  color: #cac9c9;
+}
+
+.go-tour .arrow_modal_days {
+  top: 40%;
+  font-size: 4em;
+  color: #cac9c9;
+}
+
 .go-tour .btn-primary {
   width: 100%;
   position: absolute;
   left: 0px;
   bottom: -3em;
+}
+
+@media only screen and (min-device-width: 320px) and (max-device-height: 568px) and (orientation: landscape) and (-webkit-device-pixel-ratio: 2) {
+  .go-tour {
+    height: 40vh;
+    /* Styles */
+  }
 }
 
 .go-tour-title {
@@ -1276,14 +1293,19 @@ footer .logo-text {
 }
 
 .slider .slider-contents li, .slider .modal-slider-contents li {
-  height: 80%;
+  height: inherit !important;
   float: left;
 }
 
 .slider .slider-contents li .slider-time, .slider .modal-slider-contents li .slider-time {
   font-size: 2vw;
-  height: 8vw !important;
   border-radius: 0px !important;
+}
+
+@media (max-width: 960px) {
+  .slider .slider-contents li .slider-time, .slider .modal-slider-contents li .slider-time {
+    font-size: 1.5vw;
+  }
 }
 
 .slider .slider-contents li .slider-item, .slider .modal-slider-contents li .slider-item {
@@ -1337,6 +1359,7 @@ footer .logo-text {
 }
 
 .go_tour_panel {
+  font-family: 'apercu-regular', sans-serif;
   display: inline-block;
   align-self: center;
   border-radius: 5px;
@@ -1369,6 +1392,7 @@ footer .logo-text {
 
 .go_tour_panel .next_btn, .go_tour_panel .next_btn_pastel, .go_tour_panel .back_btn {
   height: 50%;
+  font-size: 1.5em;
   float: right;
   width: 85%;
   color: white;
@@ -1393,6 +1417,13 @@ footer .logo-text {
   width: 100%;
   top: 3em;
   height: 80%;
+}
+
+@media only screen and (min-device-width: 320px) and (max-device-height: 568px) and (orientation: landscape) and (-webkit-device-pixel-ratio: 2) {
+  .go_tour_panel .time_panel, .go_tour_panel .form_panel, .go_tour_panel .options_panel {
+    overflow: scroll;
+    /* Styles */
+  }
 }
 
 .go_tour_panel .options_panel {
@@ -1448,7 +1479,7 @@ footer .logo-text {
 }
 
 .go_tour_panel .form_panel .form_main .form_intro {
-  font-size: 3vw;
+  font-size: 2em;
 }
 
 .go_tour_panel .form_panel .form_main .form_sub_intro {
@@ -1506,6 +1537,16 @@ footer .logo-text {
 
 .go_tour_panel .time_panel, .go_tour_panel .infobar_row {
   padding: 0px 2.5em;
+}
+
+.go_tour_panel .time_panel_intro {
+  font-size: 2em;
+}
+
+.go_tour_panel .time_panel_header {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
 }
 
 .go_tour_panel .go_tour_infobar {
@@ -2824,4 +2865,8 @@ footer .logo-text {
 .required:-ms-input-placeholder:after {
   content: " *";
   color: red;
+}
+
+.booking-modal-image {
+  width: 15vw !important;
 }

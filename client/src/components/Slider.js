@@ -82,7 +82,7 @@ export default class Slider extends Component{
     if(!withinRange){
       console.log('not within range today, ',curr_hour)
       //Either set to following day or display all available times later in that day
-      if(curr_hour>1500){
+      if(curr_hour>=1500){
         //set the day to tomorrow:
         booking_day = this.state.curr_hour.add(24,'hour').format('dddd').toLowerCase();
         console.log('greater than 1500',booking_day)
@@ -238,7 +238,25 @@ export default class Slider extends Component{
   }
 
   render(){
-
+    let arrowClass;
+    let arrowClass2;
+    switch(this.props.slider_kind){
+      case 'days':
+      arrowClass='fa fa-angle-left';
+      arrowClass2='fa fa-angle-right';
+      break;
+      case 'modal-days':
+      arrowClass='fa fa-angle-left arrow_modal_days';
+      arrowClass2='fa fa-angle-right arrow_modal_days';
+      break;
+      case 'times':
+      arrowClass='fa fa-angle-left arrow_left_modal_times';
+      arrowClass2='fa fa-angle-right arrow_right_modal_times';
+      break;
+      default:
+      arrowClass='fa fa-angle-left';
+      arrowClass2='fa fa-angle-right';
+    }
     const button = (this.props.call_to_action) ? (
       <div onClick={()=>this.props.openScheduler()} className="btn btn-primary">Schedule Showing</div>
     ) : '';
@@ -249,13 +267,13 @@ export default class Slider extends Component{
       <div className="go-tour">
         <div className="go-tour-wrapper">
           <div className="go-tour-title">{this.props.title}</div>
-          <span onClick={() => this.slideLeft()} className="fa fa-angle-left"></span>
+          <span onClick={() => this.slideLeft()} className={arrowClass}></span>
           <div ref='slider' className={onPageClass}>
             <ul ref='slider_contents' className={sliderClass}>
               {contents}
             </ul>
           </div>
-          <span onClick={() => this.slideRight()} className="fa fa-angle-right"></span>
+          <span onClick={() => this.slideRight()} className={arrowClass2}></span>
           { button }
         </div>
       </div>

@@ -1,6 +1,6 @@
 .go-tour{
-  height:20vh;
-  margin:5px 5px 50px 5px;
+  // height:20vh;
+  margin:5px 5px 5px 5px;
   text-align: center;
 
 }
@@ -20,7 +20,6 @@
     font-size: 2.5em;
     position: absolute;
     z-index: 10;
-    color:#fff;
     color:gray;
     top:45%;
     // height:100%;
@@ -37,11 +36,30 @@
   .fa-angle-right{
     right:-10%;
   }
+  .arrow_left_modal_times,.arrow_right_modal_times{
+    top:28%;
+    font-size:4em;
+
+    color:#cac9c9;
+  }
+  .arrow_modal_days{
+    top:40%;
+    font-size:4em;
+
+    color:#cac9c9;
+  }
   .btn-primary{
     width:100%;
     position: absolute;
     left:0px;
     bottom:-3em;
+  }
+  @media only screen and (min-device-width: 320px)
+  and (max-device-height: 568px)
+  and (orientation : landscape)
+  and (-webkit-device-pixel-ratio: 2){
+    height:40vh;
+  /* Styles */
   }
 }
 
@@ -67,19 +85,24 @@
     .modal-slider-contents{
       padding-bottom:20px;
       margin-top:1em;
+      // height:15vh;
     }
     .slider-contents,.modal-slider-contents{
       list-style-type: none;
       overflow-x: scroll;
       padding-left: 0px;
       li{
-        height:80%;
+        height:inherit !important;
+        // height:80%;
         float:left;
         .slider-time{
           font-size:2vw;
-          height:8vw !important;
+          // height:8vw !important;
           // margin:0px !important;
           border-radius: 0px !important;
+          @media(max-width:960px){
+            font-size:1.5vw;
+          }
         }
         .slider-item{
           border-radius:5px;

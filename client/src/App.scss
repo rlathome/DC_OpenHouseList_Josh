@@ -1052,6 +1052,7 @@ footer{
   justify-content: space-around;
 }
 .go_tour_panel{
+  font-family: 'apercu-regular', sans-serif;
   display:inline-block;
   align-self: center;
   border-radius: 5px;
@@ -1082,6 +1083,7 @@ footer{
   .next_btn,.next_btn_pastel,.back_btn{
     height:50%;
     // position: absolute;
+    font-size: 1.5em;
     float:right;
     width:85%;
     color:white;
@@ -1105,6 +1107,13 @@ footer{
     width:100%;
     top:3em;
     height:80%;
+    @media only screen and (min-device-width: 320px)
+    and (max-device-height: 568px)
+    and (orientation : landscape)
+    and (-webkit-device-pixel-ratio: 2){
+      overflow: scroll;
+    /* Styles */
+    }
   }
   .options_panel{
     right:100%;
@@ -1151,7 +1160,7 @@ footer{
       margin:auto;
       text-align: center;
       .form_intro{
-        font-size:3vw;
+        font-size:2em;
       }
       .form_sub_intro{
         font-size:1.5vw;
@@ -1201,6 +1210,14 @@ footer{
   }
   .time_panel,.infobar_row{
     padding:0px 2.5em;
+  }
+  .time_panel_intro{
+    font-size: 2em;
+  }
+  .time_panel_header{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
   }
   .go_tour_infobar{
     position: absolute;
@@ -2399,4 +2416,9 @@ $specs-time:.35s;
 .required:-ms-input-placeholder:after {
     content: " *";
     color: red;
+}
+.booking-modal-image{
+  width:15vw !important;
+  // width:2vw;
+  // height:2vw;
 }

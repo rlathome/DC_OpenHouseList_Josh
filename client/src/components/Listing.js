@@ -865,6 +865,11 @@ componentDidMount(){
         <span ref="go_tour_panel" className="go_tour_panel">
           <button onClick = {this.closeScheduler.bind(this)}>Close</button>
           <div ref="time_panel" className="time_panel">
+            {/* <h1>Pick A Time</h1> */}
+            <div className="time_panel_header">
+              <span className="time_panel_intro">Pick A Time </span>
+              <img className="img-responsive" src={listing.image_urls.all_thumb} alt="listing image"></img>
+            </div>
             <Slider title={listing.street_number+' '+listing.street_name+ ' '+listing.street_post_dir} {...day_modal_props}  />
             <Slider title={''} {...time_modal_props} />
           </div>
@@ -1044,7 +1049,7 @@ componentDidMount(){
       <div>
       <Header reload={this.reload.bind(this)}/>
       <div className="wrapper listing-page">
-        {/* {showing_modal} */}
+        {showing_modal}
         {submit_modal}
         {go_tour_modal}
         <div className="listing-header row rounded">
