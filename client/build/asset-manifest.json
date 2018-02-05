@@ -1,15 +1,8 @@
 {
-<<<<<<< HEAD
-  "main.css": "static/css/main.564c1f10.css",
-  "main.css.map": "static/css/main.564c1f10.css.map",
-  "main.js": "static/js/main.8db4ae45.js",
-  "main.js.map": "static/js/main.8db4ae45.js.map",
-=======
   "main.css": "static/css/main.c01d3126.css",
   "main.css.map": "static/css/main.c01d3126.css.map",
-  "main.js": "static/js/main.714bfce7.js",
-  "main.js.map": "static/js/main.714bfce7.js.map",
->>>>>>> showing_form
+  "main.js": "static/js/main.2f0162e1.js",
+  "main.js.map": "static/js/main.2f0162e1.js.map",
   "static/media/bath.svg": "static/media/bath.19bbdb98.svg",
   "static/media/bed.svg": "static/media/bed.ec2cfbc8.svg"
 }

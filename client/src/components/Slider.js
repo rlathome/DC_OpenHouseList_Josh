@@ -93,7 +93,8 @@ export default class Slider extends Component{
       setTimeout(()=>{
         Slide.resetHours(this);
         Slide.resizeSlider(slider,slider_contents,num_boxes);
-        setTimeout(()=>{Slide.late_afternoon_clear(this);},200)
+        // setTimeout(()=>{Slide.late_afternoon_clear(this);},200)
+        Slide.late_afternoon_clear(this);
       },100);
     }
 
