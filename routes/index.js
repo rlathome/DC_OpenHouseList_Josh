@@ -18,7 +18,7 @@ let apiKey = '82b44a7662b0abb55eebf365a61c50399b512935';
 // let domain = 'http://vast-shore-14133.herokuapp.com';
 let domain = 'http://dcopenhouselist.com';
 
-// let domain = 'http://localhost:3000";
+// let domain = 'http://localhost:3000';
 
 
 
@@ -237,6 +237,78 @@ router.post('/submitform',function(req,res,next){
   // });
 });
 
+router.post('/submitshowingform',function(req,res,next){
+  let form_data = req.body;
+  console.log('submitting: ',form_data);
+  // let to= 'info@rlahre.com';
+
+  let first = form_data.first;
+  let last = form_data.last;
+  let mls = form_data.mls;
+  let subject = "A Visitor has scheduled a showing on DC's Open House List!";
+  let comments = form_data.comments;
+  let phone = form_data.mobile;
+  let email = form_data.email;
+  let with_agent_already = form_data.with_agent_already;
+  let day_picked = form_data.day_picked;
+  let time = form_data.time;
+  // let user_choice = form_data.user_choice;
+  //
+  // let prev_data = {
+  //   day_picked:this.state.day_picked,
+  //   time:this.state.time,
+  //   user_choice:this.state.user_choice
+  // }
+  // console.log('previous data: ',prev_data);
+  // let form_results = {
+  //   first : this.refs.form_first_name.value,
+  //   last : this.refs.form_last_name.value,
+  //   mobile : this.refs.form_phone.value,
+  //   email : this.refs.form_email.value,
+  //   comments : this.refs.form_comments.value,
+  //   with_agent_already : this.state.selected_option
+  // }
+  // let to = agent_email;
+  let to = 'info@rlahre.com'
+
+  var mailcomposer = require('mailcomposer');
+
+  var domain = 'info.dcopenhouselist.com';
+  var apiKey = 'key-602b6fef248551d53fee98ac2dbdef70';
+  var mailgun = require('mailgun-js')({apiKey:apiKey, domain:domain});
+
+  var mail = mailcomposer({
+    subject,
+    to,
+    from:first+' '+last+'<'+email+'>',
+    with_agent_already,
+    // user_choice,
+    body:comments,
+    mls,
+    phone,
+    day_picked,
+    time,
+    html:'<div>Re: MLS# '+mls+'<br/>'+comments+'</div>'+'<div>'+phone+'</div>'+'<div>'+email+'</div>'
+  });
+
+  // res.send('Queued. Thank you.');
+
+  mail.build(function(mailBuildError, message){
+    var dataToSend = {
+        to: to,
+        message: message.toString('ascii')
+    };
+    mailgun.messages().sendMime(dataToSend, function (sendError, body) {
+        if (sendError) {
+            console.log(sendError);
+            return;
+        }
+        res.json(body);
+    });
+  });
+
+});
+
 router.post('/createagent',function(req,res,next){
   let body = req.body;
   console.log('body: ',body);
@@ -315,7 +387,6 @@ router.post('/addfeatured',function(req,res,next){
   let mls = body.mls;
 
   let password =  (body.password) ? body.password : 'na';
-
   if(password !=="!E28_Ey9scbCgC_)"){
     console.log('incorrect');
     res.send('incorrect password');

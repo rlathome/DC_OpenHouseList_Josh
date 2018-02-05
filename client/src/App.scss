@@ -1036,15 +1036,325 @@ footer{
     float:right;
   }
 }
-.gotourbtn{
-  background-color:rgb(88,88,88);
-  // background-color: rgb(233,103,39);
-  color:rgb(204,204,204);
-  &:hover{
-    background-color: lightgrey;
-    border:1px solid #000;
+.listing-form-wrapper{
+  position: relative;
+}
+
+
+@import '3box_slider';
+
+.listing-form-inputs{
+  // position: absolute;
+}
+.booking-modal{
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+}
+.go_tour_panel{
+  font-family: 'apercu-regular', sans-serif;
+  display:inline-block;
+  align-self: center;
+  border-radius: 5px;
+  overflow: hidden;
+  width:80vw;
+  height:80vh;
+  background-color:#fff;
+  position:relative;
+  // right:-100vw;
+  .booking_days{
+    list-style-type:none;
+    text-align: center;
+    li{
+      width:8vw;
+      float:left;
+      padding:10px;
+      color:rgb(153,153,153);
+      border:1px solid rgb(153,153,153);
+      margin-right:1em;
+      box-shadow: 5px 5px 5px grey;
+      border-radius: 5px;
+
+      div{
+        font-family: 'apercu-regular',sans-serif;
+      }
+    }
+  }
+  .next_btn,.next_btn_pastel,.back_btn{
+    height:50%;
+    // position: absolute;
+    font-size: 1.5em;
+    float:right;
+    width:85%;
+    color:white;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    text-align:center;
+    margin:auto;
+    // iphone 6 portrait
+    @media only screen
+    and (min-width : 355px)
+    and (max-width : 667px)
+    and (orientation : portrait) {
+      width:60%;
+      margin-right:0px;
+    }
+  }
+  .next_btn{
+    // background-color:rgb(200,32,33);
+    background-color: #35CAFC;
+    cursor:pointer;
+  }
+  .next_btn_pastel{
+    // background-color:rgb(200,138,139);
+    background-color: #96ddf5;
+  }
+  .time_panel,.form_panel,.options_panel{
+    position: absolute;
+    width:100%;
+    top:3em;
+    height:80%;
+    @media only screen and (min-device-width: 320px)
+    and (max-device-height: 568px)
+    and (orientation : landscape)
+    and (-webkit-device-pixel-ratio: 2){
+      overflow: scroll;
+    /* Styles */
+    }
+  }
+  .options_panel{
+    right:-100%;
+    // opacity:0;
+    display:flex;
+    justify-content: center;
+    flex-direction: column;
+    .options_main{
+      width:60%;
+      height:60%;
+      margin:auto;
+      // background-color:red;
+      .col-xs-12{
+        text-align: center;
+        font-size: 2.5vw;
+        margin-bottom:1.25vw;
+        @media only screen
+        and (min-width : 355px)
+        and (max-width : 667px)
+        and (orientation : portrait) {
+          font-size: 1.5em;
+          margin-bottom:5vw;
+        }
+      }
+      .col-xs-6{
+        padding:0px 5px;
+      }
+      .optionsboxes{
+        border-radius: 5px;
+        text-align: center;
+        height:100%;
+        width:100%;
+        height:15vw;
+        display:flex;
+        flex-direction: column;
+        justify-content: center;
+        border:1px solid #000;
+        cursor:pointer;
+        &:hover{
+          background-color:rgb(245,245,245);
+        }
+        .fa{
+          font-size:6.5vw;
+          color: #35CAFC;
+        }
+        @media only screen
+        and (min-width : 355px)
+        and (max-width : 667px)
+        and (orientation : portrait) {
+          height:40vw;
+        }
+      }
+    }
+  }
+  .form_panel{
+    right:-100%;
+    ::placeholder{
+      color:lightgrey;
+    }
+    @media(min-width:1100px){
+      top:1em;
+    }
+    .form_main{
+      width:65%;
+      height:60%;
+      margin:auto;
+      text-align: center;
+      @media only screen
+      and (min-width : 355px)
+      and (max-width : 667px)
+      and (orientation : portrait) {
+        font-size: 3vw;
+      }
+      .form_intro{
+        font-size:2em;
+      }
+      .form_sub_intro{
+        font-size:1.5vw;
+        color:gray;
+        margin-bottom:1.5vw;
+        // iphone 6 portrait
+        @media only screen
+        and (min-width : 355px)
+        and (max-width : 667px)
+        and (orientation : portrait) {
+          font-size: 3vw;
+        }
+      }
+      .showing_form{
+        background-color:lightgrey;
+        // height:100%;
+        padding:2.5vh 0vh;
+        .showing_form_inputs{
+          display: flex;
+          flex-direction: row;
+          justify-content: space-between;
+          text-align: left;
+          .first{
+            padding-right:1vw !important;
+          }
+          .second{
+            padding-left:1vw !important;
+          }
+          .col-xs-6{
+            padding:0px;
+          }
+          input{
+            width:100%;
+            margin-bottom:1vw;
+          }
+        }
+        .yes_no{
+          text-align: left;
+          label{
+            margin-right:2vw;
+            font-weight: normal !important;
+          }
+          input{
+            margin-right:1vw;
+          }
+          textarea{
+            width:100%;
+            height:15vh;
+          }
+        }
+      }
+    }
+    // opacity:0;
+  }
+  .time_panel,.infobar_row{
+    padding:0px 2.5em;
+
+    // iphone 6 portrait
+    @media only screen
+    and (min-width : 355px)
+    and (max-width : 667px)
+    and (orientation : portrait) {
+      padding:0em .5em;
+    }
+  }
+  .time_panel_intro{
+    font-size: 2em;
+  }
+  .time_panel_header{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+  }
+  .go_tour_infobar{
+    position: absolute;
+    bottom:0px;
+    width:100%;
+    height:20%;
+    background-color:rgb(226,226,226);
+    .infobar_row{
+      height:100%;
+      margin:0px;
+      .go_tour_infotext{
+        .date,.start,.end,.modal_listing_address{
+          text-align: center;
+          display: flex;
+          flex-direction: column;
+          justify-content: space-around;
+          padding-right:2em;
+          @media only screen
+          and (min-width : 355px)
+          and (max-width : 667px)
+          and (orientation : portrait) {
+            // margin: 0px 7vw 0px 0px;
+            padding:0px;
+          }
+        }
+        .modal_listing_img{
+          display: flex;
+          flex-direction: column;
+          justify-content: space-around;
+          padding-right:2em;
+        }
+        .modal_listing_img img{
+          // flex-direction: row !important;
+          // margin-top:auto;
+          display: block;
+          border-radius: 5px;
+          width: 20vw;
+          // width:25vw;
+          // padding-right:2em;
+          // height:75%;
+        }
+        .date{
+          width:50%;
+          text-align: left;
+        }
+        .start,.end{
+          width:25%;
+          text-align: left;
+        }
+      }
+      .infobar_column{
+        height:inherit;
+        display:flex;
+        padding:0px;
+      }
+      .infobar_btn{
+        flex-direction: column;
+        justify-content: space-around;
+      }
+      // iphone 6 portrait
+      @media only screen
+      and (min-width : 355px)
+      and (max-width : 667px)
+      and (orientation : portrait) {
+        padding: 0px 1em;
+        font-size: 2.5vw;
+      }
+    }
+  }
+  @media(max-width:768px){
+    width:100%;
+    height:100%;
+    .booking_days{
+      li{
+        font-size:2vw;
+        width:15vw;
+        float:none;
+        margin-bottom:10px;
+      }
+    }
+
   }
 }
+
+
+
 .results-option-neigh{
   height:75px;
   font-size: 1.75em;
@@ -1588,10 +1898,11 @@ footer{
   height:10vh;
   width:15vw;
   text-align:center;
-  // height:100%;
+  box-shadow: 5px 5px 5px grey;
   padding:2vh;
   font-size:1.75em;
-  background-color: lightgrey;
+  // background-color: lightgrey;
+  background-color: #35CAFC;
   border:1px solid #000;
   cursor:pointer;
   display:inline-block;
@@ -1655,7 +1966,7 @@ footer{
 .listing-column2{
   padding:0px;
   @media(max-width: 765px){
-    height:90vh;
+    height:inherit;
   }
   // @media only screen
   // and (min-width : 375px)
@@ -1714,7 +2025,7 @@ footer{
     margin:10px 0px;
     textarea{
       width:100%;
-      height:25vh;
+      height:10vh;
       &::-webkit-input-placeholder{
         color:lightgrey;
       }
@@ -1763,6 +2074,21 @@ footer{
 .listing-form-header{
   // text-align: center;
   font-size:1.75em;
+  margin-top:3vw;
+  // ipad portrait
+  @media only screen
+    and (min-width : 768px)
+    and (max-width : 1024px)
+    and (orientation : portrait) {
+       margin-top:4vw;
+      /* STYLES GO HERE */
+    }
+  @media only screen
+  and (min-width : 375px)
+  and (max-width : 667px)
+  and (orientation : portrait) {
+    margin-top:8vw;
+  }
 }
 .listing-form-header-quote{
   font-size:.75em;
@@ -1795,10 +2121,6 @@ footer{
     width:48%;
     // margin:0px 5px;
   }
-}
-.go-tour{
-  height:25vh;
-  background-color:#fff;
 }
 .listing-photos{
   height:55vh;
@@ -1895,7 +2217,7 @@ footer{
 .listing-comments{
   font-size:.85em;
 }
-.arrow{
+.angle{
   color:#fff;
   font-size: 2.5em;
   position: absolute;
@@ -1905,11 +2227,11 @@ footer{
     color:#e1e4d1;
   }
 }
-.arrow-right{
+.angle-right{
   top:50%;
   right:10px;
 }
-.arrow-left{
+.angle-left{
   top:50%;
   left:10px;
 }
@@ -1967,7 +2289,7 @@ footer{
   height:100%;
   width: 100%;
   z-index: 50000;
-  img{
+  .showing-modal-image{
     position: absolute;
     z-index: 100000000;
     width: 80vw;
@@ -2093,6 +2415,7 @@ $specs-time:.35s;
   .specs-1,.specs-2{
     opacity:0;
     transition-property: opacity;
+    margin-bottom:0px;
     transition:opacity $specs-time ease-in-out;
   }
   // ipad portrait
@@ -2190,4 +2513,19 @@ $specs-time:.35s;
 .required:-ms-input-placeholder:after {
     content: " *";
     color: red;
+}
+.booking-modal-image{
+  // height:5vw !important;
+  // width:2vw;
+  // height:2vw;
+}
+.close_btn{
+  position: absolute;
+  right:2vw;
+  z-index: 40000;
+  top:2vw;
+  border:1px solid lightgrey;
+  padding:2px;
+  color:grey;
+  cursor: pointer;
 }

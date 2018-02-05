@@ -1,0 +1,191 @@
+.go-tour{
+  // height:20vh;
+  margin:5px 5px 5px 5px;
+  text-align: center;
+
+}
+
+.go-tour-wrapper{
+  display: inline-block;
+  height:inherit;
+  width:80%;
+  position: relative;
+}
+.picked{
+  background-color:rgb(245,245,245) !important;
+  border:2px solid #000 !important;
+
+  // iphone 6 portrait
+  @media only screen
+  and (min-width : 355px)
+  and (max-width : 667px)
+  and (orientation : portrait) {
+    border:1px solid #000 !important;
+  }
+}
+.go-tour{
+  .fa{
+    font-size: 2.5em;
+    position: absolute;
+    z-index: 10;
+    color:gray;
+    top:40%;
+    // height:100%;
+    // background-color:rgba(55,55,55,.5);
+    cursor: pointer;
+    &:hover{
+      color:gray;
+      color:rgb(224,224,224);
+    }
+  }
+  .fa-angle-left{
+    left:-10%;
+  }
+  .fa-angle-right{
+    right:-10%;
+  }
+  .arrow_left_modal_times,.arrow_right_modal_times{
+    top:28%;
+    font-size:4em;
+
+    color:#cac9c9;
+    // iphone 6 portrait
+    @media only screen
+    and (min-width : 355px)
+    and (max-width : 667px)
+    and (orientation : portrait) {
+      top:20%;
+      font-size: 3em;
+    }
+  }
+  .arrow_modal_days{
+    top:25%;
+    font-size:4em;
+
+    color:#cac9c9;
+    // iphone 6 portrait
+    @media only screen
+    and (min-width : 355px)
+    and (max-width : 667px)
+    and (orientation : portrait) {
+      top: 25%;
+      font-size: 3em;
+    }
+  }
+  .btn-primary{
+    width:100%;
+    position: absolute;
+    left:0px;
+    bottom:-2em;
+  }
+  @media only screen and (min-device-width: 320px)
+  and (max-device-height: 568px)
+  and (orientation : landscape)
+  and (-webkit-device-pixel-ratio: 2){
+    height:40vh;
+  /* Styles */
+  }
+}
+
+
+.go-tour-title{
+  font-size: 1.5em;
+}
+.slider{
+  position: relative;
+  overflow-x: hidden;
+  &::-webkit-scrollbar {
+    width: 0px;  /* remove scrollbar space */
+    background: transparent;  /* optional: just make scrollbar invisible */
+}
+  /* optional: show position indicator in red */
+  &::-webkit-scrollbar-thumb {
+      background: transparent;
+  }
+  height:inherit;
+    .slider-contents{
+      padding-bottom:10px;
+    }
+    .modal-slider-contents{
+      white-space: nowrap;
+      overflow: auto;
+      margin:1em 0em;
+      li{
+        display: table-cell;
+      }
+      // flex-wrap: nowrap;
+    }
+    .slider-contents,.modal-slider-contents{
+      list-style-type: none;
+      overflow-x: hidden;
+      padding-left: 0px;
+      li{
+        height:inherit !important;
+        // height:80%;
+        float:left;
+        .slider-time{
+          font-size:2vw;
+          // height:8vw !important;
+          // margin:0px !important;
+          border-radius: 0px !important;
+          @media(max-width:960px){
+            font-size:1.5vw;
+          }
+          // iphone 6 portrait
+          @media only screen
+          and (min-width : 355px)
+          and (max-width : 667px)
+          and (orientation : portrait) {
+            height:5vh;
+            margin:0px !important;
+            font-size:.75em;
+          }
+        }
+        .slider-item{
+          border-radius:5px;
+          margin:5px 10px 5px 5px;
+          border:1px solid #000;
+          background-color:lightgrey;
+        }
+        .modal-slider-item{
+          margin:5px 10px 5px 5px;
+          border-radius:0px !important;
+          color:rgb(114,114,114);
+          border:1px solid rgb(153,153,153);
+          // iphone 6 portrait
+          @media only screen
+          and (min-width : 355px)
+          and (max-width : 667px)
+          and (orientation : portrait) {
+            margin:0%;
+          }
+        }
+        .slider-item, .modal-slider-item{
+          display: flex;
+          padding:1.25em 0em;
+          flex-direction: column;
+          justify-content: space-around;
+          height:95%;
+          cursor: pointer;
+
+          &:hover{
+            background-color:rgb(245,245,245);
+            // color:#fff;
+          }
+          div{
+            font-family: 'apercu-regular',sans-serif;
+            &:nth-child(1){
+              font-size:.75em;
+            }
+            &:nth-child(2){
+              font-size:2em;
+              font-weight: 400;
+            }
+            &:nth-child(3){
+              font-size:.75em;
+            }
+          }
+        }
+      }
+    }
+  }

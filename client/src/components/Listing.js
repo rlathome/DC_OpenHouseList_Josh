@@ -1,11 +1,21 @@
 import React, { Component } from 'react';
 import ListingMap from './ListingMap';
+import {findDOMNode} from 'react-dom';
 import Header from './Header';
 import axios from 'axios';
 import { hashHistory } from 'react-router';
 import currency from 'currency-formatter';
+import Slider from './Slider';
 import $ from 'jquery';
 import moment from 'moment';
+let myFunctions = require('./js/Functions.js');
+
+let Functions = new myFunctions();
+
+let myScroller = require('./js/PhotoScroll.js');
+let Scroller = new myScroller();
+
+// import { Swipe } from '../Swipe/swipe.js';
 // let apiKey = (process.env.REACT_APP_STATUS == 'development') ? "http://localhost:8080" : "http://vast-shore-14133.herokuapp.com";
 
 // let apiKey = "http://localhost:8080";
@@ -14,19 +24,32 @@ let apiKey="http://www.dcopenhouselist.com";
 
 // let apiKey="https://dcopenhouselist.herokuapp.com";
 
-console.log('listingjs env: ',process.env.REACT_APP_STATUS);
+// console.log('listingjs env: ',process.env.REACT_APP_STATUS);
+form_page: 'start','options','about','finished'
 
 class Listing extends Component{
   constructor(props){
     super(props);
     this.state={
+      testmsg:'',
+      selected_option:'',
       listing:'',
       showing:'',
+      form_page:'start',
+      form_moved:false,
+      booking_tour:false,
+      next_ok:false,
       thumb_photos:[],
       big_photos:[],
       showing_index:0,
       showing_modal:false,
       day:'',
+      day_picked:'-',
+      booking_day:'',
+      day_short:'',
+      time:'-',
+      end:'-',
+      user_choice:'',
       submitted_email:false,
       inapp:false,
       autoscroll:true,
@@ -36,7 +59,6 @@ class Listing extends Component{
     }
   }
   componentWillMount(){
-
     this.getAllAgents();
     let mls=(this.props.params) ? this.props.params.mls : '';
     let day=(this.props.params) ? this.props.params.day : '';
@@ -50,12 +72,12 @@ class Listing extends Component{
       });
     }
     window.scrollTo(0,0);
-        // console.log('axios: ',this.props.listing);
+        // // console.log('axios: ',this.props.listing);
         // let listing = this.props.listing
     if(mls){
       axios.get(apiKey + '/info/listing/'+mls).then(
       (listing)=>{
-        console.log('listing axios: ',listing);
+        // console.log('listing axios: ',listing);
         listing = (listing.data.results) ? listing.data.results[0] : '';
         let showing = (listing) ? listing.image_urls.all_big[0] : '';
         let showing_index = 0;
@@ -71,7 +93,7 @@ class Listing extends Component{
         )
         let index=-1;
         let thumb_photos = (listing) ? listing.image_urls.all_thumb.map((pic)=>{
-          // console.log('thumb pic: ',pic);
+          // // console.log('thumb pic: ',pic);
           let style = {
             backgroundImage:'url('+pic+')',
             backgroundPosition:'center',
@@ -104,192 +126,47 @@ class Listing extends Component{
     }
   }
 
+componentDidMount(){
+  let id2='#'+this.state.showing_index;
+  $(id2).addClass('thumb-viewing');
+  setTimeout(()=>{
+    $('.listing-specs').css('width','100%');
+    $('.listing-specs div').css('opacity','1');
+  },10);
+
+}
+//
+// componentDidUpdate(){
+//
+// }
+
   getAllAgents(){
     let url=apiKey+"/info/getallagents";
-    axios.get(url).then((response)=>{
-      console.log('axios agents: ',response);
-      let agents = response.data;
 
-      let agentinfo = agents.map((agent)=>{
-        return {
-          email:agent.email,
-          name:agent.name,
-          headshot_url:agent.headshot_url,
-          id:agent.id,
-          phone:agent.phone
-        }
-      });
-      let agentindex = Math.random();
-      agentindex = agentindex*agentinfo.length;
-      agentindex = Math.floor(agentindex);
-      let agent = agentinfo[agentindex];
-      console.log('agent: ',agent);
-      let agent_email=agent.email;
-
-      this.setState({
-        agent,
-        agent_email
-      });
-    }).catch((err)=>{
-      console.log('err - ',err);
-    });
-
+    Functions.getAllAgents(this,url);
 
   }
   scrollPhotos(index){
-      let photo=index || this.state.showing_index;
-      let photos = this.state.big_photos;
-      console.log('photo index: ',photo);
-      photo=parseInt(photo);
-      photo++;
-      if(photo===photos.length){
-        photo=0;
-      }
-      setTimeout(()=>{
-        if(this.state.autoscroll===true && this.state.showingpic==false){
-        console.log('incrementing: ',photo);
-          // $('.photo-container').css('opacity',0);
-          // $('.photo-container-day').css('opacity',1+' !important');
-          setTimeout(()=>{
-            this.setState({
-              showing_index:photo
-            });
-            // $('.photo-container').css('opacity',1);
-          let x = (photo !==0) ? this.scrollAlong(photo-1) : this.scrollAlong(photo);
-          if(x ===false){return;}
-          let newIndex = photo;
-          let id='#'+newIndex;
-          let id2= (photo !==0) ? '#'+(this.state.showing_index-1) : '#'+(this.state.thumb_photos.length-1);
-          $(id).addClass('thumb-viewing');
-          $(id2).removeClass('thumb-viewing');
-          this.scrollPhotos();
-
-        },500);
-        }else{
-          setTimeout(()=>{
-              this.scrollPhotos();
-          },5000);
-        }
-      },5000);
+    Functions.scrollPhotos(this,index);
   }
   scrollChecker(){
-    this.setState({
-      autoscroll:false,
-      showingpic:true
-    });
-    setTimeout(()=>{
-      this.setState({
-        showingpic:false
-      });
-      if(this.state.autoscroll===false){
-        this.setState({
-          autoscroll:true
-        });
-      }
-    },5000);
+    Scroller.scrollChecker(this);
+
   }
   showPic(e){
-    this.scrollChecker();
-    // e.preventDefault();
-    // console.log("showing: ",e.target.id);
-    let newIndex = e.target.id;
-    let id='#'+newIndex;
-    let id2='#'+this.state.showing_index;
-    $(id).addClass('thumb-viewing');
-    $(id2).removeClass('thumb-viewing');
+    Scroller.showPic(this,e);
 
-    this.setState({
-      showing_index:parseInt(e.target.id)
-    });
-    $('.photo-container').css('opacity',1);
-  }
-  componentDidMount(){
-    let id2='#'+this.state.showing_index;
-    $(id2).addClass('thumb-viewing');
-    setTimeout(()=>{
-      $('.listing-specs').css('width','100%');
-      $('.listing-specs div').css('opacity','1');
-    },10);
   }
   scrollAlong(index){
-    let idx = index || this.state.showing_index;
-    let pic = $('#'+idx);
-    let width = pic.width();
-    let off = pic.offset();
-    let scroller_width = $('.scroller').width();
-    let scroller_pos = $('.scroller').position();
-    if(!scroller_pos || !pic.position()){
-      return false;
-    }
-    let scroller_right_offset = scroller_pos.left+scroller_width;
-    let scroller_left_offset = scroller_pos.left;
-    let pic_offset_left = (off) ? off.left : 0;
-    let pic_abs_left = pic.position().left;
-    let num_pics = scroller_width/width;
+    Scroller.scrollAlong(this,index);
 
-    //SCROLL RIGHT:
-    if(pic_offset_left+width>scroller_right_offset-width){
-      console.log('passed! ',(pic_offset_left+width));
-      $('.scroller').scrollLeft(pic_abs_left-((num_pics-2)*width));
-    }
-    //SCROLL LEFT:
-    if(pic_offset_left-width<scroller_left_offset){
-      console.log('passed!');
-      $('.scroller').scrollLeft(pic_abs_left-width);
-    }
   }
   goRight(e){
-    e.preventDefault();
-    this.scrollChecker();
-    let index = this.state.showing_index;
-    let newIndex=index;
-    this.scrollAlong();
-    console.log('now on: ',newIndex);
-    if(index!==this.state.thumb_photos.length-1){
-      newIndex = this.state.showing_index+1;
-      console.log('navigating to: ',newIndex);
-      let id='#'+newIndex;
-      let id2='#'+(newIndex-1);
-      $(id).addClass('thumb-viewing');
-      $(id2).removeClass('thumb-viewing');
-    }else{
-      newIndex = 0;
-      console.log('navigating to: ',newIndex);
-      let id='#'+newIndex;
-      let id2='#'+(newIndex.length-1);
-      $(id).addClass('thumb-viewing');
-      $(id2).removeClass('thumb-viewing');
-    }
-    this.setState({
-      showing_index:newIndex
-    });
+    Scroller.goRight(this,e);
+
   }
   goLeft(e){
-    e.preventDefault();
-    this.scrollChecker();
-    let index = this.state.showing_index;
-    let newIndex=index;
-    console.log('now on: ',newIndex);
-    this.scrollAlong();
-    if(index!==0){
-      newIndex = this.state.showing_index-1;
-      console.log('navigating to: ',newIndex);
-      let id='#'+newIndex;
-      let id2='#'+(newIndex+1);
-      $(id).addClass('thumb-viewing');
-      $(id2).removeClass('thumb-viewing');
-    }
-    else{
-      newIndex = this.state.thumb_photos.length-1;
-      console.log('navigating to: ',newIndex);
-      let id='#'+newIndex;
-      let id2='#0';
-      $(id).addClass('thumb-viewing');
-      $(id2).removeClass('thumb-viewing');
-    }
-    this.setState({
-      showing_index:newIndex
-    });
+    Scroller.goLeft(this,e);
   }
   submitForm(e){
     e.preventDefault();
@@ -300,11 +177,11 @@ class Listing extends Component{
     let textarea = this.refs.textarea.value;
     let agent_email = this.state.agent_email;
     let mls = this.props.params.mls;
-    console.log('submitting: ',first,last,email,textarea);
+    // console.log('submitting: ',first,last,email,textarea);
     //FILTER FOR SCRIPTING ATTACKS:
     //CODE HERE
     if(this.refs.hidden.val !==undefined){
-      console.log('bot');
+      // console.log('bot');
       return;
     }
     if(first==='' || last==='' || email===''){
@@ -321,7 +198,7 @@ class Listing extends Component{
       textarea
     }
     axios.post(apiKey + '/info/submitform',data).then((response)=>{
-      console.log('successfully submitted',response);
+      // console.log('successfully submitted',response);
       if(response.data.message === "Queued. Thank you."){
 
         //show modal
@@ -344,7 +221,7 @@ class Listing extends Component{
         },2000);
       }
     }).catch((err)=>{
-      console.log('err - ',err);
+      // console.log('err - ',err);
     });
   }
   navigateBack(){
@@ -360,19 +237,232 @@ class Listing extends Component{
 
   //large view of listing photos:
   showing_modal(){
-    console.log('showing');
+    // console.log('showing');
     this.setState({showing_modal:true})
+    // Functions.disableScroll();
   }
   showing_modal_off(){
     this.setState({showing_modal:false})
+    Functions.enableScroll();
   }
   reload(){
     hashHistory.push('/');
   }
+  slideLeft(){
+    console.log('left')
+    let slide_len = $('.slider').width();
+    console.log(slide_len);
+    let pic_abs_left = $('.slider-contents').position().left;
+    console.log('abs left: ',pic_abs_left)
+    const amt = '-='+slide_len;
+    $('.slider').animate({ scrollLeft: amt},200);
+  }
+  slideRight(){
+    console.log('right')
+    let slide_len = $('.slider').width();
+    console.log(slide_len);
+    const amt = '+='+slide_len;
+    let pic_abs_left = $('.slider-contents').position().left;
+    let remaining = pic_abs_left+$('.slider-contents').width()-slide_len;
+    if(remaining>=slide_len){
+      $('.slider').animate({ scrollLeft: amt},200,()=>{
+        let pic_abs_left = $('.slider-contents').position().left;
+        let remaining = pic_abs_left+$('.slider-contents').width();
+        console.log('remaining: ',remaining,' slider-width: ',slide_len);
+      });
+    }else{
+      // remaining = pic_abs_left+$('.slider-contents').width()-slide_len+15;
+      console.log('not more');
+      remaining=remaining;
+      remaining = '+='+remaining;
+      $('.slider').animate({ scrollLeft: remaining},200);
+    }
+  }
+  pickDay(data){
+    let date = [];
+    date.push(data.day_short);
+    date.push(data.mo_short);
+    date.push(data.date);
+    console.log('touring: ',date.join(','));
+    this.setState({
+      day_picked:date.join(', '),
+      booking_day:data.booking_day,
+      day_short:data.day_short
+    });
+    let ep = '.'+data.day_abbr.toLowerCase();
+    $('.slider-item').removeClass('picked');
+    $(ep).addClass('picked');
+  }
+  pickModalDay(data){
+    let date = [];
+    date.push(data.day_short);
+    date.push(data.mo_short);
+    date.push(data.date);
+    console.log('touring: ',date.join(','));
+    this.setState({
+      day_picked:date.join(', '),
+      booking_day:data.booking_day,
+      day_short:data.day_short
+    });
+    if(this.state.time !== '-'){
+      this.setState({
+        next_ok:true
+      });
+    }
+    let ep = '.modal-slider-item.'+data.day_abbr.toLowerCase();
+    $('.modal-slider-item').removeClass('picked');
+    $(ep).addClass('picked');
+  }
+  pickTime(data){
+    // let ep = e.target.id;
+    let id = data.id;
+    let time = data.time;
+    this.setState({
+      time:time,
+      end:data.end
+    });
+    if(this.state.booking_day !== ''){
+      this.setState({
+        next_ok:true
+      });
+    }
+    console.log('the time: ',time);
+    console.log('ending: ',data)
+    id="#"+id;
+    console.log('ep: ',id)
+    $('.slider-time').removeClass('picked');
+    $(id).addClass('picked');
+  }
+  openScheduler(){
+    this.setState({
+      booking_tour:true
+    });
+    Functions.disableScroll();
+  }
+  closeScheduler(){
+    this.setState({
+      booking_tour:false,
+      day_picked:'-',
+      time:'-',
+      form_page:'start'
+    });
+    // let optionsbox = findDOMNode(this.refs.options_panel);
+    let formbox = findDOMNode(this.refs.form_panel);
+    // $(optionsbox).animate({right:'-100%'},10);
+    $(formbox).animate({right:'-100%'},10);
+    Functions.enableScroll();
+  }
+  animateLeft(e){
+    e.preventDefault();
+      let gobox = findDOMNode(this.refs.time_panel);
+      let optionsbox = findDOMNode(this.refs.options_panel);
+      let formbox = findDOMNode(this.refs.form_panel);
+    if(this.state.form_page==='start'){
+      $(gobox).animate({left:'-100%','opacity':'0'},200);
+      // $(optionsbox).animate({left:'0%','opacity':'1'},200);
+      $(formbox).animate({left:'0%'},200);
+      this.setState({
+        form_page:'form',
+        next_ok:false
+      });
+    // }else if(this.state.form_page==='options'){
+    //   $(optionsbox).animate({left:'-100%','opacity':'0'},200);
+    //   $(formbox).animate({left:'0%','opacity':'1'},200);
+    //   this.setState({
+    //     form_page:'form'
+    //   });
+    }else if(this.state.form_page==='form'){
+      let prev_data = {
+        day_picked:this.state.day_picked,
+        time:this.state.time
+        // user_choice:this.state.user_choice
+      }
+      console.log('previous data: ',prev_data);
+      let form_results = {
+        first : this.refs.form_first_name.value,
+        last : this.refs.form_last_name.value,
+        mobile : this.refs.form_phone.value,
+        email : this.refs.form_email.value,
+        comments : this.refs.form_comments.value,
+        with_agent_already : this.state.selected_option,
+        mls:this.props.params.mls
+      }
+      form_results = {
+        ...form_results,
+        ...prev_data
+      }
+      console.log('form data: ',form_results);
+      axios.post(apiKey + '/info/submitshowingform',form_results).then((response)=>{
+        console.log('successfully submitted',response);
+        if(response.data === "Queued. Thank you."){
+        // if(response.data.message === "Queued. Thank you."){
+
+          //show modal
+          this.setState({
+            submitted_email:true,
+            form_page:'start',
+            booking_tour:false
+          });
+
+          //enable scrolling:
+          Functions.enableScroll();
+          //hide modal
+          setTimeout(()=>{
+            this.setState({
+              submitted_email:false
+            });
+          },2000);
+        }
+      }).catch((err)=>{
+        console.log('submit err - ',err);
+      });
+    }
+
+    console.log('day: ',this.state.day_picked);
+    console.log('time: ',this.state.time);
+    this.setState({
+      form_moved:true
+    });
+  }
+  isFormFilled(){
+    var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+   const isEmail = re.test(String(this.refs.form_email.value).toLowerCase());
+    if(this.refs.form_first_name.value !=='' && this.refs.form_last_name.value !=='' && isEmail){
+      this.setState({
+        next_ok:true
+      });
+    }else{
+      this.setState({
+        next_ok:false
+      });
+    };
+  }
+  wantAgent(){
+    const agent_box = findDOMNode(this.refs.want_agent);
+    $('.optionsboxes').removeClass('picked');
+    $(agent_box).addClass('picked');
+    this.setState({
+      user_choice:'want_agent_help'
+    });
+  }
+  letMeIn(){
+    const let_me_in_box = findDOMNode(this.refs.just_let_me_in);
+    $('.optionsboxes').removeClass('picked');
+    $(let_me_in_box).addClass('picked');
+    this.setState({
+      user_choice:'let_me_in'
+    });
+  }
+  handleOptionChange(e){
+    this.setState({
+      selected_option:e.target.value
+    });
+  }
   render(){
+
     let showing=this.state.showing;
     let listing=this.state.listing;
-    // console.log('listing to display: ',listing);
+    // // console.log('listing to display: ',listing);
     let subdivision=(listing) ? listing.subdivision : '';
     let price = (listing) ? listing.list_price : '';
     subdivision=subdivision.toLowerCase();
@@ -380,13 +470,38 @@ class Listing extends Component{
     let showing_index = this.state.showing_index;
     let thumb_photos=this.state.thumb_photos;
     let big_photos=this.state.big_photos;
+    // const days_abbr=[
+    //   'Sun','Mon','Tues','Weds','Thurs','Fri','Sat'
+    // ];
+    const days_abbr=[
+      'SUNDAY','MONDAY','TUESDAY','WEDNESDAY','THURSDAY','FRIDAY','SATURDAY'
+    ];
+    let tdy = moment().day();
+    const this_week = [];
+    for(let i=0; i<=6; i++){
+      this_week.push(tdy);
+      if(tdy<6){
+        tdy++;
+      }else{
+        tdy=0;
+      }
+    }
+
+
+
+    // const slider_week = this_week.map((day)=>{
+    //   return(
+    //     <li><div className="slider-item">{days_abbr[day]}</div></li>
+    //   )
+    // });
+
 
     let is_vert = false;
     let pic_image = document.createElement('img');
     pic_image.src=big_photos[showing_index];
-    console.log('pic height: ',pic_image.height);
+    // console.log('pic height: ',pic_image.height);
     if(pic_image.height>pic_image.width){
-      console.log('vertical!!!');
+      // console.log('vertical!!!');
       is_vert = true;
     }
     let pic_size = (is_vert) ? 'contain' : 'cover';
@@ -407,23 +522,325 @@ class Listing extends Component{
     let days = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
     let dow = moment(event_start).day();
     dow = days[dow];
-    console.log('open house is on: ',dow);
+    // console.log('open house is on: ',dow);
     dow = (dow) ? 'Open '+dow : '';
     showing = (
       <div style={showing_image} className="photo-container">
         <div className="photo-container-day">{dow} {time} {time2}</div>
       </div>
     )
-    //FULLSCREEN IMAGES
-    let showing_modal = (this.state.showing_modal) ? (
-      <div className="showing-modal">
-          <div className="sm_opacity"></div>
-          <div onClick={this.goLeft.bind(this)} className="arrow arrow-left fa fa-arrow-left"></div>
-          <div onClick={this.goRight.bind(this)} className="arrow arrow-right fa fa-arrow-right"></div>
-          <img className="showing-modal-image image-responsive" src={big_photos[showing_index]} alt="listing"/>
-          <i className="glyphicon glyphicon-resize-small" onClick={this.showing_modal_off.bind(this)}></i>
+    // //MODAL SLIDER
+
+    let slider_week = [];
+    let modal_slider_week = [];
+    let booking_week = []
+    for(let i=0; i<7; i++){
+      let day = moment().add(24*i,'hour');
+      let day_abbr = day.format('dddd').toUpperCase();
+      let day_short = day.format('ddd');
+      let date = day.format('DD');
+      let mo = day.format('MMM').toUpperCase();
+      let mo_short = day.format('MMM');
+      const className = 'slider-item '+ day_abbr.toLowerCase();
+      const modalClassName = 'modal-slider-item '+day_abbr.toLowerCase();
+      const data = {
+        day_abbr,
+        date,
+        mo,
+        day_short,
+        mo_short,
+        booking_day:day.format('dddd').toLowerCase()
+      }
+      slider_week.push(
+          (
+            <li>
+              <div onClick={()=>this.pickDay(data)} className={className}>
+                <div>{day_abbr}</div>
+                <div>{date}</div>
+                <div>{mo}</div>
+              </div>
+            </li>
+        )
+      );
+
+      modal_slider_week.push(
+          (
+            <li>
+              <div onClick={()=>this.pickModalDay(data)} className={modalClassName}>
+                <div>{day_abbr}</div>
+                <div>{date}</div>
+                <div>{mo}</div>
+              </div>
+            </li>
+        )
+      );
+    }
+
+
+    const show_times = [
+      {
+        'start':'9:00 AM',
+        'end':'9:45 AM'
+      },
+      {
+        'start':'9:30 AM',
+        'end':'10:15 AM'
+      },
+      {
+        'start':'10:00 AM',
+        'end':'10:45 AM'
+      },
+      {
+        'start':'10:30 AM',
+        'end':'11:15 AM'
+      },
+      {
+        'start':'11:00 AM',
+        'end':'11:45 AM'
+      },
+      {
+        'start':'11:30 AM',
+        'end':'12:15 PM'
+      },
+      {
+        'start':'12:00 PM',
+        'end':'12:45 PM'
+      },
+      {
+        'start':'12:30 PM',
+        'end':'1:15 PM'
+      },
+      {
+        'start':'1:00 PM',
+        'end':'1:45 PM'
+      },
+      {
+        'start':'1:30 PM',
+        'end':'2:15 PM'
+      },
+      {
+        'start':'2:00 PM',
+        'end':'2:45 PM'
+      },
+      {
+        'start':'2:30 PM',
+        'end':'3:15 PM'
+      },
+      {
+        'start':'3:00 PM',
+        'end':'3:45 PM'
+      },
+      {
+        'start':'3:30 PM',
+        'end':'4:15 PM'
+      },
+      {
+        'start':'4:00 PM',
+        'end':'4:45 PM'
+      },
+      {
+        'start':'4:30 PM',
+        'end':'5:15 PM'
+      },
+      {
+        'start':'5:00 PM',
+        'end':'5:45 PM'
+      },
+      {
+        'start':'5:30 PM',
+        'end':'6:15 PM'
+      },
+      {
+        'start':'6:00 PM',
+        'end':'6:45 PM'
+      },
+      {
+        'start':'6:30 PM',
+        'end':'7:15 PM'
+      },
+      {
+        'start':'7:00 PM',
+        'end':'7:45 PM'
+      }
+    ];
+
+
+
+    let slide_time = 200;
+    const slider_times = show_times.map((time)=>{
+      // console.log('mapping time: ',time);
+      let end = time['end'];
+      time = time['start'];
+      const timeClass = time.split('').filter((obj)=>{
+        return (obj !== ' ' && obj !==':' && obj !=='A' && obj !=='P' && obj !=='M');
+      }).join('')+'hours';
+      // console.log('timeclass: ',timeClass);
+      const className='modal-slider-item slider-time '+timeClass;
+      const id='slide_time'+slide_time.toString();
+      slide_time++;
+      let data = {
+        'id':id,
+        'time':time,
+        'end':end
+      }
+      return (
+        <li>
+          <div ref={timeClass} onClick={()=>this.pickTime(data)} id={id} className = {className}>
+            <div>{time}</div>
+          </div>
+        </li>
+      );
+    });
+
+
+
+    const slider_basic_props={
+      'slideRight':this.slideRight,
+      'slideLeft':this.slideLeft,
+      'openScheduler':this.openScheduler.bind(this)
+    }
+    const day_slider_props = {
+      ...slider_basic_props,
+      'slider_contents':slider_week,
+      'call_to_action':true,
+      'slider_kind':'days',
+      'number_boxes':3,
+      'booking_day':this.state.booking_day
+    }
+    const day_modal_props = {
+      ...slider_basic_props,
+      'slider_contents':modal_slider_week,
+      'call_to_action':false,
+      'slider_kind':'modal-days',
+      'number_boxes':3,
+      'rounded':false,
+      'booking_day':this.state.booking_day
+    }
+    const time_modal_props = {
+      ...slider_basic_props,
+      'slider_contents':slider_times,
+      'call_to_action':false,
+      'rounded':false,
+      'slider_kind':'times',
+      'number_boxes':7,
+      'day_short':this.state.day_short,
+      'booking_day':this.state.booking_day
+    }
+    // const next_button = (this.state.day_picked !=='-' && this.state.time !=='-') ? (
+    const next_button = (this.state.next_ok ===true) ? (
+      <div onClick={this.animateLeft.bind(this)} className="btn-3d next_btn">Next</div>
+    ) : (
+      <div className="next_btn_pastel">Next</div>
+    )
+    const nav_buttons = (this.state.form_moved) ? (
+      <div className="infobar_nav_btns">
+        <div className="next_btn">Back</div>
+        {next_button}
       </div>
     ) : '';
+    const go_tour_modal = (this.state.booking_tour) ? (
+      <div className="showing-modal booking-modal">
+        <div className="sm_opacity">
+        </div>
+        <span ref="go_tour_panel" className="go_tour_panel">
+          <div className="close_btn" onClick = {this.closeScheduler.bind(this)}>Cancel</div>
+          <div ref="time_panel" className="time_panel">
+            {/* <h1>Pick A Time</h1> */}
+            <div className="time_panel_header">
+              <span className="time_panel_intro">Pick A Time </span>
+            </div>
+            <Slider title={''} {...day_modal_props}  />
+            <Slider title={''} {...time_modal_props} />
+          </div>
+          {/* <div ref="options_panel" className="options_panel">
+            <div className="options_main">
+              <div className="row">
+                <div className="col-xs-12">How can we help you on your tour?</div>
+                <div className="col-xs-6">
+                  <div ref="want_agent" onClick={this.wantAgent.bind(this)} className="optionsboxes">
+                    <div><div className="fa fa-user"></div></div>
+                    I'd like guidance from an RLAH agent.
+                  </div>
+                </div>
+                <div className="col-xs-6">
+                  <div ref="just_let_me_in" onClick={this.letMeIn.bind(this)} className="optionsboxes">
+                    <div><div className="fa fa-clock-o"></div></div>
+                    Just get me into the home.
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div> */}
+          <div ref="form_panel" className="form_panel">
+            <div className="form_main">
+              <div className="form_intro">Tell us a little bit about yourself.</div>
+              <div className="form_sub_intro">We will never share your information or spam you.</div>
+              <form className="showing_form row">
+                {/* <div className="showing_form_inputs col-xs-6">
+                  <div>First Name<input ref="form_first_name" placeholder="John"/></div>
+                  <div>Email<input ref="form_email" placeholder="example@example.com"/></div>
+                </div>
+                <div className="showing_form_inputs col-xs-6">
+                  <div>Last Name<input ref="form_last_name" placeholder="Doe"/></div>
+                  <div>Mobile Number<input ref="form_phone" placeholder="( ) -"/></div>
+                </div> */}
+                <div className="showing_form_inputs col-xs-12">
+                  <div onKeyUp={this.isFormFilled.bind(this)} className='col-xs-6 first'>First Name<input ref="form_first_name" placeholder="John"/></div>
+                  <div onKeyUp={this.isFormFilled.bind(this)} className="col-xs-6 second">Last Name<input ref="form_last_name" placeholder="Doe"/></div>
+                </div>
+                <div className="showing_form_inputs col-xs-12">
+                  <div onKeyUp={this.isFormFilled.bind(this)} className='col-xs-6 first'>Email<input ref="form_email" placeholder="example@example.com"/></div>
+                  <div className='col-xs-6 second'>Mobile Number<input ref="form_phone" placeholder="( ) -"/></div>
+                </div>
+                <div className="yes_no col-xs-12">
+                  <div>Are you currently working with a real estate agent to help you buy your home?</div>
+                  <div>
+                    <input onChange={this.handleOptionChange.bind(this)} type="radio" value='no' checked = {this.state.selected_option==='no'} id="radio_no" name="yes_no"/><label for="radio_no">No</label>
+                    <input onChange={this.handleOptionChange.bind(this)} type="radio" value='yes' checked = {this.state.selected_option==='yes'} id="radio_yes" name="yes_no"/><label for="radio_yes">Yes</label>
+                  </div>
+                  <div>Notes (optional)</div>
+                  <textarea ref="form_comments" placeholder="Anything else you'd like to know about this tour or your home search?"></textarea>
+                </div>
+              </form>
+            </div>
+          </div>
+          <div className="go_tour_infobar">
+            <div className="infobar_row row">
+              <div className="go_tour_infotext col-xs-8 infobar_column">
+                {/* <div className="modal_listing_img"> */}
+                  <span className="modal_listing_address">{listing.street_number+' '+listing.street_name+ ' '+listing.street_post_dir+ ' '}</span>
+                  <span className="modal_listing_img">
+                    <img className="booking-modal-image img-responsive" src={(listing.image_urls) ? listing.image_urls.all_thumb[0] : ''} alt="listing image"></img>
+                  </span>
+                {/* </div> */}
+                <div className="date">
+                  <div>
+                    <div>DATE</div>
+                    <div>{this.state.day_picked}</div>
+                  </div>
+                </div>
+                <div className="start">
+                  <div>
+                    <div>START</div>
+                    <div>{this.state.time}</div>
+                  </div>
+                </div>
+                <div className="end">
+                  <div>
+                    <div>END</div>
+                    <div>{this.state.end}</div>
+                  </div>
+                </div>
+              </div>
+              <div className="col-xs-4 infobar_column infobar_btn">
+                {next_button}
+              </div>
+            </div>
+          </div>
+        </span>
+      </div>
+    ) : '';
+
 
     let comments = (listing) ? listing.internet_remarks : '';
     let listing_bedrooms = (listing) ? listing.num_bedrooms : '';
@@ -459,7 +876,7 @@ class Listing extends Component{
       case 'Southwest':
       dir = 'SW';
       break;
-      case 'Souteast':
+      case 'Southeast':
       dir = 'SE';
       break;
       case 'Northeast':
@@ -496,6 +913,17 @@ class Listing extends Component{
       </div>
     ) : '';
 
+    //FULLSCREEN IMAGES
+    let showing_modal = (this.state.showing_modal) ? (
+      <div className="showing-modal">
+          <div className="sm_opacity"></div>
+          <div onClick={this.goLeft.bind(this)} className="arrow arrow-left fa fa-arrow-left"></div>
+          <div onClick={this.goRight.bind(this)} className="arrow arrow-right fa fa-arrow-right"></div>
+          <img className="showing-modal-image image-responsive" src={big_photos[showing_index]} alt="listing"/>
+          <i className="glyphicon glyphicon-resize-small" onClick={this.showing_modal_off.bind(this)}></i>
+      </div>
+    ) : '';
+
     let agent = (this.state.agent) ? this.state.agent : '';
 
     let listing_agent_column = (agent) ? (
@@ -519,6 +947,7 @@ class Listing extends Component{
       <div className="wrapper listing-page">
         {showing_modal}
         {submit_modal}
+        {go_tour_modal}
         <div className="listing-header row rounded">
           <div className="listing-address">
             { st_address }
@@ -542,8 +971,8 @@ class Listing extends Component{
                     </div>
                     {/* <img src={this.state.showing} alt="listing photo" /> */}
                     {showing}
-                    <div onClick={this.goLeft.bind(this)} className="arrow arrow-left fa fa-arrow-left"></div>
-                    <div onClick={this.goRight.bind(this)} className="arrow arrow-right fa fa-arrow-right"></div>
+                    <div onClick={this.goLeft.bind(this)} className="angle angle-left fa fa-angle-left"></div>
+                    <div onClick={this.goRight.bind(this)} className="angle angle-right fa fa-angle-right"></div>
                   </div>
                   <div className="scroller">
                     <div className="photo-carousel">
@@ -581,26 +1010,49 @@ class Listing extends Component{
                 </div>
                 <div className="listing-form-column row">
                   <div className="listing-form col-lg-8">
+                    {/* <div className="go-tour">
+                      <div className="go-tour-wrapper">
+                        <div className="go-tour-title">Go Tour This Home</div>
+                        <span onClick={this.slideLeft.bind(this)} className="fa fa-angle-left"></span>
+                        <div className="slider onPage">
+                          <ul className="slider-contents">
+                            {slider_week}
+                          </ul>
+                        </div>
+                        <span onClick={this.slideRight.bind(this)} className="fa fa-angle-right"></span>
+                        <div onClick={()=>this.openScheduler()} className="btn btn-primary">Schedule Showing</div>
+                      </div>
+
+
+                    </div> */}
+                    <Slider title={'Go Tour This Property'} {...day_slider_props}  />
                     <div className="listing-form-header row">
                       <div className="col-xs-8">
                         Ask a Question
                         <div className="listing-form-header-quote">"We'll respond quickly!"</div>
                       </div>
                     </div>
-                    <form className="form form-default" onSubmit={this.submitForm.bind(this)}>
-                      <div className="form-column">
-                        <input className="form-control required" ref="first_name" placeholder="First Name"/>
-                        <input className="form-control required" ref="last_name" placeholder="Last Name"/>
-                      </div>
-                      <div className="form-column">
-                        <input className="form-control required" ref="email" placeholder="E-mail"/>
-                        <input className="form-control" ref="phone" placeholder="Phone"/>
-                      </div>
-                      <textarea className="form-control" ref="textarea" placeholder = "What can we do for you?"/>
-                      <input ref="hidden" className="hidden" />
-                      <input className="btn btn-primary" type="submit" value="Submit"/>
-                      <input className="btn btn-secondary" type="submit" value="Go Tour"/>
-                    </form>
+                    <div className="listing-form-wrapper">
+                      <form className="form form-default listing-form-inputs" onSubmit={this.submitForm.bind(this)}>
+                        <div className="basic-form">
+                          <div className="form-column">
+                            <input className="form-control required" ref="first_name" placeholder="First Name"/>
+                            <input className="form-control required" ref="last_name" placeholder="Last Name"/>
+                          </div>
+                          <div className="form-column">
+                            <input className="form-control required" ref="email" placeholder="E-mail"/>
+                            <input className="form-control" ref="phone" placeholder="Phone"/>
+                          </div>
+                          <textarea className="form-control" ref="textarea" placeholder = "What can we do for you?"/>
+                        </div>
+                        <input ref="hidden" className="hidden" />
+                        <input className="btn btn-primary" type="submit" value="Submit"/>
+                        {/* <input className="btn btn-secondary" type="submit" value="Go Tour"/> */}
+                      </form>
+                      {/* <div className="go-tour-form">
+                        <textarea className="form-control" ref="textarea" placeholder = "What can we do for you?"/>
+                      </div> */}
+                    </div>
                   </div>
                   <div className="listing-agent-photo col-lg-4">
                     { listing_agent_column }
