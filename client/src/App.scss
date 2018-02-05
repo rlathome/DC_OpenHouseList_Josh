@@ -1092,6 +1092,14 @@ footer{
     justify-content: space-around;
     text-align:center;
     margin:auto;
+    // iphone 6 portrait
+    @media only screen
+    and (min-width : 355px)
+    and (max-width : 667px)
+    and (orientation : portrait) {
+      width:60%;
+      margin-right:0px;
+    }
   }
   .next_btn{
     // background-color:rgb(200,32,33);
@@ -1116,7 +1124,7 @@ footer{
     }
   }
   .options_panel{
-    right:100%;
+    right:-100%;
     // opacity:0;
     display:flex;
     justify-content: center;
@@ -1130,6 +1138,16 @@ footer{
         text-align: center;
         font-size: 2.5vw;
         margin-bottom:1.25vw;
+        @media only screen
+        and (min-width : 355px)
+        and (max-width : 667px)
+        and (orientation : portrait) {
+          font-size: 1.5em;
+          margin-bottom:5vw;
+        }
+      }
+      .col-xs-6{
+        padding:0px 5px;
       }
       .optionsboxes{
         border-radius: 5px;
@@ -1149,16 +1167,34 @@ footer{
           font-size:6.5vw;
           color: #35CAFC;
         }
+        @media only screen
+        and (min-width : 355px)
+        and (max-width : 667px)
+        and (orientation : portrait) {
+          height:40vw;
+        }
       }
     }
   }
   .form_panel{
-    right:200%;
+    right:-100%;
+    ::placeholder{
+      color:lightgrey;
+    }
+    @media(min-width:1100px){
+      top:1em;
+    }
     .form_main{
       width:65%;
       height:60%;
       margin:auto;
       text-align: center;
+      @media only screen
+      and (min-width : 355px)
+      and (max-width : 667px)
+      and (orientation : portrait) {
+        font-size: 3vw;
+      }
       .form_intro{
         font-size:2em;
       }
@@ -1166,6 +1202,13 @@ footer{
         font-size:1.5vw;
         color:gray;
         margin-bottom:1.5vw;
+        // iphone 6 portrait
+        @media only screen
+        and (min-width : 355px)
+        and (max-width : 667px)
+        and (orientation : portrait) {
+          font-size: 3vw;
+        }
       }
       .showing_form{
         background-color:lightgrey;
@@ -1210,6 +1253,14 @@ footer{
   }
   .time_panel,.infobar_row{
     padding:0px 2.5em;
+
+    // iphone 6 portrait
+    @media only screen
+    and (min-width : 355px)
+    and (max-width : 667px)
+    and (orientation : portrait) {
+      padding:0em .5em;
+    }
   }
   .time_panel_intro{
     font-size: 2em;
@@ -1229,12 +1280,35 @@ footer{
       height:100%;
       margin:0px;
       .go_tour_infotext{
-        .date,.start,.end{
+        .date,.start,.end,.modal_listing_address{
           text-align: center;
           display: flex;
           flex-direction: column;
           justify-content: space-around;
           padding-right:2em;
+          @media only screen
+          and (min-width : 355px)
+          and (max-width : 667px)
+          and (orientation : portrait) {
+            // margin: 0px 7vw 0px 0px;
+            padding:0px;
+          }
+        }
+        .modal_listing_img{
+          display: flex;
+          flex-direction: column;
+          justify-content: space-around;
+          padding-right:2em;
+        }
+        .modal_listing_img img{
+          // flex-direction: row !important;
+          // margin-top:auto;
+          display: block;
+          border-radius: 5px;
+          width: 20vw;
+          // width:25vw;
+          // padding-right:2em;
+          // height:75%;
         }
         .date{
           width:50%;
@@ -1254,11 +1328,19 @@ footer{
         flex-direction: column;
         justify-content: space-around;
       }
+      // iphone 6 portrait
+      @media only screen
+      and (min-width : 355px)
+      and (max-width : 667px)
+      and (orientation : portrait) {
+        padding: 0px 1em;
+        font-size: 2.5vw;
+      }
     }
   }
   @media(max-width:768px){
-    width:100vw;
-    height:100vh;
+    width:100%;
+    height:100%;
     .booking_days{
       li{
         font-size:2vw;
@@ -1992,6 +2074,21 @@ footer{
 .listing-form-header{
   // text-align: center;
   font-size:1.75em;
+  margin-top:3vw;
+  // ipad portrait
+  @media only screen
+    and (min-width : 768px)
+    and (max-width : 1024px)
+    and (orientation : portrait) {
+       margin-top:4vw;
+      /* STYLES GO HERE */
+    }
+  @media only screen
+  and (min-width : 375px)
+  and (max-width : 667px)
+  and (orientation : portrait) {
+    margin-top:8vw;
+  }
 }
 .listing-form-header-quote{
   font-size:.75em;
@@ -2192,7 +2289,7 @@ footer{
   height:100%;
   width: 100%;
   z-index: 50000;
-  img{
+  .showing-modal-image{
     position: absolute;
     z-index: 100000000;
     width: 80vw;
@@ -2418,7 +2515,17 @@ $specs-time:.35s;
     color: red;
 }
 .booking-modal-image{
-  width:15vw !important;
+  // height:5vw !important;
   // width:2vw;
   // height:2vw;
+}
+.close_btn{
+  position: absolute;
+  right:2vw;
+  z-index: 40000;
+  top:2vw;
+  border:1px solid lightgrey;
+  padding:2px;
+  color:grey;
+  cursor: pointer;
 }

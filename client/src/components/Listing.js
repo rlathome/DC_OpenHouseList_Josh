@@ -8,9 +8,13 @@ import currency from 'currency-formatter';
 import Slider from './Slider';
 import $ from 'jquery';
 import moment from 'moment';
-let myFunctions = require('./Functions.js');
+let myFunctions = require('./js/Functions.js');
 
 let Functions = new myFunctions();
+
+let myScroller = require('./js/PhotoScroll.js');
+let Scroller = new myScroller();
+
 // import { Swipe } from '../Swipe/swipe.js';
 // let apiKey = (process.env.REACT_APP_STATUS == 'development') ? "http://localhost:8080" : "http://vast-shore-14133.herokuapp.com";
 
@@ -27,12 +31,14 @@ class Listing extends Component{
   constructor(props){
     super(props);
     this.state={
+      testmsg:'',
       selected_option:'',
       listing:'',
       showing:'',
       form_page:'start',
       form_moved:false,
       booking_tour:false,
+      next_ok:false,
       thumb_photos:[],
       big_photos:[],
       showing_index:0,
@@ -127,6 +133,7 @@ componentDidMount(){
     $('.listing-specs').css('width','100%');
     $('.listing-specs div').css('opacity','1');
   },10);
+
 }
 //
 // componentDidUpdate(){
@@ -135,182 +142,31 @@ componentDidMount(){
 
   getAllAgents(){
     let url=apiKey+"/info/getallagents";
-    axios.get(url).then((response)=>{
-      // console.log('axios agents: ',response);
-      let agents = response.data;
 
-      let agentinfo = agents.map((agent)=>{
-        return {
-          email:agent.email,
-          name:agent.name,
-          headshot_url:agent.headshot_url,
-          id:agent.id,
-          phone:agent.phone
-        }
-      });
-      let agentindex = Math.random();
-      agentindex = agentindex*agentinfo.length;
-      agentindex = Math.floor(agentindex);
-      let agent = agentinfo[agentindex];
-      // console.log('agent: ',agent);
-      let agent_email=agent.email;
-
-      this.setState({
-        agent,
-        agent_email
-      });
-    }).catch((err)=>{
-      // console.log('err - ',err);
-    });
-
+    Functions.getAllAgents(this,url);
 
   }
   scrollPhotos(index){
-      let photo=index || this.state.showing_index;
-      let photos = this.state.big_photos;
-      // console.log('photo index: ',photo);
-      photo=parseInt(photo);
-      photo++;
-      if(photo===photos.length){
-        photo=0;
-      }
-      setTimeout(()=>{
-        if(this.state.autoscroll===true && this.state.showingpic==false){
-        // console.log('incrementing: ',photo);
-          // $('.photo-container').css('opacity',0);
-          // $('.photo-container-day').css('opacity',1+' !important');
-          setTimeout(()=>{
-            this.setState({
-              showing_index:photo
-            });
-            // $('.photo-container').css('opacity',1);
-          let x = (photo !==0) ? this.scrollAlong(photo-1) : this.scrollAlong(photo);
-          if(x ===false){return;}
-          let newIndex = photo;
-          let id='#'+newIndex;
-          let id2= (photo !==0) ? '#'+(this.state.showing_index-1) : '#'+(this.state.thumb_photos.length-1);
-          $(id).addClass('thumb-viewing');
-          $(id2).removeClass('thumb-viewing');
-          this.scrollPhotos();
-
-        },500);
-        }else{
-          setTimeout(()=>{
-              this.scrollPhotos();
-          },5000);
-        }
-      },5000);
+    Functions.scrollPhotos(this,index);
   }
   scrollChecker(){
-    this.setState({
-      autoscroll:false,
-      showingpic:true
-    });
-    setTimeout(()=>{
-      this.setState({
-        showingpic:false
-      });
-      if(this.state.autoscroll===false){
-        this.setState({
-          autoscroll:true
-        });
-      }
-    },5000);
+    Scroller.scrollChecker(this);
+
   }
   showPic(e){
-    this.scrollChecker();
-    // e.preventDefault();
-    // // console.log("showing: ",e.target.id);
-    let newIndex = e.target.id;
-    let id='#'+newIndex;
-    let id2='#'+this.state.showing_index;
-    $(id).addClass('thumb-viewing');
-    $(id2).removeClass('thumb-viewing');
+    Scroller.showPic(this,e);
 
-    this.setState({
-      showing_index:parseInt(e.target.id)
-    });
-    $('.photo-container').css('opacity',1);
   }
   scrollAlong(index){
-    let idx = index || this.state.showing_index;
-    let pic = $('#'+idx);
-    let width = pic.width();
-    let off = pic.offset();
-    let scroller_width = $('.scroller').width();
-    let scroller_pos = $('.scroller').position();
-    if(!scroller_pos || !pic.position()){
-      return false;
-    }
-    let scroller_right_offset = scroller_pos.left+scroller_width;
-    let scroller_left_offset = scroller_pos.left;
-    let pic_offset_left = (off) ? off.left : 0;
-    let pic_abs_left = pic.position().left;
-    let num_pics = scroller_width/width;
+    Scroller.scrollAlong(this,index);
 
-    //SCROLL RIGHT:
-    if(pic_offset_left+width>scroller_right_offset-width){
-      // console.log('passed! ',(pic_offset_left+width));
-      $('.scroller').scrollLeft(pic_abs_left-((num_pics-2)*width));
-    }
-    //SCROLL LEFT:
-    if(pic_offset_left-width<scroller_left_offset){
-      // console.log('passed!');
-      $('.scroller').scrollLeft(pic_abs_left-width);
-    }
   }
   goRight(e){
-    e.preventDefault();
-    this.scrollChecker();
-    let index = this.state.showing_index;
-    let newIndex=index;
-    this.scrollAlong();
-    // console.log('now on: ',newIndex);
-    if(index!==this.state.thumb_photos.length-1){
-      newIndex = this.state.showing_index+1;
-      // console.log('navigating to: ',newIndex);
-      let id='#'+newIndex;
-      let id2='#'+(newIndex-1);
-      $(id).addClass('thumb-viewing');
-      $(id2).removeClass('thumb-viewing');
-    }else{
-      newIndex = 0;
-      // console.log('navigating to: ',newIndex);
-      let id='#'+newIndex;
-      let id2='#'+(newIndex.length-1);
-      $(id).addClass('thumb-viewing');
-      $(id2).removeClass('thumb-viewing');
-    }
-    this.setState({
-      showing_index:newIndex
-    });
+    Scroller.goRight(this,e);
+
   }
   goLeft(e){
-    e.preventDefault();
-    this.scrollChecker();
-    let index = this.state.showing_index;
-    let newIndex=index;
-    // console.log('now on: ',newIndex);
-    this.scrollAlong();
-    if(index!==0){
-      newIndex = this.state.showing_index-1;
-      // console.log('navigating to: ',newIndex);
-      let id='#'+newIndex;
-      let id2='#'+(newIndex+1);
-      $(id).addClass('thumb-viewing');
-      $(id2).removeClass('thumb-viewing');
-    }
-    else{
-      newIndex = this.state.thumb_photos.length-1;
-      // console.log('navigating to: ',newIndex);
-      let id='#'+newIndex;
-      let id2='#0';
-      $(id).addClass('thumb-viewing');
-      $(id2).removeClass('thumb-viewing');
-    }
-    this.setState({
-      showing_index:newIndex
-    });
+    Scroller.goLeft(this,e);
   }
   submitForm(e){
     e.preventDefault();
@@ -448,6 +304,11 @@ componentDidMount(){
       booking_day:data.booking_day,
       day_short:data.day_short
     });
+    if(this.state.time !== '-'){
+      this.setState({
+        next_ok:true
+      });
+    }
     let ep = '.modal-slider-item.'+data.day_abbr.toLowerCase();
     $('.modal-slider-item').removeClass('picked');
     $(ep).addClass('picked');
@@ -460,6 +321,11 @@ componentDidMount(){
       time:time,
       end:data.end
     });
+    if(this.state.booking_day !== ''){
+      this.setState({
+        next_ok:true
+      });
+    }
     console.log('the time: ',time);
     console.log('ending: ',data)
     id="#"+id;
@@ -480,10 +346,10 @@ componentDidMount(){
       time:'-',
       form_page:'start'
     });
-    let optionsbox = findDOMNode(this.refs.options_panel);
+    // let optionsbox = findDOMNode(this.refs.options_panel);
     let formbox = findDOMNode(this.refs.form_panel);
-    $(optionsbox).animate({right:'-100%'},10);
-    $(formbox).animate({right:'-200%'},10);
+    // $(optionsbox).animate({right:'-100%'},10);
+    $(formbox).animate({right:'-100%'},10);
     Functions.enableScroll();
   }
   animateLeft(e){
@@ -493,22 +359,23 @@ componentDidMount(){
       let formbox = findDOMNode(this.refs.form_panel);
     if(this.state.form_page==='start'){
       $(gobox).animate({left:'-100%','opacity':'0'},200);
-      $(optionsbox).animate({left:'0%','opacity':'1'},200);
-      $(formbox).animate({left:'100%'},200);
+      // $(optionsbox).animate({left:'0%','opacity':'1'},200);
+      $(formbox).animate({left:'0%'},200);
       this.setState({
-        form_page:'options'
+        form_page:'form',
+        next_ok:false
       });
-    }else if(this.state.form_page==='options'){
-      $(optionsbox).animate({left:'-100%','opacity':'0'},200);
-      $(formbox).animate({left:'0%','opacity':'1'},200);
-      this.setState({
-        form_page:'form'
-      });
+    // }else if(this.state.form_page==='options'){
+    //   $(optionsbox).animate({left:'-100%','opacity':'0'},200);
+    //   $(formbox).animate({left:'0%','opacity':'1'},200);
+    //   this.setState({
+    //     form_page:'form'
+    //   });
     }else if(this.state.form_page==='form'){
       let prev_data = {
         day_picked:this.state.day_picked,
-        time:this.state.time,
-        user_choice:this.state.user_choice
+        time:this.state.time
+        // user_choice:this.state.user_choice
       }
       console.log('previous data: ',prev_data);
       let form_results = {
@@ -526,21 +393,19 @@ componentDidMount(){
       }
       console.log('form data: ',form_results);
       axios.post(apiKey + '/info/submitshowingform',form_results).then((response)=>{
-        // console.log('successfully submitted',response);
-        if(response.data.message === "Queued. Thank you."){
+        console.log('successfully submitted',response);
+        if(response.data === "Queued. Thank you."){
+        // if(response.data.message === "Queued. Thank you."){
 
           //show modal
           this.setState({
-            submitted_email:true
+            submitted_email:true,
+            form_page:'start',
+            booking_tour:false
           });
 
-          //clear form
-          // this.refs.first_name.value = '';
-          // this.refs.last_name.value = '';
-          // this.refs.email.value = '';
-          // this.refs.phone.value = '';
-          // this.refs.textarea.value = '';
-
+          //enable scrolling:
+          Functions.enableScroll();
           //hide modal
           setTimeout(()=>{
             this.setState({
@@ -549,7 +414,7 @@ componentDidMount(){
           },2000);
         }
       }).catch((err)=>{
-        // console.log('err - ',err);
+        console.log('submit err - ',err);
       });
     }
 
@@ -558,6 +423,19 @@ componentDidMount(){
     this.setState({
       form_moved:true
     });
+  }
+  isFormFilled(){
+    var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+   const isEmail = re.test(String(this.refs.form_email.value).toLowerCase());
+    if(this.refs.form_first_name.value !=='' && this.refs.form_last_name.value !=='' && isEmail){
+      this.setState({
+        next_ok:true
+      });
+    }else{
+      this.setState({
+        next_ok:false
+      });
+    };
   }
   wantAgent(){
     const agent_box = findDOMNode(this.refs.want_agent);
@@ -826,7 +704,8 @@ componentDidMount(){
       'slider_contents':slider_week,
       'call_to_action':true,
       'slider_kind':'days',
-      'number_boxes':3
+      'number_boxes':3,
+      'booking_day':this.state.booking_day
     }
     const day_modal_props = {
       ...slider_basic_props,
@@ -847,7 +726,8 @@ componentDidMount(){
       'day_short':this.state.day_short,
       'booking_day':this.state.booking_day
     }
-    const next_button = (this.state.day_picked !=='-' && this.state.time !=='-') ? (
+    // const next_button = (this.state.day_picked !=='-' && this.state.time !=='-') ? (
+    const next_button = (this.state.next_ok ===true) ? (
       <div onClick={this.animateLeft.bind(this)} className="btn-3d next_btn">Next</div>
     ) : (
       <div className="next_btn_pastel">Next</div>
@@ -863,17 +743,16 @@ componentDidMount(){
         <div className="sm_opacity">
         </div>
         <span ref="go_tour_panel" className="go_tour_panel">
-          <button onClick = {this.closeScheduler.bind(this)}>Close</button>
+          <div className="close_btn" onClick = {this.closeScheduler.bind(this)}>Cancel</div>
           <div ref="time_panel" className="time_panel">
             {/* <h1>Pick A Time</h1> */}
             <div className="time_panel_header">
               <span className="time_panel_intro">Pick A Time </span>
-              <img className="img-responsive" src={listing.image_urls.all_thumb} alt="listing image"></img>
             </div>
-            <Slider title={listing.street_number+' '+listing.street_name+ ' '+listing.street_post_dir} {...day_modal_props}  />
+            <Slider title={''} {...day_modal_props}  />
             <Slider title={''} {...time_modal_props} />
           </div>
-          <div ref="options_panel" className="options_panel">
+          {/* <div ref="options_panel" className="options_panel">
             <div className="options_main">
               <div className="row">
                 <div className="col-xs-12">How can we help you on your tour?</div>
@@ -891,7 +770,7 @@ componentDidMount(){
                 </div>
               </div>
             </div>
-          </div>
+          </div> */}
           <div ref="form_panel" className="form_panel">
             <div className="form_main">
               <div className="form_intro">Tell us a little bit about yourself.</div>
@@ -906,11 +785,11 @@ componentDidMount(){
                   <div>Mobile Number<input ref="form_phone" placeholder="( ) -"/></div>
                 </div> */}
                 <div className="showing_form_inputs col-xs-12">
-                  <div className='col-xs-6 first'>First Name<input ref="form_first_name" placeholder="John"/></div>
-                  <div className="col-xs-6 second">Last Name<input ref="form_last_name" placeholder="Doe"/></div>
+                  <div onKeyUp={this.isFormFilled.bind(this)} className='col-xs-6 first'>First Name<input ref="form_first_name" placeholder="John"/></div>
+                  <div onKeyUp={this.isFormFilled.bind(this)} className="col-xs-6 second">Last Name<input ref="form_last_name" placeholder="Doe"/></div>
                 </div>
                 <div className="showing_form_inputs col-xs-12">
-                  <div className='col-xs-6 first'>Email<input ref="form_email" placeholder="example@example.com"/></div>
+                  <div onKeyUp={this.isFormFilled.bind(this)} className='col-xs-6 first'>Email<input ref="form_email" placeholder="example@example.com"/></div>
                   <div className='col-xs-6 second'>Mobile Number<input ref="form_phone" placeholder="( ) -"/></div>
                 </div>
                 <div className="yes_no col-xs-12">
@@ -928,6 +807,12 @@ componentDidMount(){
           <div className="go_tour_infobar">
             <div className="infobar_row row">
               <div className="go_tour_infotext col-xs-8 infobar_column">
+                {/* <div className="modal_listing_img"> */}
+                  <span className="modal_listing_address">{listing.street_number+' '+listing.street_name+ ' '+listing.street_post_dir+ ' '}</span>
+                  <span className="modal_listing_img">
+                    <img className="booking-modal-image img-responsive" src={(listing.image_urls) ? listing.image_urls.all_thumb[0] : ''} alt="listing image"></img>
+                  </span>
+                {/* </div> */}
                 <div className="date">
                   <div>
                     <div>DATE</div>
@@ -1025,6 +910,17 @@ componentDidMount(){
           <div>We'll be in touch shortly!</div>
           <img src="../images/DC_open House_sm-10.svg" alt='rlah logo' />
         </div>
+      </div>
+    ) : '';
+
+    //FULLSCREEN IMAGES
+    let showing_modal = (this.state.showing_modal) ? (
+      <div className="showing-modal">
+          <div className="sm_opacity"></div>
+          <div onClick={this.goLeft.bind(this)} className="arrow arrow-left fa fa-arrow-left"></div>
+          <div onClick={this.goRight.bind(this)} className="arrow arrow-right fa fa-arrow-right"></div>
+          <img className="showing-modal-image image-responsive" src={big_photos[showing_index]} alt="listing"/>
+          <i className="glyphicon glyphicon-resize-small" onClick={this.showing_modal_off.bind(this)}></i>
       </div>
     ) : '';
 

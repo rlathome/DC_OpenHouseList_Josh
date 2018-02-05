@@ -250,9 +250,9 @@ router.post('/submitshowingform',function(req,res,next){
   let phone = form_data.mobile;
   let email = form_data.email;
   let with_agent_already = form_data.with_agent_already;
-  let day_picked = form_data.day_picked,
-  let time = form_data.time,
-  let user_choice = form_data.user_choice
+  let day_picked = form_data.day_picked;
+  let time = form_data.time;
+  // let user_choice = form_data.user_choice;
   //
   // let prev_data = {
   //   day_picked:this.state.day_picked,
@@ -281,15 +281,17 @@ router.post('/submitshowingform',function(req,res,next){
     subject,
     to,
     from:first+' '+last+'<'+email+'>',
+    with_agent_already,
+    // user_choice,
     body:comments,
-    phone,
-    mobile,
     mls,
+    phone,
     day_picked,
     time,
-    with_agent_already,
     html:'<div>Re: MLS# '+mls+'<br/>'+comments+'</div>'+'<div>'+phone+'</div>'+'<div>'+email+'</div>'
   });
+
+  // res.send('Queued. Thank you.');
 
   mail.build(function(mailBuildError, message){
     var dataToSend = {
@@ -303,7 +305,7 @@ router.post('/submitshowingform',function(req,res,next){
         }
         res.json(body);
     });
-});
+  });
 
 });
 
