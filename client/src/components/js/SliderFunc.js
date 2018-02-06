@@ -73,13 +73,13 @@ function sliderFunctions(){
       setTimeout(()=>{
         this.resizeSlider(slider,slider_contents,num_boxes);
       },100);
-      // this.late_afternoon_clear(comp);
+      this.remove_current_day(comp);
       // commands for same day:
     }else if (comp.props.slider_kind == 'times'){
       console.log('day changed to same day!')
       setTimeout(()=>{
         this.resetHours(comp);
-        // this.late_afternoon_clear(comp);
+        this.remove_current_day(comp);
       },50);
       this.resizeSlider(slider,slider_contents,num_boxes);
     }
@@ -126,24 +126,29 @@ function sliderFunctions(){
     }
   }
 
-  this.late_afternoon_clear = (comp) =>{
+  this.remove_current_day = (comp) =>{
+    comp.setState({
+      slider_contents:comp.props.slider_contents.slice(1,comp.props.slider_contents.length)
+    });
     let curr_hour = comp.state.curr_hour.format('HH');
     let withinRange = curr_hour >9 && curr_hour<15;
     let day_chosen = comp.props.day_short;
     let now = comp.state.curr_hour;
     let today = now.format('ddd');
     console.log('late aft clear ',day_chosen,' equals ',today, ' curr_hour: ',curr_hour);
-    if(!withinRange && comp.props.slider_kind =='times' && day_chosen==today){
-    // console.log('late aft curr_hour: ',comp.props.slider_kind,curr_hour);
-      console.log('erasing contents')
-      comp.setState({
-        late_afternoon:true
-      });
-    }else{
-      comp.setState({
-        late_afternoon:false
-      });
-    }
+    // if(!withinRange && comp.props.slider_kind !=='times' && day_chosen==today){
+    // // console.log('late aft curr_hour: ',comp.props.slider_kind,curr_hour);
+    //
+    //
+    //   console.log('erasing contents')
+    //   // comp.setState({
+    //   //   s
+    //   // });
+    // }else{
+    //   // comp.setState({
+    //   //   late_afternoon:false
+    //   // });
+    // }
   }
 
   this.scrollChosenDay = (comp) =>{
@@ -152,32 +157,37 @@ function sliderFunctions(){
     console.log('curr_hour: ',curr_hour);
     let withinRange = curr_hour >9 && curr_hour<15;
     if(booking_day && comp.props.slider_kind !=='times'){
-      let _booking_day = '.'+booking_day;
-      let $booking_day = $(_booking_day);
-      console.log('day picked in scrollChosenDay: ',booking_day);
-      $booking_day.addClass('picked');
-      const scrollPos = $booking_day.position().left;
-      console.log(booking_day,' is ',scrollPos)
-      let slider = ReactDOM.findDOMNode(comp.refs.slider);
-      $(slider).scrollLeft(scrollPos);
+      this.remove_current_day(comp);
+      setTimeout(()=>{
+        console.log('slicing off day')
+        let _booking_day = '.'+booking_day;
+        let $booking_day = $(_booking_day);
+        console.log('day picked in scrollChosenDay: ',booking_day);
+        $booking_day.addClass('picked');
+        const scrollPos = $booking_day.position().left;
+        console.log(booking_day,' is ',scrollPos)
+        let slider = ReactDOM.findDOMNode(comp.refs.slider);
+        $(slider).scrollLeft(scrollPos);
+      },50);
     }
     if(!withinRange && comp.props.slider_kind !=='times' && comp.props.slider_kind !=='modal-days'){
       console.log('not within range today, ',curr_hour)
       //Either set to following day or display all available times later in that day
       if(curr_hour>=1500){
+        this.remove_current_day(comp);
         //set the day to tomorrow:
-        booking_day = comp.state.curr_hour.add(24,'hour').format('dddd').toLowerCase();
-        console.log('greater than 1500',booking_day, ' ', comp.props.slider_kind);
-
-        let _booking_day = '.'+booking_day;
-        let $booking_day = $(_booking_day);
-        const scrollPos = $booking_day.position().left;
-        console.log(booking_day,' is ',scrollPos)
-        let slider = ReactDOM.findDOMNode(comp.refs.slider);
-        $(slider).scrollLeft(scrollPos);
-        comp.setState({
-          late_afternoon:true
-        });
+        // booking_day = comp.state.curr_hour.add(24,'hour').format('dddd').toLowerCase();
+        // console.log('greater than 1500',booking_day, ' ', comp.props.slider_kind);
+        //
+        // let _booking_day = '.'+booking_day;
+        // let $booking_day = $(_booking_day);
+        // const scrollPos = $booking_day.position().left;
+        // console.log(booking_day,' is ',scrollPos)
+        // let slider = ReactDOM.findDOMNode(comp.refs.slider);
+        // $(slider).scrollLeft(scrollPos);
+        // comp.setState({
+        //   late_afternoon:true
+        // });
       }else if(curr_hour<900){
         // display available times for today
         console.log('less than 900')
