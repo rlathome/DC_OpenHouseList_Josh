@@ -222,7 +222,7 @@ componentDidMount(){
         },2000);
       }
     }).catch((err)=>{
-      // console.log('err - ',err);
+      console.log('form submission error - ',err);
     });
   }
   navigateBack(){
@@ -341,7 +341,7 @@ componentDidMount(){
       console.log('form data: ',form_results);
       axios.post(apiKey + '/info/submitshowingform',form_results).then((response)=>{
         console.log('successfully submitted',response);
-        if(response.data === "Queued. Thank you."){
+        if(response.data.message === "Queued. Thank you."){
         // if(response.data.message === "Queued. Thank you."){
 
           //show modal
@@ -350,6 +350,7 @@ componentDidMount(){
             form_page:'start',
             booking_tour:false
           });
+
 
           //enable scrolling:
           Functions.enableScroll();
@@ -374,7 +375,12 @@ componentDidMount(){
   isFormFilled(){
     var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
    const isEmail = re.test(String(this.refs.form_email.value).toLowerCase());
-    if(this.refs.form_first_name.value !=='' && this.refs.form_last_name.value !=='' && isEmail){
+
+   const ready =
+   this.refs.form_first_name.value !=='' && this.refs.form_last_name.value !=='' && isEmail && this.refs.form_phone.value !=='' && (this.state.selected_option =='yes' || this.state.selected_option =='no');
+
+    if(ready){
+      console.log('ready to go')
       this.setState({
         next_ok:true
       });
@@ -404,6 +410,8 @@ componentDidMount(){
     this.setState({
       selected_option:e.target.value
     });
+
+    setTimeout(()=>{this.isFormFilled();},200);
   }
   render(){
 
@@ -673,12 +681,11 @@ componentDidMount(){
       'day_short':this.state.day_short,
       'booking_day':this.state.booking_day
     }
-    // const next_button = (this.state.day_picked !=='-' && this.state.time !=='-') ? (
     const next_button = (this.state.next_ok ===true) ? (
       <div onClick={this.animateLeft.bind(this)} className="btn-3d next_btn">Next</div>
     ) : (
       <div className="next_btn_pastel">Next</div>
-    )
+    );
     const nav_buttons = (this.state.form_moved) ? (
       <div className="infobar_nav_btns">
         <div className="next_btn">Back</div>
@@ -699,6 +706,9 @@ componentDidMount(){
             <Slider title={''} {...day_modal_props}  />
             <Slider title={''} {...time_modal_props} />
           </div>
+
+          {/* OPTIONS PANEL HAS BEEN OMITTED:  */}
+
           {/* <div ref="options_panel" className="options_panel">
             <div className="options_main">
               <div className="row">
@@ -718,26 +728,19 @@ componentDidMount(){
               </div>
             </div>
           </div> */}
+
           <div ref="form_panel" className="form_panel">
             <div className="form_main">
               <div className="form_intro">Tell us a little bit about yourself.</div>
               <div className="form_sub_intro">We will never share your information or spam you.</div>
               <form className="showing_form row">
-                {/* <div className="showing_form_inputs col-xs-6">
-                  <div>First Name<input ref="form_first_name" placeholder="John"/></div>
-                  <div>Email<input ref="form_email" placeholder="example@example.com"/></div>
-                </div>
-                <div className="showing_form_inputs col-xs-6">
-                  <div>Last Name<input ref="form_last_name" placeholder="Doe"/></div>
-                  <div>Mobile Number<input ref="form_phone" placeholder="( ) -"/></div>
-                </div> */}
                 <div className="showing_form_inputs col-xs-12">
                   <div onKeyUp={this.isFormFilled.bind(this)} className='col-xs-6 first'>First Name<input ref="form_first_name" placeholder="John"/></div>
                   <div onKeyUp={this.isFormFilled.bind(this)} className="col-xs-6 second">Last Name<input ref="form_last_name" placeholder="Doe"/></div>
                 </div>
                 <div className="showing_form_inputs col-xs-12">
                   <div onKeyUp={this.isFormFilled.bind(this)} className='col-xs-6 first'>Email<input ref="form_email" placeholder="example@example.com"/></div>
-                  <div className='col-xs-6 second'>Mobile Number<input ref="form_phone" placeholder="( ) -"/></div>
+                  <div onKeyUp={this.isFormFilled.bind(this)} className='col-xs-6 second'>Mobile Number<input ref="form_phone" placeholder="( ) -"/></div>
                 </div>
                 <div className="yes_no col-xs-12">
                   <div>Are you currently working with a real estate agent to help you buy your home?</div>
@@ -754,12 +757,10 @@ componentDidMount(){
           <div className="go_tour_infobar">
             <div className="infobar_row row">
               <div className="go_tour_infotext col-xs-8 infobar_column">
-                {/* <div className="modal_listing_img"> */}
                   <span className="modal_listing_address">{listing.street_number+' '+listing.street_name+ ' '+listing.street_post_dir+ ' '}</span>
                   <span className="modal_listing_img">
                     <img className="booking-modal-image img-responsive" src={(listing.image_urls) ? listing.image_urls.all_thumb[0] : ''} alt="listing image"></img>
                   </span>
-                {/* </div> */}
                 <div className="date">
                   <div>
                     <div>DATE</div>
@@ -874,7 +875,7 @@ componentDidMount(){
     let agent = (this.state.agent) ? this.state.agent : '';
 
     let mailto_email = 'mailto:'+agent.email;
-    
+
     let listing_agent_column = (agent) ? (
       <div className="row listing-agent-column">
         <div className="agent-photo-holder col-lg-12 col-md-6 col-sm-6 pull-right">
