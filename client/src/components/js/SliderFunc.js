@@ -88,13 +88,14 @@ function sliderFunctions(){
   this.resetHours= (comp) =>{
     let day_chosen = comp.props.day_short;
     let now = comp.state.curr_hour;
+    //now = moment().subtract(5,'hours');
     let today = now.format('ddd');
     // let curr_hour = moment().add(12,'hour').format('HH');
     let curr_hour = now.format('HH');
     console.log('curr_hour reset: ',curr_hour);
     let withinDayRange = curr_hour >9 && curr_hour<15;
     if(!withinDayRange){
-      console.log('not within range today')
+      console.log('not within range today -- ',curr_hour)
       //Either set to following day or display all available times later in that day
       return;
     }
@@ -151,9 +152,11 @@ function sliderFunctions(){
 
   this.scrollChosenDay = (comp) =>{
     let booking_day = comp.props.booking_day;
-    let curr_hour = comp.state.curr_hour.format('HH')+'00';
+    let curr_hour = comp.state.curr_hour;
+    // curr_hour = moment().subtract(5,'hours')
+    curr_hour = curr_hour.format('HH')+'00';
     console.log('curr_hour: ',curr_hour);
-    let withinRange = curr_hour >9 && curr_hour<15;
+    let withinRange = curr_hour >900 && curr_hour<1500;
     if(booking_day && comp.props.slider_kind !=='times'){
       setTimeout(()=>{
         console.log('slicing off day')
@@ -191,6 +194,7 @@ function sliderFunctions(){
         return;
       }
     }else{
+      console.log('resetting hours')
       this.resetHours(comp);
     }
   }
