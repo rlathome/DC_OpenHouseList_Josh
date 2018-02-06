@@ -9,8 +9,9 @@ import Slider from './Slider';
 import $ from 'jquery';
 import moment from 'moment';
 let myFunctions = require('./js/Functions.js');
-
 let Functions = new myFunctions();
+let myListingFunc = require('./js/ListingFuncs.js');
+let ListingFunc = new myListingFunc();
 
 let myScroller = require('./js/PhotoScroll.js');
 let Scroller = new myScroller();
@@ -278,61 +279,7 @@ componentDidMount(){
       $('.slider').animate({ scrollLeft: remaining},200);
     }
   }
-  pickDay(data){
-    let date = [];
-    date.push(data.day_short);
-    date.push(data.mo_short);
-    date.push(data.date);
-    console.log('touring: ',date.join(','));
-    this.setState({
-      day_picked:date.join(', '),
-      booking_day:data.booking_day,
-      day_short:data.day_short
-    });
-    let ep = '.'+data.day_abbr.toLowerCase();
-    $('.slider-item').removeClass('picked');
-    $(ep).addClass('picked');
-  }
-  pickModalDay(data){
-    let date = [];
-    date.push(data.day_short);
-    date.push(data.mo_short);
-    date.push(data.date);
-    console.log('touring: ',date.join(','));
-    this.setState({
-      day_picked:date.join(', '),
-      booking_day:data.booking_day,
-      day_short:data.day_short
-    });
-    if(this.state.time !== '-'){
-      this.setState({
-        next_ok:true
-      });
-    }
-    let ep = '.modal-slider-item.'+data.day_abbr.toLowerCase();
-    $('.modal-slider-item').removeClass('picked');
-    $(ep).addClass('picked');
-  }
-  pickTime(data){
-    // let ep = e.target.id;
-    let id = data.id;
-    let time = data.time;
-    this.setState({
-      time:time,
-      end:data.end
-    });
-    if(this.state.booking_day !== ''){
-      this.setState({
-        next_ok:true
-      });
-    }
-    console.log('the time: ',time);
-    console.log('ending: ',data)
-    id="#"+id;
-    console.log('ep: ',id)
-    $('.slider-time').removeClass('picked');
-    $(id).addClass('picked');
-  }
+
   openScheduler(){
     this.setState({
       booking_tour:true
@@ -554,7 +501,7 @@ componentDidMount(){
       slider_week.push(
           (
             <li>
-              <div onClick={()=>this.pickDay(data)} className={className}>
+              <div onClick={()=>ListingFunc.pickDay(this,data)} className={className}>
                 <div>{day_abbr}</div>
                 <div>{date}</div>
                 <div>{mo}</div>
@@ -566,7 +513,7 @@ componentDidMount(){
       modal_slider_week.push(
           (
             <li>
-              <div onClick={()=>this.pickModalDay(data)} className={modalClassName}>
+              <div onClick={()=>ListingFunc.pickModalDay(this,data)} className={modalClassName}>
                 <div>{day_abbr}</div>
                 <div>{date}</div>
                 <div>{mo}</div>
@@ -685,7 +632,7 @@ componentDidMount(){
       }
       return (
         <li>
-          <div ref={timeClass} onClick={()=>this.pickTime(data)} id={id} className = {className}>
+          <div ref={timeClass} onClick={()=>ListingFunc.pickTime(this,data)} id={id} className = {className}>
             <div>{time}</div>
           </div>
         </li>
@@ -743,7 +690,7 @@ componentDidMount(){
         <div className="sm_opacity">
         </div>
         <span ref="go_tour_panel" className="go_tour_panel">
-          <div className="close_btn" onClick = {this.closeScheduler.bind(this)}>Cancel</div>
+          <div className="close_btn fa fa-times-circle" onClick = {this.closeScheduler.bind(this)}></div>
           <div ref="time_panel" className="time_panel">
             {/* <h1>Pick A Time</h1> */}
             <div className="time_panel_header">
@@ -926,6 +873,8 @@ componentDidMount(){
 
     let agent = (this.state.agent) ? this.state.agent : '';
 
+    let mailto_email = 'mailto:'+agent.email;
+    
     let listing_agent_column = (agent) ? (
       <div className="row listing-agent-column">
         <div className="agent-photo-holder col-lg-12 col-md-6 col-sm-6 pull-right">
@@ -936,7 +885,7 @@ componentDidMount(){
           <div>11 Dupont Circle NW, Ste 650</div>
           <div>Washington, DC 20036</div>
           <div>Phone: {agent.phone}</div>
-          <div>Email: <a ref="agent_email" href={agent.email} alt='agent email'>{agent.email}</a></div>
+          <div>Email: <a ref="agent_email" href={mailto_email} alt='agent email'>{agent.email}</a></div>
         </div>
       </div>
     ) : '';

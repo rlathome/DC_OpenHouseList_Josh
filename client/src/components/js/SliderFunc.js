@@ -1,10 +1,48 @@
-// import {findDOMNode} from 'react-dom';
 var ReactDOM = require('react-dom');
 var React = require('react');
 var moment = require('moment');
 var $ = require('jquery');
 
 function sliderFunctions(){
+
+  this.slideLeft = (comp) =>{
+    console.log('left')
+    let slider = ReactDOM.findDOMNode(comp.refs.slider);
+    let slider_contents = ReactDOM.findDOMNode(comp.refs.slider_contents);
+    let slide_len = $(slider).width();
+    console.log(slide_len);
+    let pic_abs_left = $(slider_contents).position().left;
+
+    console.log('abs left: ',pic_abs_left)
+    const amt = '-='+slide_len;
+    $(slider).animate({ scrollLeft: amt},200);
+  }
+
+  this.slideRight = (comp) =>{
+    console.log('right')
+    let slide_len = $('.slider').width();
+    console.log(slide_len);
+    const amt = '+='+slide_len;
+    // let pic_abs_left;
+    let slider_contents = ReactDOM.findDOMNode(comp.refs.slider_contents);
+    let slider = ReactDOM.findDOMNode(comp.refs.slider);
+    let pic_abs_left = $(slider_contents).position().left;
+
+    let remaining = pic_abs_left+$(slider_contents).width()-slide_len;
+    if(remaining>=slide_len){
+      $(slider).animate({ scrollLeft: amt},200,()=>{
+        // let pic_abs_left = $('.slider-contents').position().left;
+        let remaining = pic_abs_left+$(slider_contents).width();
+        console.log('remaining: ',remaining,' slider-width: ',slide_len);
+      });
+    }else{
+      // remaining = pic_abs_left+$('.slider-contents').width()-slide_len+15;
+      console.log('not more');
+      remaining=remaining;
+      remaining = '+='+remaining;
+      $(slider).animate({ scrollLeft: remaining},200);
+    }
+  }
 
   this.resizeSlider = (slider,slider_contents,num_boxes,comp) =>{
     console.log('resize slider props')
@@ -25,9 +63,31 @@ function sliderFunctions(){
 
   }
 
+  this.listenForChanges = (comp,slider,slider_contents,num_boxes) =>{
+    if(comp.props.slider_kind == 'times' && comp.props.day_short !== comp.state.curr_hour.format('ddd')){
+      // commands for different day:
+      console.log('day changed: ',comp.props.day_short, comp.state.curr_hour.format('ddd'))
+      comp.setState({
+        slider_contents:comp.props.slider_contents
+      });
+      setTimeout(()=>{
+        this.resizeSlider(slider,slider_contents,num_boxes);
+      },100);
+      this.late_afternoon_clear(comp);
+      // commands for same day:
+    }else if (comp.props.slider_kind == 'times'){
+      console.log('day changed to same day!')
+      setTimeout(()=>{
+        this.resetHours(comp);
+        this.late_afternoon_clear(comp);
+      },50);
+      this.resizeSlider(slider,slider_contents,num_boxes);
+    }
+  }
+
   //This function is only called if user picks today, so as to create a 4 hour time window:
 
-  this.resetHours=(comp)=>{
+  this.resetHours= (comp) =>{
     let day_chosen = comp.props.day_short;
     let now = comp.state.curr_hour;
     let today = now.format('ddd');
@@ -67,27 +127,26 @@ function sliderFunctions(){
   }
 
   this.late_afternoon_clear = (comp) =>{
-    let curr_hour = comp.state.curr_hour.format('HH')+'00';
+    let curr_hour = comp.state.curr_hour.format('HH');
     let withinRange = curr_hour >9 && curr_hour<15;
     let day_chosen = comp.props.day_short;
     let now = comp.state.curr_hour;
     let today = now.format('ddd');
+    console.log('late aft clear ',day_chosen,' equals ',today, ' curr_hour: ',curr_hour);
     if(!withinRange && comp.props.slider_kind =='times' && day_chosen==today){
-    console.log('late aft curr_hour: ',comp.props.slider_kind,curr_hour);
+    // console.log('late aft curr_hour: ',comp.props.slider_kind,curr_hour);
       console.log('erasing contents')
       comp.setState({
-        slider_contents:'',
         late_afternoon:true
       });
     }else{
       comp.setState({
-        late_afternoon:false,
-        slider_contents:comp.props.slider_contents
+        late_afternoon:false
       });
     }
   }
 
-  this.scrollChosenDay=(comp)=>{
+  this.scrollChosenDay = (comp) =>{
     let booking_day = comp.props.booking_day;
     let curr_hour = comp.state.curr_hour.format('HH')+'00';
     console.log('curr_hour: ',curr_hour);
@@ -95,14 +154,14 @@ function sliderFunctions(){
     if(booking_day && comp.props.slider_kind !=='times'){
       let _booking_day = '.'+booking_day;
       let $booking_day = $(_booking_day);
-      console.log('day picked: ',booking_day);
+      console.log('day picked in scrollChosenDay: ',booking_day);
       $booking_day.addClass('picked');
       const scrollPos = $booking_day.position().left;
       console.log(booking_day,' is ',scrollPos)
       let slider = ReactDOM.findDOMNode(comp.refs.slider);
       $(slider).scrollLeft(scrollPos);
     }
-    if(!withinRange && comp.props.slider_kind !=='times'){
+    if(!withinRange && comp.props.slider_kind !=='times' && comp.props.slider_kind !=='modal-days'){
       console.log('not within range today, ',curr_hour)
       //Either set to following day or display all available times later in that day
       if(curr_hour>=1500){

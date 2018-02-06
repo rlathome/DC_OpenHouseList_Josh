@@ -3003,7 +3003,7 @@ footer .logo-text {
   right: 2vw;
   z-index: 40000;
   top: 2vw;
-  border: 1px solid lightgrey;
+  font-size: 2em;
   padding: 2px;
   color: grey;
   cursor: pointer;

@@ -40,29 +40,7 @@ export default class Slider extends Component{
 
     // listen for if user changes day in modal, and if user switches to same day:
 
-    if(this.props.slider_kind == 'times' && this.props.day_short !== this.state.curr_hour.format('ddd')){
-      // commands for different day:
-      console.log('day changed: ',this.props.day_short, this.state.curr_hour.format('ddd'))
-      this.setState({
-        slider_contents:this.props.slider_contents
-      });
-      setTimeout(()=>{
-        Slide.resizeSlider(slider,slider_contents,num_boxes);;
-      },100);
-      // commands for same day:
-    }else if (this.props.slider_kind == 'times'){
-      console.log('day changed to same day!')
-      setTimeout(()=>{
-        Slide.resetHours(this);
-      },50);
-      Slide.resizeSlider(slider,slider_contents,num_boxes);
-    }
-
-    //SET SLIDER TO CORRECT DAY/TIME:
-    // let booking_day = this.props.booking_day;
-    // let curr_hour = this.state.curr_hour.format('HH')+'00';
-    // console.log('curr_hour: ',curr_hour);
-    // let withinRange = curr_hour >9 && curr_hour<15;
+    Slide.listenForChanges(this,slider,slider_contents,num_boxes);
 
     // scroll to chosen day and correct time:
     Slide.scrollChosenDay(this);
@@ -104,41 +82,10 @@ export default class Slider extends Component{
   }
 
   slideLeft(){
-    console.log('left')
-    let slider = findDOMNode(this.refs.slider);
-    let slider_contents = findDOMNode(this.refs.slider_contents);
-    let slide_len = $(slider).width();
-    console.log(slide_len);
-    let pic_abs_left = $(slider_contents).position().left;
-
-    console.log('abs left: ',pic_abs_left)
-    const amt = '-='+slide_len;
-    $(slider).animate({ scrollLeft: amt},200);
+    Slide.slideLeft(this);
   }
   slideRight(){
-    console.log('right')
-    let slide_len = $('.slider').width();
-    console.log(slide_len);
-    const amt = '+='+slide_len;
-    // let pic_abs_left;
-    let slider_contents = findDOMNode(this.refs.slider_contents);
-    let slider = findDOMNode(this.refs.slider);
-    let pic_abs_left = $(slider_contents).position().left;
-
-    let remaining = pic_abs_left+$(slider_contents).width()-slide_len;
-    if(remaining>=slide_len){
-      $(slider).animate({ scrollLeft: amt},200,()=>{
-        // let pic_abs_left = $('.slider-contents').position().left;
-        let remaining = pic_abs_left+$(slider_contents).width();
-        console.log('remaining: ',remaining,' slider-width: ',slide_len);
-      });
-    }else{
-      // remaining = pic_abs_left+$('.slider-contents').width()-slide_len+15;
-      console.log('not more');
-      remaining=remaining;
-      remaining = '+='+remaining;
-      $(slider).animate({ scrollLeft: remaining},200);
-    }
+    Slide.slideRight(this);
   }
 
   render(){
