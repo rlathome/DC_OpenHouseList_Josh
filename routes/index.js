@@ -288,7 +288,28 @@ router.post('/submitshowingform',function(req,res,next){
     phone,
     day_picked,
     time,
-    html:'<div>Re: MLS# '+mls+'<br/>'+comments+'</div>'+'<div>'+phone+'</div>'+'<div>'+email+'</div>'
+    html:'<div>Re: MLS# '+mls+'<br/>'
+    +'<div>'
+      +first+' '+last
+    +'</div>'
+    +'<div>'
+      +'With agent already: '+with_agent_already
+    +'</div>'
+    +'<div>'
+      +comments
+    +'</div>'
+    +'<div>'
+      +day_picked
+    +'</div>'
+    +'<div>'
+      +time
+    +'</div>'
+    +'<div>'
+      +phone
+    +'</div>'
+    +'<div>'
+      +email
+    +'</div>'
   });
 
   // res.send('Queued. Thank you.');
