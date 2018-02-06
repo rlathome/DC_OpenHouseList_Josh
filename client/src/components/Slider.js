@@ -13,15 +13,8 @@ export default class Slider extends Component{
     this.state={
       slider_contents:[],
       booking_day:'',
-      curr_hour:moment(),
-      late_afternoon:false
+      curr_hour:moment()
     }
-  }
-  componentWillMount(){
-    // let booking_day = (this.props.booking_day) ? this.props.booking_day : '';
-    // this.setState({
-    //   booking_day
-    // });
   }
 
   componentDidMount(){
@@ -44,8 +37,6 @@ export default class Slider extends Component{
 
     // scroll to chosen day and correct time:
     Slide.scrollChosenDay(this);
-
-
   }
 
 
@@ -64,15 +55,15 @@ export default class Slider extends Component{
       setTimeout(()=>{
         Slide.resizeSlider(slider,slider_contents,num_boxes);
       },100);
-      Slide.late_afternoon_clear(this);
+      // Slide.late_afternoon_clear(this);
       // commands for same day:
     }else if (this.props.slider_kind == 'times'){
       console.log('day changed to same day!')
       setTimeout(()=>{
         Slide.resetHours(this);
         Slide.resizeSlider(slider,slider_contents,num_boxes);
-        // setTimeout(()=>{Slide.late_afternoon_clear(this);},200)
-        Slide.late_afternoon_clear(this);
+        // setTimeout(()=>{// Slide.late_afternoon_clear(this);},200)
+        // Slide.late_afternoon_clear(this);
       },100);
     }
 

@@ -73,13 +73,13 @@ function sliderFunctions(){
       setTimeout(()=>{
         this.resizeSlider(slider,slider_contents,num_boxes);
       },100);
-      this.late_afternoon_clear(comp);
+      // this.late_afternoon_clear(comp);
       // commands for same day:
     }else if (comp.props.slider_kind == 'times'){
       console.log('day changed to same day!')
       setTimeout(()=>{
         this.resetHours(comp);
-        this.late_afternoon_clear(comp);
+        // this.late_afternoon_clear(comp);
       },50);
       this.resizeSlider(slider,slider_contents,num_boxes);
     }

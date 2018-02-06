@@ -26,13 +26,19 @@ function listingFunctions(){
       date.push(data.mo_short);
       date.push(data.date);
       console.log('touring: ',date.join(','));
-      if(comp.state.time !== '-' && comp.state.day_picked !=='-'){
+      if(comp.state.time == '-'){
         comp.setState({
           next_ok:false,
           time:'-',
           end:'-'
         });
-      }else{
+      }else if(comp.state.time !=='-' && comp.state.day !=='-'){
+        console.log('not ok for next: comp time = ',comp.state.time)
+        comp.setState({
+          next_ok:false
+        })
+      }else {
+        console.log('ok for next: comp time = ',comp.state.time)
         comp.setState({
           next_ok:true
         })
