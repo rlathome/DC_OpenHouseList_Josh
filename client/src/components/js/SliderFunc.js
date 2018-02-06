@@ -73,13 +73,11 @@ function sliderFunctions(){
       setTimeout(()=>{
         this.resizeSlider(slider,slider_contents,num_boxes);
       },100);
-      this.remove_current_day(comp);
       // commands for same day:
     }else if (comp.props.slider_kind == 'times'){
       console.log('day changed to same day!')
       setTimeout(()=>{
         this.resetHours(comp);
-        this.remove_current_day(comp);
       },50);
       this.resizeSlider(slider,slider_contents,num_boxes);
     }
@@ -157,7 +155,6 @@ function sliderFunctions(){
     console.log('curr_hour: ',curr_hour);
     let withinRange = curr_hour >9 && curr_hour<15;
     if(booking_day && comp.props.slider_kind !=='times'){
-      this.remove_current_day(comp);
       setTimeout(()=>{
         console.log('slicing off day')
         let _booking_day = '.'+booking_day;
@@ -170,7 +167,7 @@ function sliderFunctions(){
         $(slider).scrollLeft(scrollPos);
       },50);
     }
-    if(!withinRange && comp.props.slider_kind !=='times' && comp.props.slider_kind !=='modal-days'){
+    if(!withinRange && comp.props.slider_kind !=='times'){
       console.log('not within range today, ',curr_hour)
       //Either set to following day or display all available times later in that day
       if(curr_hour>=1500){
