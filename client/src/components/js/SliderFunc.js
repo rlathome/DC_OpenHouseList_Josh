@@ -87,13 +87,14 @@ function sliderFunctions(){
 
   this.resetHours= (comp) =>{
     let day_chosen = comp.props.day_short;
-    let now = comp.state.curr_hour;
+    let now = moment();
+    // let now = moment().add(12,'hours');
     //now = moment().subtract(5,'hours');
     let today = now.format('ddd');
     // let curr_hour = moment().add(12,'hour').format('HH');
-    let curr_hour = now.format('HH');
+    let curr_hour = now.format('H');
     console.log('curr_hour reset: ',curr_hour);
-    let withinDayRange = curr_hour >9 && curr_hour<15;
+    let withinDayRange = curr_hour<15;
     if(!withinDayRange){
       console.log('not within range today -- ',curr_hour)
       //Either set to following day or display all available times later in that day
@@ -104,7 +105,10 @@ function sliderFunctions(){
     let scrollClass;
     if(day_chosen === today){
       // create time window:
-      let time_window = now;
+      let time_window = moment();
+      if(curr_hour<10){
+        time_window = moment().hours(9);
+      }
       time_window.add(4,'hour');
       console.log('time_window: ',time_window.format('HH'));
       scrollClass = '.'+(moment(time_window,'hh').format('h')+'00').toString()+'hours';
@@ -116,7 +120,10 @@ function sliderFunctions(){
       console.log('our desired time is at ',comp.props.slider_contents, ' ',scrollIndex);
       if(scrollIndex !==0){
         console.log('changing contents')
-        const contents = comp.props.slider_contents.slice(scrollIndex,comp.props.slider_contents.length);
+        let contents = comp.props.slider_contents.slice(scrollIndex,comp.props.slider_contents.length);
+        const dead_contents = comp.props.dead_slider_contents.slice(0,scrollIndex);
+        //add line below when ready to create unavailable 'dead' time choices:
+        // contents = dead_contents.concat(contents);
         comp.setState({
           slider_contents: contents
         });
@@ -152,9 +159,9 @@ function sliderFunctions(){
 
   this.scrollChosenDay = (comp) =>{
     let booking_day = comp.props.booking_day;
-    let curr_hour = comp.state.curr_hour;
-    // curr_hour = moment().subtract(5,'hours')
-    curr_hour = curr_hour.format('HH')+'00';
+    let curr_hour = moment();
+    // let curr_hour = moment().add(12,'hours');
+    curr_hour = curr_hour.format('H')+'00';
     console.log('curr_hour: ',curr_hour);
     let withinRange = curr_hour >900 && curr_hour<1500;
     if(booking_day && comp.props.slider_kind !=='times'){

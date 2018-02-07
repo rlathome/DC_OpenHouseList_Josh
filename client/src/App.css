@@ -3007,3 +3007,13 @@ footer .logo-text {
   color: grey;
   cursor: pointer;
 }
+
+.dead {
+  border: 1px solid #e4e2e2 !important;
+  color: #e4e2e2 !important;
+  cursor: inherit !important;
+}
+
+.dead:hover {
+  background-color: #fff !important;
+}

@@ -648,6 +648,31 @@ componentDidMount(){
       );
     });
 
+    const dead_slider_times = show_times.map((time)=>{
+      // console.log('mapping time: ',time);
+      let end = time['end'];
+      time = time['start'];
+      const timeClass = time.split('').filter((obj)=>{
+        return (obj !== ' ' && obj !==':' && obj !=='A' && obj !=='P' && obj !=='M');
+      }).join('')+'hours';
+      // console.log('timeclass: ',timeClass);
+      const className='modal-slider-item slider-time dead '+timeClass;
+      const id='slide_time'+slide_time.toString();
+      slide_time++;
+      let data = {
+        'id':id,
+        'time':time,
+        'end':end
+      }
+      return (
+        <li>
+          <div ref={timeClass} id={id} className = {className}>
+            <div>{time}</div>
+          </div>
+        </li>
+      );
+    });
+
 
 
     const slider_basic_props={
@@ -675,6 +700,7 @@ componentDidMount(){
     const time_modal_props = {
       ...slider_basic_props,
       'slider_contents':slider_times,
+      'dead_slider_contents':dead_slider_times,
       'call_to_action':false,
       'rounded':false,
       'slider_kind':'times',
