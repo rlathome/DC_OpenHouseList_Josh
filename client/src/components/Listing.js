@@ -504,7 +504,8 @@ componentDidMount(){
         mo,
         day_short,
         mo_short,
-        booking_day:day.format('dddd').toLowerCase()
+        booking_day:day.format('dddd').toLowerCase(),
+        open_modal:true
       }
       slider_week.push(
           (
@@ -657,7 +658,7 @@ componentDidMount(){
     const day_slider_props = {
       ...slider_basic_props,
       'slider_contents':slider_week,
-      'call_to_action':true,
+      'call_to_action':false,
       'slider_kind':'days',
       'number_boxes':3,
       'booking_day':this.state.booking_day

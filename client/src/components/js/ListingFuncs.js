@@ -15,6 +15,9 @@ function listingFunctions(){
       booking_day:data.booking_day,
       day_short:data.day_short
     });
+    if(data.open_modal){
+      comp.openScheduler();
+    }
     let ep = '.'+data.day_abbr.toLowerCase();
     $('.slider-item').removeClass('picked');
     $(ep).addClass('picked');
