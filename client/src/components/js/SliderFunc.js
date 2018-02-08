@@ -1,6 +1,9 @@
 var ReactDOM = require('react-dom');
 var React = require('react');
 var moment = require('moment');
+var axios = require('axios');
+var myFunctions = require('./Functions.js');
+var Functions = new myFunctions();
 var $ = require('jquery');
 
 function sliderFunctions(){
@@ -42,6 +45,79 @@ function sliderFunctions(){
       remaining = '+='+remaining;
       $(slider).animate({ scrollLeft: remaining},200);
     }
+  }
+
+  this.animateLeft = (comp,apiKey)=>{
+      let gobox = ReactDOM.findDOMNode(comp.refs.time_panel);
+      let optionsbox = ReactDOM.findDOMNode(comp.refs.options_panel);
+      let formbox = ReactDOM.findDOMNode(comp.refs.form_panel);
+    if(comp.state.form_page==='start'){
+      $(gobox).animate({left:'-100%','opacity':'0'},200);
+      // $(optionsbox).animate({left:'0%','opacity':'1'},200);
+      $(formbox).animate({left:'0%'},200);
+      comp.setState({
+        form_page:'form',
+        next_ok:false
+      });
+    // }else if(comp.state.form_page==='options'){
+    //   $(optionsbox).animate({left:'-100%','opacity':'0'},200);
+    //   $(formbox).animate({left:'0%','opacity':'1'},200);
+    //   comp.setState({
+    //     form_page:'form'
+    //   });
+  }else if(comp.state.form_page==='form'){
+      let prev_data = {
+        day_picked:comp.state.day_picked,
+        time:comp.state.time
+        // user_choice:comp.state.user_choice
+      }
+      console.log('previous data: ',prev_data);
+      let form_results = {
+        first : comp.refs.form_first_name.value,
+        last : comp.refs.form_last_name.value,
+        mobile : comp.refs.form_phone.value,
+        email : comp.refs.form_email.value,
+        comments : comp.refs.form_comments.value,
+        with_agent_already : comp.state.selected_option,
+        mls:comp.props.params.mls
+      }
+      form_results = {
+        ...form_results,
+        ...prev_data
+      }
+      console.log('form data: ',form_results);
+      comp.setState({
+        submitting_showing_form:true
+      });
+      axios.post(apiKey + '/info/submitshowingform',form_results).then((response)=>{
+        console.log('successfully submitted',response);
+        // if(response.data === "Queued. Thank you."){
+        if(response.data.message === "Queued. Thank you."){
+          //show modal
+          comp.setState({
+            submitted_email:true,
+            form_page:'start',
+            booking_tour:false,
+            submitting_showing_form:false
+          });
+          //enable scrolling:
+          Functions.enableScroll();
+          //hide modal
+          setTimeout(()=>{
+            comp.setState({
+              submitted_email:false
+            });
+          },4000);
+        }
+      }).catch((err)=>{
+        console.log('submit err - ',err);
+      });
+    }
+    console.log('day: ',comp.state.day_picked);
+    console.log('time: ',comp.state.time);
+    comp.setState({
+      form_moved:true
+    });
   }
 
   this.resizeSlider = (slider,slider_contents,num_boxes,comp) =>{

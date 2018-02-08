@@ -130,6 +130,95 @@ function myFunctions(){
     },5000);
   }
 
+  this.show_times = () =>{
+    return [
+      {
+        'start':'9:00 AM',
+        'end':'9:45 AM'
+      },
+      {
+        'start':'9:30 AM',
+        'end':'10:15 AM'
+      },
+      {
+        'start':'10:00 AM',
+        'end':'10:45 AM'
+      },
+      {
+        'start':'10:30 AM',
+        'end':'11:15 AM'
+      },
+      {
+        'start':'11:00 AM',
+        'end':'11:45 AM'
+      },
+      {
+        'start':'11:30 AM',
+        'end':'12:15 PM'
+      },
+      {
+        'start':'12:00 PM',
+        'end':'12:45 PM'
+      },
+      {
+        'start':'12:30 PM',
+        'end':'1:15 PM'
+      },
+      {
+        'start':'1:00 PM',
+        'end':'1:45 PM'
+      },
+      {
+        'start':'1:30 PM',
+        'end':'2:15 PM'
+      },
+      {
+        'start':'2:00 PM',
+        'end':'2:45 PM'
+      },
+      {
+        'start':'2:30 PM',
+        'end':'3:15 PM'
+      },
+      {
+        'start':'3:00 PM',
+        'end':'3:45 PM'
+      },
+      {
+        'start':'3:30 PM',
+        'end':'4:15 PM'
+      },
+      {
+        'start':'4:00 PM',
+        'end':'4:45 PM'
+      },
+      {
+        'start':'4:30 PM',
+        'end':'5:15 PM'
+      },
+      {
+        'start':'5:00 PM',
+        'end':'5:45 PM'
+      },
+      {
+        'start':'5:30 PM',
+        'end':'6:15 PM'
+      },
+      {
+        'start':'6:00 PM',
+        'end':'6:45 PM'
+      },
+      {
+        'start':'6:30 PM',
+        'end':'7:15 PM'
+      },
+      {
+        'start':'7:00 PM',
+        'end':'7:45 PM'
+      }
+    ];
+  }
+
 
 }
 

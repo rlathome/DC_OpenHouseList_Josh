@@ -12,6 +12,8 @@ let myFunctions = require('./js/Functions.js');
 let Functions = new myFunctions();
 let myListingFunc = require('./js/ListingFuncs.js');
 let ListingFunc = new myListingFunc();
+let mySlideFunc = require('./js/SliderFunc.js');
+let Slide = new mySlideFunc();
 
 let myScroller = require('./js/PhotoScroll.js');
 let Scroller = new myScroller();
@@ -44,6 +46,7 @@ class Listing extends Component{
       big_photos:[],
       showing_index:0,
       showing_modal:false,
+      submitting_showing_form:false,
       day:'',
       day_picked:'-',
       booking_day:'',
@@ -301,77 +304,8 @@ componentDidMount(){
   }
   animateLeft(e){
     e.preventDefault();
-      let gobox = findDOMNode(this.refs.time_panel);
-      let optionsbox = findDOMNode(this.refs.options_panel);
-      let formbox = findDOMNode(this.refs.form_panel);
-    if(this.state.form_page==='start'){
-      $(gobox).animate({left:'-100%','opacity':'0'},200);
-      // $(optionsbox).animate({left:'0%','opacity':'1'},200);
-      $(formbox).animate({left:'0%'},200);
-      this.setState({
-        form_page:'form',
-        next_ok:false
-      });
-    // }else if(this.state.form_page==='options'){
-    //   $(optionsbox).animate({left:'-100%','opacity':'0'},200);
-    //   $(formbox).animate({left:'0%','opacity':'1'},200);
-    //   this.setState({
-    //     form_page:'form'
-    //   });
-    }else if(this.state.form_page==='form'){
-      let prev_data = {
-        day_picked:this.state.day_picked,
-        time:this.state.time
-        // user_choice:this.state.user_choice
-      }
-      console.log('previous data: ',prev_data);
-      let form_results = {
-        first : this.refs.form_first_name.value,
-        last : this.refs.form_last_name.value,
-        mobile : this.refs.form_phone.value,
-        email : this.refs.form_email.value,
-        comments : this.refs.form_comments.value,
-        with_agent_already : this.state.selected_option,
-        mls:this.props.params.mls
-      }
-      form_results = {
-        ...form_results,
-        ...prev_data
-      }
-      console.log('form data: ',form_results);
-      axios.post(apiKey + '/info/submitshowingform',form_results).then((response)=>{
-        console.log('successfully submitted',response);
-        if(response.data.message === "Queued. Thank you."){
-        // if(response.data.message === "Queued. Thank you."){
-
-          //show modal
-          this.setState({
-            submitted_email:true,
-            form_page:'start',
-            booking_tour:false
-          });
-
-
-          //enable scrolling:
-          Functions.enableScroll();
-          //hide modal
-          setTimeout(()=>{
-            this.setState({
-              submitted_email:false
-            });
-          },2000);
-        }
-      }).catch((err)=>{
-        console.log('submit err - ',err);
-      });
-    }
-
-    console.log('day: ',this.state.day_picked);
-    console.log('time: ',this.state.time);
-    this.setState({
-      form_moved:true
-    });
-  }
+    Slide.animateLeft(this,apiKey);
+  };
   isFormFilled(){
     var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
    const isEmail = re.test(String(this.refs.form_email.value).toLowerCase());
@@ -441,17 +375,7 @@ componentDidMount(){
         tdy=0;
       }
     }
-
-
-
-    // const slider_week = this_week.map((day)=>{
-    //   return(
-    //     <li><div className="slider-item">{days_abbr[day]}</div></li>
-    //   )
-    // });
-
-
-    let is_vert = false;
+let is_vert = false;
     let pic_image = document.createElement('img');
     pic_image.src=big_photos[showing_index];
     // console.log('pic height: ',pic_image.height);
@@ -533,92 +457,7 @@ componentDidMount(){
     }
 
 
-    const show_times = [
-      {
-        'start':'9:00 AM',
-        'end':'9:45 AM'
-      },
-      {
-        'start':'9:30 AM',
-        'end':'10:15 AM'
-      },
-      {
-        'start':'10:00 AM',
-        'end':'10:45 AM'
-      },
-      {
-        'start':'10:30 AM',
-        'end':'11:15 AM'
-      },
-      {
-        'start':'11:00 AM',
-        'end':'11:45 AM'
-      },
-      {
-        'start':'11:30 AM',
-        'end':'12:15 PM'
-      },
-      {
-        'start':'12:00 PM',
-        'end':'12:45 PM'
-      },
-      {
-        'start':'12:30 PM',
-        'end':'1:15 PM'
-      },
-      {
-        'start':'1:00 PM',
-        'end':'1:45 PM'
-      },
-      {
-        'start':'1:30 PM',
-        'end':'2:15 PM'
-      },
-      {
-        'start':'2:00 PM',
-        'end':'2:45 PM'
-      },
-      {
-        'start':'2:30 PM',
-        'end':'3:15 PM'
-      },
-      {
-        'start':'3:00 PM',
-        'end':'3:45 PM'
-      },
-      {
-        'start':'3:30 PM',
-        'end':'4:15 PM'
-      },
-      {
-        'start':'4:00 PM',
-        'end':'4:45 PM'
-      },
-      {
-        'start':'4:30 PM',
-        'end':'5:15 PM'
-      },
-      {
-        'start':'5:00 PM',
-        'end':'5:45 PM'
-      },
-      {
-        'start':'5:30 PM',
-        'end':'6:15 PM'
-      },
-      {
-        'start':'6:00 PM',
-        'end':'6:45 PM'
-      },
-      {
-        'start':'6:30 PM',
-        'end':'7:15 PM'
-      },
-      {
-        'start':'7:00 PM',
-        'end':'7:45 PM'
-      }
-    ];
+    const show_times = Functions.show_times();
 
 
 
@@ -719,8 +558,14 @@ componentDidMount(){
         {next_button}
       </div>
     ) : '';
+    const spinner = (this.state.submitting_showing_form) ? (
+      <div className="submit_modal">
+        <img className="scheduling_spinner" src={require("../images/loadcontent.gif")} alt="please wait"/>
+      </div>
+    ): '';
     const go_tour_modal = (this.state.booking_tour) ? (
       <div className="showing-modal booking-modal">
+        { spinner }
         <div className="sm_opacity">
         </div>
         <span ref="go_tour_panel" className="go_tour_panel">

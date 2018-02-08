@@ -25,8 +25,6 @@ let domain = 'http://dcopenhouselist.com';
 let stage = process.env.NODE_ENV;
 console.log('app in stage: ',stage);
 console.log('domain: ',domain);
-// let params = 'latitude,longitude,image_urls,street_name,subdivision,street_number,square_feet,mls_number,list_price,open_house_events,address,full_baths,num_bedrooms,half_baths';
-
 const params='';
 
 
@@ -54,7 +52,6 @@ router.get('/open_houses',function(req,res,next){
   // res.json(dcdata);
   console.log('api key: ',apiKey);
   let params='';
-  // let params = 'latitude,longitude,image_urls,street_name,street_pre_direction,street_post_direction, subdivision,street_number,square_feet,mls_number,list_price,open_house_events,address,full_baths,num_bedrooms,half_baths';
   let page_req='';
   let url = "https://api.displet.com/residentials/search?authentication_token="+apiKey+"&open_house=y&state=DC&open_house_within=6"+page_req;
 
@@ -69,8 +66,6 @@ router.get('/open_houses',function(req,res,next){
 
   request(options, function (error, response, body) {
     console.log('error:', error); // Print the error if one occurred
-    // console.log('statusCode:', response && response.statusCode); // Print the response status code if a response was received
-    // console.log('body:', body); // Print the HTML for the Google homepage.
     body=JSON.parse(body);
     console.log('results: ',body.results.length);
     console.log('page_count: ',body.meta.count);
@@ -139,8 +134,6 @@ router.get('/listing/:mls',function(req,res,next){
   request(options, function (error, response, body) {
     console.log('error:', error); // Print the error if one occurred
     console.log('statusCode:', response && response.statusCode); // Print the response status code if a response was received
-    // console.log('body:', body); // Print the HTML for the Google homepage.
-    // console.log('listing: ',JSON.parse(body))
     body=JSON.parse(body);
     res.json(body);
   });
@@ -186,8 +179,6 @@ router.get('/neighborhoods',function(req,res,next){
 router.post('/submitform',function(req,res,next){
   let form_data = req.body;
   console.log('submitting: ',form_data);
-  // let to= 'info@rlahre.com';
-
   let first = form_data.first;
   let last = form_data.last;
   let mls = form_data.mls;
@@ -196,7 +187,6 @@ router.post('/submitform',function(req,res,next){
   let phone = form_data.phone;
   let email = form_data.email;
   let agent_email = form_data.agent_email;
-  // let to = agent_email;
   let to = 'info@rlahre.com'
 
   var mailcomposer = require('mailcomposer');
@@ -229,12 +219,6 @@ router.post('/submitform',function(req,res,next){
         res.json(body);
     });
 });
-
-
-  // mailgun.messages().send(formData, function (error, body) {
-  //   console.log('reply: ',body);
-  //   res.json(body);
-  // });
 });
 
 router.post('/submitshowingform',function(req,res,next){
@@ -252,23 +236,6 @@ router.post('/submitshowingform',function(req,res,next){
   let with_agent_already = form_data.with_agent_already;
   let day_picked = form_data.day_picked;
   let time = form_data.time;
-  // let user_choice = form_data.user_choice;
-  //
-  // let prev_data = {
-  //   day_picked:this.state.day_picked,
-  //   time:this.state.time,
-  //   user_choice:this.state.user_choice
-  // }
-  // console.log('previous data: ',prev_data);
-  // let form_results = {
-  //   first : this.refs.form_first_name.value,
-  //   last : this.refs.form_last_name.value,
-  //   mobile : this.refs.form_phone.value,
-  //   email : this.refs.form_email.value,
-  //   comments : this.refs.form_comments.value,
-  //   with_agent_already : this.state.selected_option
-  // }
-  // let to = agent_email;
   let to = 'info@rlahre.com'
 
   var mailcomposer = require('mailcomposer');
@@ -290,29 +257,29 @@ router.post('/submitshowingform',function(req,res,next){
     time,
     html:'<div>Re: MLS# '+mls+'<br/>'
     +'<div>'
-      +first+' '+last
+      +'Name: '+first+' '+last
     +'</div>'
     +'<div>'
       +'With agent already: '+with_agent_already
     +'</div>'
     +'<div>'
-      +comments
+      +'Showing date requested: '+day_picked
     +'</div>'
     +'<div>'
-      +day_picked
+      +'Time requested: '+time
     +'</div>'
     +'<div>'
-      +time
+      +'Phone: '+phone
     +'</div>'
     +'<div>'
-      +phone
+      +'Email: '+email
     +'</div>'
     +'<div>'
-      +email
+      +'Additional comments: '+comments
     +'</div>'
   });
 
-  // res.send('Queued. Thank you.');
+  // res.send('Queued. Thank you.')
 
   mail.build(function(mailBuildError, message){
     var dataToSend = {
@@ -367,7 +334,6 @@ router.post('/createagent',function(req,res,next){
     console.log('error:', error); // Print the error if one occurred
     console.log('returned: ',data_returned);
     data_returned=JSON.parse(data_returned);
-    // console.log('data_returned: ',data_returned);
     res.json(data_returned);
   });
 
@@ -425,8 +391,6 @@ router.get('/getfeaturedlistings',function(req,res,next){
   console.log('getting featured');
   Featured.find({},'',function(err,response){
     if(err) console.log('err - ',err);
-    // res.json(response);
-    // var numbs = JSON.stringify(response);
     console.log('response: ',response);
     var results = [];
     let listings = [];
@@ -435,8 +399,6 @@ router.get('/getfeaturedlistings',function(req,res,next){
       listings.push(response[i]["mls"]);
     }
     listings = listings.join(',');
-      // listing = JSON.parse(listing);
-      // results.push(listing);
       let url = "https://api.displet.com/residentials/search?authentication_token="+apiKey+"&;return_fields="+params+"&mls_number="+listings;
       console.log('url: ',url);
       let options = {
@@ -496,7 +458,6 @@ router.post('/deleteagent',function(req,res,next){
     console.log('error:', error); // Print the error if one occurred
     console.log('returned: ',data_returned);
     data_returned=JSON.parse(data_returned);
-    // console.log('data_returned: ',data_returned);
     res.json(data_returned);
   });
 });

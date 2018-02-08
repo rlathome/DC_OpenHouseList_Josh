@@ -2538,3 +2538,10 @@ $specs-time:.35s;
     background-color:#fff !important;
   }
 }
+
+.scheduling_spinner{
+  position: absolute;
+  top:25vh;
+  left:40vw;
+  z-index: 1000;
+}
