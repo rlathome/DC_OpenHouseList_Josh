@@ -124,7 +124,7 @@ class Listing extends Component{
           listing
         });
 
-        this.scrollPhotos();
+        // this.scrollPhotos();
 
       });
     }
@@ -155,19 +155,15 @@ componentDidMount(){
   }
   scrollChecker(){
     Scroller.scrollChecker(this);
-
   }
   showPic(e){
     Scroller.showPic(this,e);
-
   }
   scrollAlong(index){
     Scroller.scrollAlong(this,index);
-
   }
   goRight(e){
     Scroller.goRight(this,e);
-
   }
   goLeft(e){
     Scroller.goLeft(this,e);

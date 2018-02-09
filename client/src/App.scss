@@ -2545,3 +2545,21 @@ $specs-time:.35s;
   left:40vw;
   z-index: 1000;
 }
+.arrow{
+  color:#fff;
+  font-size: 2.5em;
+  position: absolute;
+  z-index: 10;
+  cursor: pointer;
+  &:hover{
+    color:#e1e4d1;
+  }
+}
+.arrow-right{
+  top:50%;
+  right:10px;
+}
+.arrow-left{
+  top:50%;
+  left:10px;
+}

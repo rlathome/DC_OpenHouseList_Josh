@@ -23,8 +23,7 @@ class Featured extends Component{
     return 'yeah baby';
   }
   componentWillMount(){
-    // this.getChosenListings();
-    this.getTopListings();
+    this.getChosenListings();
   }
   getChosenListings(){
     let url=apiKey+"/info/getfeaturedlistings";
