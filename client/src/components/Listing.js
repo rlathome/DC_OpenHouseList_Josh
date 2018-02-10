@@ -843,7 +843,7 @@ let is_vert = false;
 
 
                     </div> */}
-                    <Slider title={'Go Tour This Property'} {...day_slider_props}  />
+                    <Slider title={'Schedule a Private Showing'} {...day_slider_props}  />
                     <div className="listing-form-header row">
                       <div className="col-xs-8">
                         Ask a Question
