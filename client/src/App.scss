@@ -1817,7 +1817,21 @@ footer{
 .listing-emoji{
   width:3.5vw;
   height:1.5vw;
-  @media(max-width: 865px){
+  // iphone 6 portrait
+  @media only screen
+  and (min-width : 355px)
+  and (max-width : 667px)
+  and (orientation : portrait) {
+    width:5vw;
+    height:4.5vw;
+  }
+  //ipad portrait
+  @media only screen
+  and (min-width : 768px)
+  and (max-width : 1024px)
+  and (orientation : portrait) {
+    width:5vw;
+    height:3.5vw;
   }
 }
 .listing-price-emoji{
@@ -1865,7 +1879,7 @@ footer{
   @media(max-width: 768px){
     // font-size:m;
     width:75%;
-    bottom:0px;
+    // bottom:0px;
   }
   // iphone 6 landscape
   @media only screen

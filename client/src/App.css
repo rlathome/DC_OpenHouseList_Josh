@@ -2278,6 +2278,20 @@ footer .logo-text {
   height: 1.5vw;
 }
 
+@media only screen and (min-width: 355px) and (max-width: 667px) and (orientation: portrait) {
+  .listing-emoji {
+    width: 5vw;
+    height: 4.5vw;
+  }
+}
+
+@media only screen and (min-width: 768px) and (max-width: 1024px) and (orientation: portrait) {
+  .listing-emoji {
+    width: 5vw;
+    height: 3.5vw;
+  }
+}
+
 .listing-beds, .listing-baths {
   font-size: .75em;
   display: inline-block;
@@ -2328,7 +2342,6 @@ footer .logo-text {
 @media (max-width: 768px) {
   .listing-header-specs {
     width: 75%;
-    bottom: 0px;
   }
 }
 
