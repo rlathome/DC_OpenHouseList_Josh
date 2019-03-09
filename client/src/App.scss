@@ -2439,6 +2439,13 @@ $specs-time:.35s;
   and (orientation : portrait) {
     height:auto;
   }
+  // iphone 6 portrait
+  @media only screen
+  and (min-width : 355px)
+  and (max-width : 667px)
+  and (orientation : portrait) {
+    font-size:1em;
+  }
 
 }
 .agent-photo-holder{

@@ -2910,6 +2910,12 @@ footer .logo-text {
   }
 }
 
+@media only screen and (min-width: 355px) and (max-width: 667px) and (orientation: portrait) {
+  .listing-specs {
+    font-size: 1em;
+  }
+}
+
 @media (max-width: 995px) {
   .agent-photo-holder {
     width: 20vw;
