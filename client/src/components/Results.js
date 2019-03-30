@@ -7,6 +7,8 @@ import moment from 'moment';
 import { hashHistory } from 'react-router';
 // import _ from "lodash";
 import ReactMap from './ReactMap';
+let myFunctions = require('./js/Functions.js');
+let Functions = new myFunctions();
 // let apiKey = (process.env.REACT_APP_STATUS == 'development') ? "http://localhost:8080" : "http://vast-shore-14133.herokuapp.com";
 
 // let apiKey="https://dcopenhouselist.herokuapp.com";
@@ -53,52 +55,14 @@ class Results extends Component{
     if(i==false && stored_results.timestamp !== timestamp){
       axios.get(apiKey + '/info/open_houses').then(
       (response)=>{
-        // console.log('axios: ',response);
-        // // console.log('axios streetnames: ',streetnames);
-        // localStorage.setItem(storage_query,JSON.stringify(response.data));
-        // try {
-        //   let items = response.data;
-        //   // localStorage.setItem(storage_query,JSON.stringify(items.slice(0,items.length/2)));
-        //   localStorage.setItem(storage_query+'1',JSON.stringify(items.slice(items.length/2,items.length)));
-        //   // console.log('successfully stored');
-        // } catch(e) {
-        //   if (e.code == 22) {
-        //     // Storage full, maybe notify user or do some clean-up
-        //     // console.log('code22');
-        //     localStorage.clear();
-        //     localStorage.setItem(storage_query,JSON.stringify(response.data));
-        //     // localStorage.clear();
-        //     // this.componentWillMount();
-        //   }
-        // }
-        // let to_paginate = response.data;
-        // let pages=this.state.pages;
-        // let page_ct = 0;
-        // let page = [];
-        // while(to_paginate.length>0){
-        //   for(let i=0; i<20; i++){
-        //     if(to_paginate.length>0){
-        //       // console.log('paginating');
-        //       let piece = to_paginate.shift();
-        //       // console.log('topag length: ',to_paginate.length);
-        //       page.push(piece);
-        //     }
-        //   }
-        //   pages[page_ct]=page;
-        //   page_ct++;
-        // }
 
-        // while(to_paginate.length>0){
-        //   // console.log('slicing');
-        //   let lump = to_paginate.slice(0,20);
-        //   to_paginate.slice(20,to_paginate.length);
-        //   pages[page_ct] = lump;
-        //   page_ct++;
-        // }
-        // // console.log('page list: ',pages);
+
         response = response.data.filter((val)=>{
           return val !==null;
         });
+
+        response = response.map((val) => Functions.filterJPEG(val));
+        console.log('FILTERED AXIOS RESULTS: ',response);
         this.props.storeResults({
           results,
           markers:response,
@@ -727,7 +691,7 @@ class Results extends Component{
       dow = (date) ? days[dow] : '';
       dow = (date) ? dow.toLowerCase() : '';
 
-    
+
       let dir;
       switch(listing.street_pre_direction){
         case 'Northwest':

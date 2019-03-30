@@ -93,6 +93,22 @@ function myFunctions(){
     });
   }
 
+  this.filterJPEG = (val) =>{
+    //filter out all photo URLS that don't contain 'JPG':
+    const jpgFilter = new RegExp('.jpg');
+    //filter all_big:
+    val.image_urls.all_big = val.image_urls.all_big.filter((pic)=>{
+      return jpgFilter.test(pic);
+    });
+    //filter all_thumb:
+    val.image_urls.all_thumb = val.image_urls.all_thumb.filter((pic)=>{
+      return jpgFilter.test(pic);
+    });
+    //filter primary_big:
+    val.image_urls.primary_big = (!jpgFilter.test(val.image_urls.primary_big)) ? val.image_urls.all_big[0] : val.image_urls.primary_big;
+    return val;
+  }
+
   this.scrollPhotos = (component,index) =>{
     let photo=index || component.state.showing_index;
     let photos = component.state.big_photos;

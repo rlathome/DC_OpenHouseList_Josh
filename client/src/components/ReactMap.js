@@ -168,26 +168,27 @@ class FullMap extends Component{
               dir = '';
             };
             var contentString = (
-              '<div id='+mls+' class="listing-popup" style='+
-                'backgroundImage:url('+val.image_urls.all_thumb[1]+')'+
-                '>'+
-                '<div class="listing-popup-opacity"></div>'+
-                '<div class="listing-popup-text">'+
-                 val.street_number + ' ' + val.street_name + ' ' + val.street_post_dir +  ' ' + dir + ' '+ '('+dowUC+')'+ '<br/>'+
-                 price +' <br/>'+
-                '</div>'+
-              '</div>'
+              `<div id=${mls} class="listing-popup" style=
+                backgroundImage:url(${val.image_urls.all_big[0]})>
+                <div class="listing-popup-opacity"></div>
+                <div class="listing-popup-text">
+                ${val.street_number}     ${val.street_name}     ${val.street_post_dir}      ${dir}    (${dowUC}) <br/>
+                 ${price}  <br/>
+                </div>
+              </div>`
             );
 
             var infowindow = new google.maps.InfoWindow({
               content: contentString
             });
-            marker.addListener('click', function() {
+            marker.addListener('click', () => {
               infowindow.open(map, marker);
-              let index = '#'+mls;
-              let style = 'url('+val.image_urls.all_thumb[0]+')'
-              jquery(index).css('background-image',style);
-              jquery(index).css('background-image',style);
+              setTimeout(()=>{
+                let index = '#'+mls;
+                let style = 'url('+val.image_urls.all_big[0]+')'
+                jquery(index).css('background-image',style);
+                jquery(index).css('background-image',style);
+              },25);
             });
             map.addListener('click',function(){
               infowindow.close(map,marker);

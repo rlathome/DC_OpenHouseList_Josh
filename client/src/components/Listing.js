@@ -83,6 +83,7 @@ class Listing extends Component{
       (listing)=>{
         // console.log('listing axios: ',listing);
         listing = (listing.data.results) ? listing.data.results[0] : '';
+        listing = Functions.filterJPEG(listing);
         let showing = (listing) ? listing.image_urls.all_big[0] : '';
         let showing_index = 0;
         let style = {
@@ -679,7 +680,7 @@ let is_vert = false;
     price = (listing) ? currency.format(listing.list_price,{ code: 'USD', decimalDigits: 0 }): '';
     price = (listing) ? price.slice(0,price.length-3): '';
     price = (listing) ? (<span className="listing-price-emoji">{price}</span>) : '';
-    let stories = (listing) ? (<div>{listing.stories}&nbsp;story</div>) : '';
+    let stories = (listing) ? (<div>Status: {listing.status_history[listing.status_history.length-1].status}&nbsp;</div>) : '';
     // let built = (listing) ? ( <div>Built:&nbsp;{listing.year_built}</div> ): '';
     let built = (listing.square_feet > 0) ? ( <div>Built:&nbsp;{listing.year_built}</div> ):(<span className="sqFt">Sq ft unknown</span>);
     let subd = ( <div>Subdivision:&nbsp;{ subdivision }</div> );

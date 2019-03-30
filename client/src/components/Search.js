@@ -145,6 +145,7 @@ class Search extends Component{
       listings:this.state.listings,
       view:this.props.params.view
     }
+    console.log('THE PROPS: ',this.props)
     let selected_listing = this.state.selected_listing;
     switch(this.state.step){
       case '':
