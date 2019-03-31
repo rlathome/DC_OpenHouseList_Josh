@@ -8,7 +8,8 @@
 .go-tour-wrapper{
   display: inline-block;
   height:inherit;
-  width:80%;
+  //width:80%;
+  width:100% !important;
   position: relative;
 }
 .picked{
@@ -27,9 +28,14 @@
   .fa{
     font-size: 2.5em;
     position: absolute;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    height:100%;
+    top:-4.5px;
     z-index: 10;
     color:gray;
-    top:40%;
+    //top:40%;
     // height:100%;
     // background-color:rgba(55,55,55,.5);
     cursor: pointer;
@@ -39,13 +45,13 @@
     }
   }
   .fa-angle-left{
-    left:-10%;
+    left:1.5%;
   }
   .fa-angle-right{
-    right:-10%;
+    right:1.5%;
   }
   .arrow_left_modal_times,.arrow_right_modal_times{
-    top:28%;
+    //top:28%;
     font-size:4em;
 
     color:#cac9c9;
@@ -59,7 +65,7 @@
     }
   }
   .arrow_modal_days{
-    top:25%;
+    //top:25%;
     font-size:4em;
 
     color:#cac9c9;
@@ -68,7 +74,7 @@
     and (min-width : 355px)
     and (max-width : 667px)
     and (orientation : portrait) {
-      top: 25%;
+      //top: 25%;
       font-size: 3em;
     }
   }
@@ -91,9 +97,16 @@
 .go-tour-title{
   font-size: 1.5em;
 }
+.slider_contain{
+  width:100%;
+  text-align: center;
+  position: relative;
+}
 .slider{
   position: relative;
   overflow-x: hidden;
+  display: inline-block;
+  width:80%;
   &::-webkit-scrollbar {
     width: 0px;  /* remove scrollbar space */
     background: transparent;  /* optional: just make scrollbar invisible */

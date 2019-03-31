@@ -1074,7 +1074,6 @@ footer{
       margin-right:1em;
       box-shadow: 5px 5px 5px grey;
       border-radius: 5px;
-
       div{
         font-family: 'apercu-regular',sans-serif;
       }
@@ -2296,29 +2295,33 @@ footer{
     left:7.5vw;
   }
 }
+.pic_contain{
+  text-align: center;
+}
 .showing-modal{
   position: fixed;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
   top:0;
   left:0;
   height:100%;
   width: 100%;
   z-index: 50000;
   .showing-modal-image{
-    position: absolute;
+    //position: absolute;
     z-index: 100000000;
-    width: 80vw;
-    left:10%;
-    top:1vh;
-    @media(max-width: 1150px){
-    top:10vh;
+    width: 75vw;
+    // left:10%;
+    // top:1vh;
+    @media(max-width: 1050px){
+    // top:10vh;
+    width:85vw;
     }
     @media(max-width: 950px){
-    width: 90vw;
-    left:5%;
-    top:5vh;
-    }
-    @media(max-width: 768px){
-    top:15vh;
+    width: 100vw;
+    // left:5%;
+    // top:5vh;
     }
     // ipad landscape
     @media only screen
@@ -2326,7 +2329,7 @@ footer{
     and (max-width : 1024px)
     and (orientation : landscape) {
        /* STYLES GO HERE */
-       top:15vh;
+       //top:15vh;
      }
 
     // ipad portrait
@@ -2335,7 +2338,7 @@ footer{
     and (max-width : 1024px)
     and (orientation : portrait) {
        /* STYLES GO HERE */
-       top:30%;
+       //top:30%;
      }
 
 
@@ -2566,6 +2569,9 @@ $specs-time:.35s;
   left:40vw;
   z-index: 1000;
 }
+
+
+
 .arrow{
   color:#fff;
   font-size: 2.5em;

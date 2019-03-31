@@ -6,11 +6,9 @@ import newN from './Neighborhoods';
 import GoogleMap from "react-google-map";
 import  MarkerClusterer  from "react-google-maps/lib/addons/MarkerClusterer";
 import GoogleMapLoader from "react-google-maps-loader"
-// let markers = this.props.markers;
 const google = window.google;
 let Neighborhoods = new newN;
 
-// // console.log('West End: ',Neighborhoods[this.props.neighborhood]);
 
 const MY_API_KEY = "82b44a7662b0abb55eebf365a61c50399b512935" // fake
 let style={
@@ -21,22 +19,19 @@ class FullMap extends Component{
   constructor(props){
     super(props);
     this.state={
-      neighborhood:''
+      neighborhood:'',
+      openWindow:''
     }
   }
-  viewListing(){
-    // console.log('imported viewListing');
+  closeListing(){
+    if(this.state.openWindow != ''){
+      this.state.openWindow.close();
+    }
   }
   render(){
     let neighb = this.props.neighborhood;
-    // console.log('neigh: ',neighb);
-    // console.log('West End: ',Neighborhoods[neighb]);
-    // console.log('r_map markers: ',this.props.markers);
     let neighborhood_polygon = (Neighborhoods[neighb] && neighb !== 'FullDCArea') ? Neighborhoods[neighb] : 'none';
-    // console.log('neigh poly: ',neighborhood_polygon);
     let map_center = (Neighborhoods[neighb] && neighb !=='FullDCAarea') ? Neighborhoods[neighb][0] : Neighborhoods['dupontcircle'][0];
-    // // console.log('map center: ',Neighborhoods[neighb]);
-    // console.log('neighborhood params: ',this.props.neighborhood);
     let showing = (this.props.display) ? '' : 'hidden';
     return(
       // GoogleMap component has a 100% height style.
@@ -61,7 +56,6 @@ class FullMap extends Component{
             });
             let viewListing = this.props.viewListing;
 
-            // // console.log('map markers: ',this.props.markers);
             //FILTER BY NEIGHBORHOOD:
             if(neighb !=='FullDCArea'){
               var neighborhoodPolygon = new google.maps.Polygon({
@@ -73,6 +67,13 @@ class FullMap extends Component{
                 fillOpacity: 0.35
               });
               neighborhoodPolygon.setMap(map);
+              neighborhoodPolygon.addListener('click',()=>{
+                console.log('CLICKED THA MAP');
+                this.closeListing();
+              })
+              map.addListener('click',()=>{
+                console.log('CLICKED THA MAP')
+              });
             }
 
             //MARKER CLUSTERING
@@ -146,9 +147,6 @@ class FullMap extends Component{
                 map_markers.push(marker);
               }
             //CREATE PROPERTY INFOWINDOW
-            // let mls = val.mls_number.toString();
-            // // console.log('listing id: ',val.id);
-            // let mls = val.id.toString();
             let mls = val.id;
             let dir;
             switch(val.street_pre_direction){
@@ -182,7 +180,11 @@ class FullMap extends Component{
               content: contentString
             });
             marker.addListener('click', () => {
+              this.closeListing();
               infowindow.open(map, marker);
+              this.setState({
+                openWindow:infowindow
+              });
               setTimeout(()=>{
                 let index = '#'+mls;
                 let style = 'url('+val.image_urls.all_big[0]+')'
@@ -204,7 +206,6 @@ class FullMap extends Component{
             });
             if(num_markers>0){
               map.fitBounds(bounds);
-              // map.panToBounds(bounds);
               var listener = google.maps.event.addListener(map, "idle", function() {
                 if (map.getZoom() > 16) map.setZoom(16);
                 google.maps.event.removeListener(listener);
@@ -215,78 +216,12 @@ class FullMap extends Component{
         console.log('filtered_results in Map: ',filtered_results);
         this.props.updateResults(filtered_results);
           }}
-
         />
       </div>
     )
   }
 }
-// const Map = ({markers, googleMaps}) => (
-//   // GoogleMap component has a 100% height style.
-//   // You have to set the DOM parent height.
-//   // So you can perfectly handle responsive with differents heights.
-//   <div style={style}>
-//     <GoogleMap
-//       googleMaps={googleMaps}
-//       // You can add and remove coordinates on the fly.
-//       // The map will rerender new markers and remove the old ones.
-//       coordinates={[
-//         {
-//           title: "Washington DC",
-//           position: {
-//             lat: 38.904373, lng: -77.053513
-//           },
-//           onLoaded: (googleMaps, map, markers) => {
-//             // Set Marker animation
-//             markers.setAnimation(googleMaps.Animation.BOUNCE)
-//
-//             // Define Marker InfoWindow
-//             const infoWindow = new googleMaps.InfoWindow({
-//               content: `
-//                 <div>
-//                   <h3>Toulouse<h3>
-//                   <div>
-//                     Toulouse is the capital city of the southwestern
-//                     French department of Haute-Garonne,
-//                     as well as of the Occitanie region.
-//                   </div>
-//                 </div>
-//               `,
-//             })
-//
-//             // Open InfoWindow when Marker will be clicked
-//             // googleMaps.event.addListener(marker, "click", () => {
-//             //   infoWindow.open(map, marker)
-//             // })
-//             //
-//             // // Change icon when Marker will be hovered
-//             // googleMaps.event.addListener(marker, "mouseover", () => {
-//             //   marker.setIcon(iconMarkerHover)
-//             // })
-//             //
-//             // googleMaps.event.addListener(marker, "mouseout", () => {
-//             //   marker.setIcon(iconMarker)
-//             // })
-//
-//             // Open InfoWindow directly
-//             // infoWindow.open(map, marker)
-//           },
-//         }
-//       ]}
-//       center={
-//         { lat: 38.904373, lng: -77.053513 }
-//       }
-//       zoom={8}
-//       onLoaded={(googleMaps, map) => {
-//         map.setMapTypeId(googleMaps.MapTypeId.SATELLITE)
-//       }}
-//     />
-//   </div>
-// )
 
-// Map.propTypes = {
-//   googleMaps: PropTypes.object.isRequired,
-// }
 
 export default GoogleMapLoader(FullMap, {
   libraries: ["places"],

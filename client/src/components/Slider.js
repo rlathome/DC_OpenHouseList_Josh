@@ -84,8 +84,8 @@ export default class Slider extends Component{
     let arrowClass2;
     switch(this.props.slider_kind){
       case 'days':
-      arrowClass='fa fa-angle-left';
-      arrowClass2='fa fa-angle-right';
+      arrowClass='fa fa-angle-left timepick_arrow';
+      arrowClass2='fa fa-angle-right timepick_arrow';
       break;
       case 'modal-days':
       arrowClass='fa fa-angle-left arrow_modal_days';
@@ -113,13 +113,15 @@ export default class Slider extends Component{
       <div className="go-tour">
         <div className="go-tour-wrapper">
           <div className="go-tour-title">{this.props.title}</div>
-          <span onClick={() => this.slideLeft()} className={arrowClass}></span>
-          <div ref='slider' className={onPageClass}>
-            <ul ref='slider_contents' className={sliderClass}>
-              {contents}
-            </ul>
+          <div className="slider_contain">
+          <span className={arrowClass} onClick={() => this.slideLeft()} ></span>
+            <div ref='slider' className={onPageClass}>
+              <ul ref='slider_contents' className={sliderClass}>
+                {contents}
+              </ul>
+            </div>
+            <span onClick={() => this.slideRight()} className={arrowClass2}></span>
           </div>
-          <span onClick={() => this.slideRight()} className={arrowClass2}></span>
           { button }
         </div>
       </div>

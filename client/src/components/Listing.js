@@ -609,7 +609,7 @@ let is_vert = false;
                 </div>
                 <div className="showing_form_inputs col-xs-12">
                   <div onKeyUp={this.isFormFilled.bind(this)} className='col-xs-6 first'>Email<input ref="form_email" placeholder="example@example.com"/></div>
-                  <div onKeyUp={this.isFormFilled.bind(this)} className='col-xs-6 second'>Mobile Number<input ref="form_phone" placeholder="( ) -"/></div>
+                  <div onKeyUp={this.isFormFilled.bind(this)} className='col-xs-6 second'>Mobile Number<input ref="form_phone" placeholder="(xxx) xxx - xxxx"/></div>
                 </div>
                 <div className="yes_no col-xs-12">
                   <div>Are you currently working with a real estate agent to help you buy your home?</div>
@@ -736,7 +736,9 @@ let is_vert = false;
           <div className="sm_opacity"></div>
           <div onClick={this.goLeft.bind(this)} className="arrow arrow-left fa fa-arrow-left"></div>
           <div onClick={this.goRight.bind(this)} className="arrow arrow-right fa fa-arrow-right"></div>
-          <img className="showing-modal-image image-responsive" src={big_photos[showing_index]} alt="listing"/>
+          <div className="pic_contain clearfix">
+            <img className="showing-modal-image image-responsive" src={big_photos[showing_index]} alt="listing"/>
+          </div>
           <i className="glyphicon glyphicon-resize-small" onClick={this.showing_modal_off.bind(this)}></i>
       </div>
     ) : '';
@@ -829,21 +831,6 @@ let is_vert = false;
                 </div>
                 <div className="listing-form-column row">
                   <div className="listing-form col-lg-8">
-                    {/* <div className="go-tour">
-                      <div className="go-tour-wrapper">
-                        <div className="go-tour-title">Go Tour This Home</div>
-                        <span onClick={this.slideLeft.bind(this)} className="fa fa-angle-left"></span>
-                        <div className="slider onPage">
-                          <ul className="slider-contents">
-                            {slider_week}
-                          </ul>
-                        </div>
-                        <span onClick={this.slideRight.bind(this)} className="fa fa-angle-right"></span>
-                        <div onClick={()=>this.openScheduler()} className="btn btn-primary">Schedule Showing</div>
-                      </div>
-
-
-                    </div> */}
                     <Slider title={'Schedule a Private Showing'} {...day_slider_props}  />
                     <div className="listing-form-header row">
                       <div className="col-xs-8">
@@ -866,11 +853,7 @@ let is_vert = false;
                         </div>
                         <input ref="hidden" className="hidden" />
                         <input className="btn btn-primary" type="submit" value="Submit"/>
-                        {/* <input className="btn btn-secondary" type="submit" value="Go Tour"/> */}
                       </form>
-                      {/* <div className="go-tour-form">
-                        <textarea className="form-control" ref="textarea" placeholder = "What can we do for you?"/>
-                      </div> */}
                     </div>
                   </div>
                   <div className="listing-agent-photo col-lg-4">

@@ -782,7 +782,7 @@ class Results extends Component{
 
 
     // let spinner = (<div className="no-results-msg">Searching for {subd} open houses{today}. Thanks for your patience.<br/><img className="spinner" src={require("../images/loadcontent.gif")} alt="please wait"/></div>);
-    let spinner = (<div className="no-results-msg">({subd} open houses{today})<br/>Thanks for your patience while we load the latest DC open houses - all future searches will happen instantly.<br/><img className="spinner" src={require("../images/loadcontent.gif")} alt="please wait"/></div>);
+    let spinner = (<div className="no-results-msg">({(subd) ? `${subd} open`: 'Searching open'} houses{today})<br/>Thanks for your patience while we load the latest DC open houses - all future searches will happen instantly.<br/><img className="spinner" src={require("../images/loadcontent.gif")} alt="please wait"/></div>);
     results = (results) ? results.filter((val)=>{
       if(val){
         return val;

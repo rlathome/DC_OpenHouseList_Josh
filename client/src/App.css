@@ -1198,7 +1198,7 @@ footer .logo-text {
 .go-tour-wrapper {
   display: inline-block;
   height: inherit;
-  width: 80%;
+  width: 100% !important;
   position: relative;
 }
 
@@ -1216,9 +1216,13 @@ footer .logo-text {
 .go-tour .fa {
   font-size: 2.5em;
   position: absolute;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  height: 100%;
+  top: -4.5px;
   z-index: 10;
   color: gray;
-  top: 40%;
   cursor: pointer;
 }
 
@@ -1228,15 +1232,14 @@ footer .logo-text {
 }
 
 .go-tour .fa-angle-left {
-  left: -10%;
+  left: 1.5%;
 }
 
 .go-tour .fa-angle-right {
-  right: -10%;
+  right: 1.5%;
 }
 
 .go-tour .arrow_left_modal_times, .go-tour .arrow_right_modal_times {
-  top: 28%;
   font-size: 4em;
   color: #cac9c9;
 }
@@ -1249,14 +1252,12 @@ footer .logo-text {
 }
 
 .go-tour .arrow_modal_days {
-  top: 25%;
   font-size: 4em;
   color: #cac9c9;
 }
 
 @media only screen and (min-width: 355px) and (max-width: 667px) and (orientation: portrait) {
   .go-tour .arrow_modal_days {
-    top: 25%;
     font-size: 3em;
   }
 }
@@ -1279,9 +1280,17 @@ footer .logo-text {
   font-size: 1.5em;
 }
 
+.slider_contain {
+  width: 100%;
+  text-align: center;
+  position: relative;
+}
+
 .slider {
   position: relative;
   overflow-x: hidden;
+  display: inline-block;
+  width: 80%;
   /* optional: show position indicator in red */
   height: inherit;
 }
@@ -2759,8 +2768,15 @@ footer .logo-text {
   }
 }
 
+.pic_contain {
+  text-align: center;
+}
+
 .showing-modal {
   position: fixed;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
   top: 0;
   left: 0;
   height: 100%;
@@ -2769,44 +2785,31 @@ footer .logo-text {
 }
 
 .showing-modal .showing-modal-image {
-  position: absolute;
   z-index: 100000000;
-  width: 80vw;
-  left: 10%;
-  top: 1vh;
+  width: 75vw;
 }
 
-@media (max-width: 1150px) {
+@media (max-width: 1050px) {
   .showing-modal .showing-modal-image {
-    top: 10vh;
+    width: 85vw;
   }
 }
 
 @media (max-width: 950px) {
   .showing-modal .showing-modal-image {
-    width: 90vw;
-    left: 5%;
-    top: 5vh;
-  }
-}
-
-@media (max-width: 768px) {
-  .showing-modal .showing-modal-image {
-    top: 15vh;
+    width: 100vw;
   }
 }
 
 @media only screen and (min-width: 768px) and (max-width: 1024px) and (orientation: landscape) {
   .showing-modal .showing-modal-image {
     /* STYLES GO HERE */
-    top: 15vh;
   }
 }
 
 @media only screen and (min-width: 768px) and (max-width: 1024px) and (orientation: portrait) {
   .showing-modal .showing-modal-image {
     /* STYLES GO HERE */
-    top: 30%;
   }
 }
 
